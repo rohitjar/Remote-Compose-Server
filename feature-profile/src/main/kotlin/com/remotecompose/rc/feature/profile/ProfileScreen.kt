@@ -3,6 +3,7 @@
 package com.remotecompose.rc.feature.profile
 
 import androidx.compose.remote.creation.Rc
+import androidx.compose.remote.creation.RemoteComposeWriter
 import androidx.compose.remote.creation.dsl.Modifier
 import androidx.compose.remote.creation.dsl.RcHorizontalPositioning
 import androidx.compose.remote.creation.dsl.RcPaintStyle
@@ -30,6 +31,7 @@ import com.remotecompose.rc.modifier.hostActionValue
 import com.remotecompose.rc.modifier.padding
 import com.remotecompose.rc.theme.Colors
 import com.remotecompose.rc.theme.Icons
+import java.rmi.Remote
 
 fun ProfileScreen(
     ctx: RenderContext = RenderContext(),
@@ -45,7 +47,7 @@ fun ProfileScreen(
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .background(Colors.purple900)
-                        .padding(8.rdp, 12.rdp, 16.rdp),
+                        .padding(16.rdp, 12.rdp, 16.rdp, 12.rdp),
                     vertical = RcVerticalPositioning.Center,
                 ) {
                     Row(
@@ -65,7 +67,7 @@ fun ProfileScreen(
                             Image(
                                 image = remoteBitmapUrl("")
                             )
-                            RemoteUrlImage(Icons.back, Modifier.wrapContentSize(), scale = Rc.ImageScale.FILL_BOUNDS, size = 96)
+                            RemoteUrlImage(Icons.back, Modifier.wrapContentSize(), scale = Rc.ImageScale.FILL_BOUNDS, width = 96, height = 96)
                         }
                         Spacer(modifier = Modifier.width(6.rdp))
                         Text(
@@ -88,7 +90,7 @@ fun ProfileScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.rdp, 16.rdp, 16.rdp, 0.rdp),
+                        .padding(16.rdp, 16.rdp, 16.rdp, 0.rdp),
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(bottom = 16.rdp),
@@ -109,6 +111,7 @@ fun ProfileScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(start = 16.rdp, end = 16.rdp),
                 ) {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         ProfileRowItem(label = "Age", value = data.age, actionPayload = "dl.myjar.app/agePopUp")
@@ -160,7 +163,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
             .background(Colors.purple900),
     ) {
         // Card inset: 16dp from band top, 20dp side margins.
-        Box(modifier = Modifier.fillMaxWidth().padding(10.rdp, 8.rdp, 10.rdp, 0.rdp)) {
+        Box(modifier = Modifier.fillMaxWidth().padding(20.rdp, 16.rdp, 20.rdp, 0.rdp)) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -205,7 +208,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         drawLine(inset.rf, (inset + radius).rf, inset.rf, h)
                         drawLine(w - inset, (inset + radius).rf, w - inset, h)
                     }
-                    .padding(8.rdp, 8.rdp, 8.rdp, 8.rdp)
+                    .padding(16.rdp, 16.rdp, 16.rdp, 16.rdp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth().wrapContentHeight(),
@@ -220,12 +223,19 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         horizontal = RcHorizontalPositioning.Center,
                         vertical = RcVerticalPositioning.Center,
                     ) {
-                        Text(
-                            text = initials,
-                            color = Colors.purple500,
-                            fontSize = 24.rsp,
-                            fontWeight = 700f,
+                        RemoteUrlImage(
+                            url = "https://cdn.myjar.app/profilePics/64d211e6c82e5256c8c698276a290c94cd6c6d0339b75c42.jpg",
+                            width = 230,
+                            height = 512,
+                            modifier = Modifier,
+                            scale = RemoteComposeWriter.IMAGE_SCALE_FILL_BOUNDS
                         )
+//                        Text(
+//                            text = initials,
+//                            color = Colors.purple500,
+//                            fontSize = 24.rsp,
+//                            fontWeight = 700f,
+//                        )
                     }
 
                     Spacer(modifier = Modifier.width(12.rdp).wrapContentHeight()) // 12dp gap
@@ -262,7 +272,7 @@ private fun RcScope.ProfileRowItem(
     Column(modifier = Modifier.fillMaxWidth()) {
         var rowModifier = Modifier
             .fillMaxWidth()
-            .padding(8.rdp, 4.rdp, 16.rdp, 10.rdp)
+            .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp)
         if (actionName != null) {
             rowModifier = if (actionPayload != null) {
                 rowModifier.hostActionValue(actionName, actionPayload).ripple()
@@ -295,7 +305,7 @@ private fun RcScope.ProfileRowItem(
                 Spacer(modifier = Modifier.weight(1f))
             }
             if (trailingChevron) {
-                RemoteUrlImage(Icons.chevronRight, Modifier.size(24.rdp), size = 96)
+                RemoteUrlImage(Icons.chevronRight, Modifier.size(24.rdp), width = 96, height = 96)
             }
         }
         Divider()
@@ -310,9 +320,7 @@ private fun RcScope.KycRow(isVerified: Boolean) {
             modifier = Modifier
                 .hostActionValue("deeplink", "dl.myjar.app/kyc")
                 .fillMaxWidth()
-                // Match ProfileRowItem's right inset (16.rdp) so the chevron aligns
-                // with the chevrons on the other rows instead of running to the edge.
-                .padding(8.rdp, 4.rdp, 16.rdp, 10.rdp)
+                .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp)
                 .ripple(),
             vertical = RcVerticalPositioning.Center,
         ) {
@@ -361,7 +369,7 @@ private fun RcScope.KycRow(isVerified: Boolean) {
 
             // flexible spacer pushes the chevron to the right edge (Figma)
             Spacer(modifier = Modifier.weight(0.5f))
-            RemoteUrlImage(Icons.chevronRight, Modifier.size(24.rdp), size = 96)
+            RemoteUrlImage(Icons.chevronRight, Modifier.size(24.rdp), width = 96, height = 96)
         }
         Divider()
     }

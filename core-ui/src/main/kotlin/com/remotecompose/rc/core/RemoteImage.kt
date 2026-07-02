@@ -21,8 +21,8 @@ const val IMAGE_SLOT_PX = 512
  * always trips RemoteBitmapDecoder.checkBounds. The sized writer.addBitmapUrl(url, w, h) is the
  * only way to declare a real slot, but the writer is library-`internal` — reached via [writer].
  */
-fun RcScope.RemoteUrlImage(url: String, modifier: Modifier, scale: Int = RemoteComposeWriter.IMAGE_SCALE_FIT, size: Int = IMAGE_SLOT_PX) {
+fun RcScope.RemoteUrlImage(url: String, modifier: Modifier, scale: Int = RemoteComposeWriter.IMAGE_SCALE_FIT, width: Int = IMAGE_SLOT_PX, height: Int = IMAGE_SLOT_PX) {
     val w = writer()
-    val imageId = w.addBitmapUrl(url, size, size)
+    val imageId = w.addBitmapUrl(url, width, height)
     w.image(modifier.toRecordingModifier(), imageId, scale, 1f)
 }
