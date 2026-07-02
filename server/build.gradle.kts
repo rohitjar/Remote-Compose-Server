@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm")
-    kotlin("plugin.serialization")
     application
 }
 
@@ -9,17 +8,15 @@ application {
 }
 
 dependencies {
+    // Server compiles ONLY against the Screen/RenderContext contract in :core-ui.
     implementation(project(":core-ui"))
-    implementation(project(":feature-profile"))
-    implementation(project(":feature-samples"))
 
-    // DocumentBuilder authors documents directly with the writer, so depend explicitly.
-    implementation("androidx.compose.remote:remote-core:1.0.0-alpha14")
-    implementation("androidx.compose.remote:remote-creation-core:1.0.0-alpha14")
-    implementation("androidx.compose.remote:remote-creation-jvm:1.0.0-alpha14")
-
-    // JSON parsing (LayoutConfig / editor payloads)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    // Feature modules are runtime plugins: discovered via ServiceLoader, never imported.
+    // Every :feature-* subproject is wired in automatically, so adding a feature needs
+    // no change here.
+    rootProject.subprojects
+        .filter { it.name.startsWith("feature-") }
+        .forEach { runtimeOnly(project(it.path)) }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

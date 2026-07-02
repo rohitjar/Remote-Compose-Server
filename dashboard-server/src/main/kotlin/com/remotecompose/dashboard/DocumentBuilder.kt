@@ -1,4 +1,4 @@
-package com.remotecompose.server
+package com.remotecompose.dashboard
 
 import androidx.compose.remote.core.operations.Header
 import androidx.compose.remote.core.operations.layout.managers.BoxLayout

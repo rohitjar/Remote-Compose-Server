@@ -17,10 +17,12 @@ import androidx.compose.remote.creation.dsl.heightIn
 import androidx.compose.remote.creation.dsl.onClick
 import androidx.compose.remote.creation.dsl.padding
 import androidx.compose.remote.creation.dsl.ripple
-import androidx.compose.remote.creation.dsl.rsp
 import androidx.compose.remote.creation.dsl.size
 import androidx.compose.remote.creation.dsl.wrapContentHeight
 import androidx.compose.remote.creation.modifiers.RoundedRectShape
+import com.remotecompose.rc.core.dp
+import com.remotecompose.rc.core.rsp
+import com.remotecompose.rc.theme.Colors
 
 // ─── Icon gravity constants ───────────────────────────────────────────────────
 const val ICON_GRAVITY_START = 1
@@ -28,22 +30,7 @@ const val ICON_GRAVITY_END = 2
 const val ICON_GRAVITY_TOP = 3
 const val ICON_GRAVITY_BOTTOM = 4
 
-// ─── Color constants ──────────────────────────────────────────────────────────
-// Hardcoded ARGB because colorResource / JarCustomTheme are unavailable on the
-// JVM server side. Keep these in sync with the values in JarColors / res/values/colors.xml
-private const val COLOR_BTN_PRIMARY_BG = 0xFF6B46C1.toInt()  // color_btn_primary_bg
-private const val COLOR_WHITE          = 0xFFFFFFFF.toInt()
-private const val COLOR_BG_LABEL       = 0xFF2D2D3A.toInt()  // color_bg_label
-private const val COLOR_BG_SURFACE_2   = 0xFF1F1F2E.toInt()  // color_bg_surface_2
-private const val COLOR_PURPLE_400     = 0xFF8B5CF6.toInt()  // color_purple_400
-private const val COLOR_PURPLE_50      = 0xFFF5F3FF.toInt()  // color_purple_50
-private const val COLOR_CTA_CAUTION    = 0xFF374151.toInt()  // color_cta_caution_state
-private const val COLOR_BG             = 0xFF0D0D1A.toInt()  // color_bg
-private const val COLOR_TEXT_PRIMARY   = 0xFFFFFFFF.toInt()  // color_text_primary (white)
-
-// White at 40% opacity – used as the top-gradient border substitute on primary/black buttons.
-// Original: color_text_primary.copy(alpha = 0.40f) → ARGB 0x66FFFFFF
-private const val COLOR_BORDER_PRIMARY_TOP = 0x66FFFFFF.toInt()
+// Colors are shared design tokens — see :core-ui theme.Colors.
 
 // ─── Button type / height enums ───────────────────────────────────────────────
 
@@ -114,10 +101,10 @@ fun RcScope.JarButton(
     iconUrl: String? = null,
     iconGravity: Int = ICON_GRAVITY_START,
     iconSizeDp: Float = 16f,
-    color: Int = COLOR_BTN_PRIMARY_BG,
+    color: Int = Colors.btnPrimary,
     iconPaddingDp: Float = 10f,
-    borderColor: Int = COLOR_BTN_PRIMARY_BG,
-    textColor: Int = COLOR_WHITE,
+    borderColor: Int = Colors.btnPrimary,
+    textColor: Int = Colors.white,
     buttonType: RcButtonType = RcButtonType.PRIMARY,
     minHeightDp: Float = 56f,
     buttonHeight: RcButtonHeight = RcButtonHeight.PRIMARY_HEIGHT,
@@ -248,7 +235,7 @@ fun RcScope.JarTertiaryButton(
     instanceKey: String,
     isEnabled: Boolean = true,
     fontSize: Float = getFontSizeSp(RcButtonHeight.PRIMARY_HEIGHT),
-    fontColor: Int = COLOR_WHITE,
+    fontColor: Int = Colors.white,
     fontWeight: Float = 500f,
     modifier: Modifier = Modifier,
 ) {
@@ -275,15 +262,15 @@ fun RcScope.JarPrimaryButton(
     iconUrl: String? = null,
     iconGravity: Int = ICON_GRAVITY_START,
     iconSizeDp: Float = 16f,
-    color: Int = COLOR_BTN_PRIMARY_BG,
+    color: Int = Colors.btnPrimary,
     iconPaddingDp: Float = 10f,
     fontWeight: Float = 500f,
-    textColor: Int = COLOR_WHITE,
+    textColor: Int = Colors.white,
     fontSize: Float = 14f,
     minHeightDp: Float = 56f,
     buttonHeight: RcButtonHeight = RcButtonHeight.PRIMARY_HEIGHT,
     // Original: Brush.verticalGradient(color_text_primary 40%→transparent) → solid fallback
-    borderColor: Int = COLOR_BORDER_PRIMARY_TOP,
+    borderColor: Int = Colors.borderPrimaryTop,
     borderWidth: Float = 1f,
     paddingValues: RcPaddingValues = getButtonPadding(buttonHeight),
     cornerRadius: Float = 8f,
@@ -325,12 +312,12 @@ fun RcScope.JarSecondaryButton(
     iconUrl: String? = null,
     iconGravity: Int = ICON_GRAVITY_START,
     iconSizeDp: Float = 16f,
-    borderColor: Int = COLOR_PURPLE_400,
-    color: Int = COLOR_BG_LABEL,
+    borderColor: Int = Colors.purple400,
+    color: Int = Colors.bgLabel,
     iconPaddingDp: Float = 10f,
     buttonHeight: RcButtonHeight = RcButtonHeight.PRIMARY_HEIGHT,
     minHeightDp: Float = 56f,
-    textColor: Int = COLOR_WHITE,
+    textColor: Int = Colors.white,
     cornerRadius: Float = 8f,
     fontSize: Float = getFontSizeSp(RcButtonHeight.PRIMARY_HEIGHT),
     paddingValues: RcPaddingValues = getButtonPadding(buttonHeight),
@@ -372,11 +359,11 @@ fun RcScope.JarSpecialBlackButton(
     iconUrl: String? = null,
     iconGravity: Int = ICON_GRAVITY_START,
     iconSizeDp: Float = 16f,
-    color: Int = COLOR_CTA_CAUTION,
+    color: Int = Colors.ctaCaution,
     buttonHeight: RcButtonHeight = RcButtonHeight.PRIMARY_HEIGHT,
     iconPaddingDp: Float = 10f,
     minHeightDp: Float = 56f,
-    textColor: Int = COLOR_WHITE,
+    textColor: Int = Colors.white,
     cornerRadius: Float = 8f,
     fontSize: Float = getFontSizeSp(RcButtonHeight.PRIMARY_HEIGHT),
     fontWeight: Float = 500f,
@@ -399,7 +386,7 @@ fun RcScope.JarSpecialBlackButton(
         fontWeight = fontWeight,
         cornerRadius = cornerRadius,
         // Original: color_text_primary.copy(alpha=0.40f) → 0x66FFFFFF
-        borderColor = COLOR_BORDER_PRIMARY_TOP,
+        borderColor = Colors.borderPrimaryTop,
         borderWidth = 1f,
         minHeightDp = minHeightDp,
         paddingValues = paddingValues,
@@ -418,13 +405,13 @@ fun RcScope.JarSpecialWhiteButton(
     iconUrl: String? = null,
     iconGravity: Int = ICON_GRAVITY_START,
     iconSizeDp: Float = 16f,
-    color: Int = COLOR_PURPLE_50,
+    color: Int = Colors.purple50,
     buttonHeight: RcButtonHeight = RcButtonHeight.PRIMARY_HEIGHT,
     iconPaddingDp: Float = 10f,
-    borderColor: Int = COLOR_PURPLE_50,
+    borderColor: Int = Colors.purple50,
     minHeightDp: Float = 56f,
     // Original: colorResource(R.color.color_bg) – dark background
-    textColor: Int = COLOR_BG,
+    textColor: Int = Colors.bgApp,
     cornerRadius: Float = 8f,
     fontSize: Float = getFontSizeSp(RcButtonHeight.PRIMARY_HEIGHT),
     fontWeight: Float = 500f,
@@ -465,11 +452,11 @@ fun RcScope.JarPillButton(
     iconUrl: String? = null,
     iconGravity: Int = ICON_GRAVITY_START,
     iconSizeDp: Float = 16f,
-    color: Int = COLOR_BG_SURFACE_2,
+    color: Int = Colors.bgSurface2,
     iconPaddingDp: Float = 10f,
-    borderColor: Int = COLOR_BG_LABEL,
+    borderColor: Int = Colors.bgLabel,
     minHeightDp: Float = getButtonHeightDp(RcButtonHeight.PILL),
-    textColor: Int = COLOR_WHITE,
+    textColor: Int = Colors.white,
     cornerRadius: Float = 8f,
     borderSize: Float = 1f,
     fontSize: Float = getFontSizeSp(RcButtonHeight.PILL),
@@ -521,11 +508,11 @@ fun RcScope.RenderImagePillButton(
 ) {
     val textPaddingH = if (smallerTextPadding) 6f else 12f
     val textPaddingV = if (iconUrl == null && !biggerVerticalPadding) 4f else 8f
-    val shape = RoundedRectShape(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
+    val shape = RoundedRectShape(dp(cornerRadius), dp(cornerRadius), dp(cornerRadius), dp(cornerRadius))
 
     // Build row modifier without forcing fillMaxWidth – honour the caller's modifier
     var rowMod = modifier
-        .border(1f, cornerRadius, borderColor, 2)
+        .border(dp(1f), dp(cornerRadius), borderColor, 2)
         .clip(shape)
         .background(bgColor)
     if (actionName != null) {
@@ -535,9 +522,9 @@ fun RcScope.RenderImagePillButton(
     Row(modifier = rowMod) {
         iconUrl?.let { url ->
             val imgMod = if (iconSizeDp != null)
-                Modifier.size(iconSizeDp, iconSizeDp).padding(12f, 0f, 0f, 0f)
+                Modifier.size(dp(iconSizeDp), dp(iconSizeDp)).padding(dp(12), dp(0), dp(0), dp(0))
             else
-                Modifier.padding(12f, 0f, 0f, 0f)
+                Modifier.padding(dp(12), dp(0), dp(0), dp(0))
             Image(image = remoteBitmapUrl(url), modifier = imgMod)
         }
         Text(
@@ -545,7 +532,7 @@ fun RcScope.RenderImagePillButton(
             color = textColor,
             fontSize = fontSize.rsp,
             maxLines = maxLines,
-            modifier = Modifier.padding(textPaddingH, textPaddingV, 12f, textPaddingV),
+            modifier = Modifier.padding(dp(textPaddingH), dp(textPaddingV), dp(12), dp(textPaddingV)),
         )
     }
 }
@@ -607,7 +594,7 @@ private fun RcScope.InternalButtonWrapperImpl(
     maxLines: Int,
     modifier: Modifier = Modifier,
 ) {
-    val shape = RoundedRectShape(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
+    val shape = RoundedRectShape(dp(cornerRadius), dp(cornerRadius), dp(cornerRadius), dp(cornerRadius))
 
     // ── RC variables ─────────────────────────────────────────────────────────
     // Keys include instanceKey so two buttons with the same actionName on the
@@ -642,16 +629,16 @@ private fun RcScope.InternalButtonWrapperImpl(
             )
         )
         .fillMaxWidth()
-        .heightIn(min = minHeightDp)
+        .heightIn(min = dp(minHeightDp))
         .clip(shape)
         .background(bgColor)
-        .border(borderWidth, cornerRadius, borderColor, 2)
+        .border(dp(borderWidth), dp(cornerRadius), borderColor, 2)
         .ripple()
         .padding(
-            paddingValues.horizontal,
-            paddingValues.vertical,
-            paddingValues.horizontal,
-            paddingValues.vertical,
+            dp(paddingValues.horizontal),
+            dp(paddingValues.vertical),
+            dp(paddingValues.horizontal),
+            dp(paddingValues.vertical),
         )
         .onClick { hostAction(effectiveAction) }
 
@@ -705,12 +692,12 @@ private fun RcScope.HorizontalButtonContentImpl(
             iconUrl?.let { url ->
                 Image(
                     image = remoteBitmapUrl(url),
-                    modifier = Modifier.size(iconSizeDp, iconSizeDp),
+                    modifier = Modifier.size(dp(iconSizeDp), dp(iconSizeDp)),
                     // iconTint (ColorFilter) not supported in RC – pre-tint the image URL
                 )
             }
             if (iconUrl != null && text.isNotBlank()) {
-                Spacer(modifier = Modifier.size(iconPaddingDp))
+                Spacer(modifier = Modifier.size(dp(iconPaddingDp)))
             }
         }
 
@@ -728,12 +715,12 @@ private fun RcScope.HorizontalButtonContentImpl(
 
         if (iconGravity == ICON_GRAVITY_END) {
             if (iconUrl != null && text.isNotBlank()) {
-                Spacer(modifier = Modifier.size(iconPaddingDp))
+                Spacer(modifier = Modifier.size(dp(iconPaddingDp)))
             }
             iconUrl?.let { url ->
                 Image(
                     image = remoteBitmapUrl(url),
-                    modifier = Modifier.size(iconSizeDp, iconSizeDp),
+                    modifier = Modifier.size(dp(iconSizeDp), dp(iconSizeDp)),
                 )
             }
         }
@@ -756,7 +743,7 @@ private fun RcScope.VerticalButtonContentImpl(
             iconUrl?.let { url ->
                 Image(
                     image = remoteBitmapUrl(url),
-                    modifier = Modifier.size(iconSizeDp, iconSizeDp),
+                    modifier = Modifier.size(dp(iconSizeDp), dp(iconSizeDp)),
                 )
             }
             Spacer(modifier = Modifier.size(iconPaddingDp))
@@ -777,7 +764,7 @@ private fun RcScope.VerticalButtonContentImpl(
             iconUrl?.let { url ->
                 Image(
                     image = remoteBitmapUrl(url),
-                    modifier = Modifier.size(iconSizeDp, iconSizeDp),
+                    modifier = Modifier.size(dp(iconSizeDp), dp(iconSizeDp)),
                 )
             }
         }

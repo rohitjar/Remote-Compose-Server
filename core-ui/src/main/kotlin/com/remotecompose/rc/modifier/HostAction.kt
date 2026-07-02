@@ -33,8 +33,8 @@ private class HostActionValueElement(
     private val type: Int,
     private val payloadJson: String,
 ) : Modifier.Element {
-    override fun applyTo(rec: RecordingModifier) {
-        rec.onClick({ writer ->
+    override fun applyTo(modifier: RecordingModifier) {
+        modifier.onClick({ writer ->
             val valueId = writer.addText(payloadJson)
             HostAction(name, type, valueId).write(writer)
         })

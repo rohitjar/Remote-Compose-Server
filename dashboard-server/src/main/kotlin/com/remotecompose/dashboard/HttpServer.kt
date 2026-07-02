@@ -1,4 +1,4 @@
-    package com.remotecompose.server
+    package com.remotecompose.dashboard
 
     import com.sun.net.httpserver.HttpExchange
     import com.sun.net.httpserver.HttpServer

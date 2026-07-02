@@ -4,8 +4,10 @@ import androidx.compose.remote.creation.dsl.Modifier
 import androidx.compose.remote.creation.dsl.background
 import androidx.compose.remote.creation.dsl.fillMaxWidth
 import androidx.compose.remote.creation.dsl.padding
-import androidx.compose.remote.creation.dsl.rsp
 import androidx.compose.remote.creation.dsl.size
+import com.remotecompose.rc.core.dp
+import com.remotecompose.rc.core.rsp
+import com.remotecompose.rc.theme.Colors
 import com.remotecompose.rc.components.button.ICON_GRAVITY_END
 import com.remotecompose.rc.components.button.JarButton
 import com.remotecompose.rc.components.button.JarPillButton
@@ -16,13 +18,12 @@ import com.remotecompose.rc.components.button.JarSpecialWhiteButton
 import com.remotecompose.rc.components.button.JarTertiaryButton
 import com.remotecompose.rc.components.button.RcButtonType
 import com.remotecompose.rc.components.button.RenderImagePillButton
+import com.remotecompose.rc.core.RenderContext
 import com.remotecompose.rc.core.rcDocument
-
-private const val COLOR_WHITE = 0xFFFFFFFF.toInt()
 
 // ─── Demo screen ─────────────────────────────────────────────────────────────
 
-fun JarButtonScreen(): ByteArray = rcDocument {
+fun JarButtonScreen(ctx: RenderContext = RenderContext()): ByteArray = rcDocument(ctx) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,16 +32,16 @@ fun JarButtonScreen(): ByteArray = rcDocument {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24f, 24f, 24f, 24f),
+                .padding(dp(24), dp(24), dp(24), dp(24)),
         ) {
             Text(
                 text = "JarButton variants — RC",
-                color = COLOR_WHITE,
-                fontSize = 22.rsp,
+                color = Colors.white,
+                fontSize = 22.rsp,   // core rsp (density-baked)
                 fontWeight = 700f,
             )
 
-            Spacer(modifier = Modifier.size(16f))
+            Spacer(modifier = Modifier.size(dp(16)))
 
             // PRIMARY – instanceKey must be unique per button on this screen
             JarPrimaryButton(
@@ -49,7 +50,7 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 instanceKey = "demo_primary",
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // SECONDARY
             JarSecondaryButton(
@@ -58,7 +59,7 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 instanceKey = "demo_secondary",
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // SPECIAL_BLACK
             JarSpecialBlackButton(
@@ -67,7 +68,7 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 instanceKey = "demo_special_black",
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // SPECIAL_WHITE
             JarSpecialWhiteButton(
@@ -76,7 +77,7 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 instanceKey = "demo_special_white",
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // TERTIARY
             JarTertiaryButton(
@@ -85,7 +86,7 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 instanceKey = "demo_tertiary",
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // PILL
             JarPillButton(
@@ -94,7 +95,7 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 instanceKey = "demo_pill",
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // DISABLED primary – stays visible at 30% alpha
             JarPrimaryButton(
@@ -106,7 +107,7 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 disabledActionName = "jar:cta:disabled_tap",
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // Primary with icon at end
             JarPrimaryButton(
@@ -118,19 +119,19 @@ fun JarButtonScreen(): ByteArray = rcDocument {
                 iconGravity = ICON_GRAVITY_END,
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // RenderImagePillButton – caller controls width via modifier
             RenderImagePillButton(
                 text = "Filter",
-                bgColor = 0xFF2D2D3A.toInt(),
-                textColor = COLOR_WHITE,
+                bgColor = Colors.bgLabel,
+                textColor = Colors.white,
                 actionName = "jar:filter:open",
                 maxLines = 1,
                 // No fillMaxWidth here – pill sizes to content
             )
 
-            Spacer(modifier = Modifier.size(12f))
+            Spacer(modifier = Modifier.size(dp(12)))
 
             // Dispatcher convenience wrapper
             JarButton(

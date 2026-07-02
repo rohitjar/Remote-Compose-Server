@@ -16,6 +16,7 @@ import androidx.compose.remote.creation.dsl.rsp
 import androidx.compose.remote.creation.dsl.size
 import androidx.compose.remote.creation.dsl.wrapContentHeight
 import androidx.compose.remote.creation.modifiers.RecordingModifier
+import com.remotecompose.rc.core.RenderContext
 import com.remotecompose.rc.core.rcDocument
 
 fun RcScope.RemoteJarButton(query: RcText) {
@@ -64,7 +65,7 @@ fun RcScope.RemoteJarButton(query: RcText) {
     }
 }
 
-fun ButtonScreen(): ByteArray = rcDocument {
+fun ButtonScreen(ctx: RenderContext = RenderContext()): ByteArray = rcDocument(ctx) {
     // Declare the named state at the document ROOT, before the layout tree,
     // so the player's inflater registers it via NamedVariable.apply().
     val query = remoteNamedText("USER:searchQuery", "Hi")
@@ -80,10 +81,10 @@ fun ButtonScreen(): ByteArray = rcDocument {
     }
 }
 
-fun Dummy(): ByteArray {
-    val ctx  = RemoteComposeContext(
-        width = 400,
-        height = 800,
+fun Dummy(ctx: RenderContext = RenderContext()): ByteArray {
+    val context = RemoteComposeContext(
+        width = (ctx.widthDp * ctx.density).toInt(),
+        height = (ctx.heightDp * ctx.density).toInt(),
         contentDescription = "",
         apiLevel = 6,
         profiles = 0,
@@ -96,5 +97,5 @@ fun Dummy(): ByteArray {
             }
         }
     }
-    return ctx.buffer()
+    return context.buffer()
 }

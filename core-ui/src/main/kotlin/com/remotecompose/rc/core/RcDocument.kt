@@ -50,12 +50,25 @@ fun rcDocument(
 ): ByteArray {
     val widthPx  = (widthDp  * density).toInt()
     val heightPx = (heightDp * density).toInt()
-    return createRcBuffer(
-        profile = makeProfile(),
-        RemoteComposeWriter.HTag(Header.DOC_WIDTH, widthPx),
-        RemoteComposeWriter.HTag(Header.DOC_HEIGHT, heightPx),
-        RemoteComposeWriter.HTag(Header.DOC_DENSITY_AT_GENERATION, density),
-        RemoteComposeWriter.HTag(Header.DOC_DENSITY_BEHAVIOR, CoreDocument.DENSITY_BEHAVIOR_DP),
-        content= content
-    )
+    // Publish `density` as the ambient value so the dp/sp helpers bake it into every
+    // authored value during `content`. The document declares DENSITY_BEHAVIOR_PIXELS,
+    // so the player renders those baked pixels 1:1 (no second scaling on device).
+    return withDensity(density) {
+        createRcBuffer(
+            profile = makeProfile(),
+            RemoteComposeWriter.HTag(Header.DOC_WIDTH, widthPx),
+            RemoteComposeWriter.HTag(Header.DOC_HEIGHT, heightPx),
+            RemoteComposeWriter.HTag(Header.DOC_DENSITY_AT_GENERATION, density),
+            RemoteComposeWriter.HTag(Header.DOC_DENSITY_BEHAVIOR, CoreDocument.DENSITY_BEHAVIOR_PIXELS),
+            content = content
+        )
+    }
 }
+
+/**
+ * Builds a document from a consumer-supplied [RenderContext] (density + dp size).
+ * This is the entry point screens should use so density/width/height flow from the
+ * request straight into the generated binary.
+ */
+fun rcDocument(ctx: RenderContext, content: RcScope.() -> Unit): ByteArray =
+    rcDocument(widthDp = ctx.widthDp, heightDp = ctx.heightDp, density = ctx.density, content = content)

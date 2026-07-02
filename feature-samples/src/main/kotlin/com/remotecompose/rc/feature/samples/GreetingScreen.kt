@@ -6,14 +6,15 @@ import androidx.compose.remote.creation.dsl.fillMaxSize
 import androidx.compose.remote.creation.dsl.fillMaxWidth
 import androidx.compose.remote.creation.dsl.height
 import androidx.compose.remote.creation.dsl.padding
-import androidx.compose.remote.creation.dsl.rdp
-import androidx.compose.remote.creation.dsl.rsp
 import androidx.compose.remote.creation.dsl.verticalScroll
+import com.remotecompose.rc.core.RenderContext
+import com.remotecompose.rc.core.dp
 import com.remotecompose.rc.core.rcDocument
+import com.remotecompose.rc.core.rdp
+import com.remotecompose.rc.core.rsp
 
 
-fun GreetingScreen(
-): ByteArray = rcDocument {
+fun GreetingScreen(ctx: RenderContext = RenderContext()): ByteArray = rcDocument(ctx) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +33,7 @@ fun GreetingScreen(
                 fontWeight = 700f,
             )
 
-            Box(modifier = Modifier.fillMaxWidth().height(16f)) {}
+            Box(modifier = Modifier.fillMaxWidth().height(dp(16))) {}
 
             Text(
                 text = "This screen was authored as a Kotlin composable function and compiled to a binary .rc document on the JVM server.",
@@ -40,14 +41,14 @@ fun GreetingScreen(
                 fontSize = 14.rsp,
             )
 
-            Box(modifier = Modifier.fillMaxWidth().height(24f)) {}
+            Box(modifier = Modifier.fillMaxWidth().height(dp(24))) {}
 
             // Card
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(0xFFFFFFFF.toInt())
-                    .padding(16f),
+                    .padding(dp(16)),
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
@@ -56,7 +57,7 @@ fun GreetingScreen(
                         fontSize = 18.rsp,
                         fontWeight = 600f,
                     )
-                    Box(modifier = Modifier.fillMaxWidth().height(8f)) {}
+                    Box(modifier = Modifier.fillMaxWidth().height(dp(8))) {}
                     Text(
                         text = "Write composable-style layouts in pure Kotlin — no JSON required. The DSL maps directly to the binary RC format.",
                         color = 0xFF4B5563.toInt(),
@@ -65,7 +66,7 @@ fun GreetingScreen(
                 }
             }
 
-            Box(modifier = Modifier.fillMaxWidth().height(16f)) {}
+            Box(modifier = Modifier.fillMaxWidth().height(dp(16))) {}
 
             Text(
                 text = "Server-driven UI • Binary format • Zero JSON parsing",
