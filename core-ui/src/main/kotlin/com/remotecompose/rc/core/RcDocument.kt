@@ -1,4 +1,4 @@
-package com.remotecompose.server.composables
+package com.remotecompose.rc.core
 
 import androidx.compose.remote.core.CoreDocument
 import androidx.compose.remote.core.RcProfiles
@@ -21,9 +21,9 @@ import androidx.compose.remote.creation.profile.Profile
 //     `.rdp` / `.rsp` and bare floats are all authored in dp / sp and scaled to
 //     pixels ONCE, on the device, because DENSITY_BEHAVIOR_DP is set below.
 
-const val DEFAULT_DENSITY = 2f   // xxhdpi reference; pass the device's real density (densityDpi/160f) for exact
-private const val BASE_WIDTH_DP  = 720
-private const val BASE_HEIGHT_DP = 1612
+const val DEFAULT_DENSITY = 3f   // xxhdpi reference; pass the device's real density (densityDpi/160f) for exact
+private const val BASE_WIDTH_DP  = 1344
+private const val BASE_HEIGHT_DP = 2992
 
 private fun makeProfile() = RcProfile(
     Profile(
@@ -59,14 +59,3 @@ fun rcDocument(
         content= content
     )
 }
-
-// ─── Registry ─────────────────────────────────────────────────────────────────
-// Add your composable functions here. Key = filename stem used for --compose CLI flag.
-val COMPOSABLE_REGISTRY: Map<String, () -> ByteArray> = mapOf(
-    "greeting" to ::GreetingScreen,
-    "jar_button" to ::JarButtonScreen,
-    "jar_image" to ::JarImageScreen,
-    "button" to ::ButtonScreen,
-    "profile" to { ProfileScreen() },
-    "dummy" to ::Dummy
-)

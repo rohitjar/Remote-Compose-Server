@@ -1,6 +1,6 @@
 @file:Suppress("RestrictedApi")
 
-package com.remotecompose.server.composables
+package com.remotecompose.rc.modifier
 
 import androidx.compose.remote.creation.actions.Action
 import androidx.compose.remote.creation.actions.HostAction

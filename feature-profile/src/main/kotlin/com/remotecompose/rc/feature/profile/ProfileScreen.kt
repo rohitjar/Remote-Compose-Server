@@ -1,9 +1,8 @@
 @file:Suppress("RestrictedApi")
 
-package com.remotecompose.server.composables
+package com.remotecompose.rc.feature.profile
 
 import androidx.compose.remote.creation.Rc
-import androidx.compose.remote.creation.RemoteComposeWriter
 import androidx.compose.remote.creation.dsl.Modifier
 import androidx.compose.remote.creation.dsl.RcHorizontalPositioning
 import androidx.compose.remote.creation.dsl.RcPaintStyle
@@ -20,11 +19,13 @@ import androidx.compose.remote.creation.dsl.onClick
 import androidx.compose.remote.creation.dsl.padding
 import androidx.compose.remote.creation.dsl.ripple
 import androidx.compose.remote.creation.dsl.size
-import androidx.compose.remote.creation.dsl.toRecordingModifier
 import androidx.compose.remote.creation.dsl.width
 import androidx.compose.remote.creation.dsl.wrapContentHeight
 import androidx.compose.remote.creation.dsl.wrapContentSize
 import androidx.compose.remote.creation.modifiers.RoundedRectShape
+import com.remotecompose.rc.core.RemoteUrlImage
+import com.remotecompose.rc.core.rcDocument
+import com.remotecompose.rc.modifier.hostActionValue
 
 /**
  * Pixel-perfect port of the JAR "Profile" Figma frame (node 3484:8240, 360×800 dp).
@@ -63,43 +64,13 @@ private const val ICON_EDIT        = "https://cdn-icons-png.flaticon.com/512/115
 private const val ICON_CHEVRON     = "https://cdn.myjar.app/rc/core/ic_arrow_right.webp"
 private const val ICON_CHECK       = "https://cdn-icons-png.flaticon.com/512/845/845646.png"
 
-// Declared image-slot size. The player's RemoteBitmapDecoder.checkBounds throws if a fetched
-// bitmap is LARGER than the slot the document declared, and the DSL's remoteBitmapUrl() hard-codes
-// the slot to 1×1 (which always fails). We declare a generous slot and the consumer's
-// CoilBitmapLoader downscales every fetched image to fit within this cap — keep the two in sync
-// (CoilBitmapLoader.DEFAULT_MAX_IMAGE_DIMENSION_PX = 512).
-private const val IMAGE_SLOT_PX = 512
-
 // ─── dp helper ────────────────────────────────────────────────────────────────
 // Author in raw dp. With DENSITY_BEHAVIOR_DP the player scales to pixels once, on
 // device, so this is an identity conversion — do NOT bake density in here.
-private fun dp(value: Int): Float = value.toFloat()*2f
-
-// ─── Sized URL image helper ───────────────────────────────────────────────────
-// The high-level RcScope DSL only exposes remoteBitmapUrl(url) which declares a 1×1 slot and thus
-// always trips RemoteBitmapDecoder.checkBounds. The sized writer.addBitmapUrl(url, w, h) is the
-// only way to declare a real slot, but the writer is library-`internal`. We reach it via a single
-// reflective field read (RcScopeImpl.writer); everything else (toRecordingModifier, writer.image,
-// IMAGE_SCALE_*) is public. Isolated here so a library change only touches one function.
-private val rcScopeWriterField by lazy {
-    Class.forName("androidx.compose.remote.creation.dsl.RcScopeImpl")
-        .getDeclaredField("writer")
-        .apply { isAccessible = true }
-}
-
-private fun RcScope.writer(): RemoteComposeWriter =
-    rcScopeWriterField.get(this) as RemoteComposeWriter
-
-/** Draws a URL image declaring an [IMAGE_SLOT_PX]² slot so the decoder's bounds check passes. */
-private fun RcScope.RemoteUrlImage(url: String, modifier: Modifier, scale: Int = RemoteComposeWriter.IMAGE_SCALE_FIT, size: Int = IMAGE_SLOT_PX) {
-    val w = writer()
-    val imageId = w.addBitmapUrl(url, size, size)
-    w.image(modifier.toRecordingModifier(), imageId, scale, 1f)
-}
-
+private fun dp(value: Int): Float = value.toFloat()*3f
 
 public val Int.rsp: RcSp
-    get() = RcSp(this.toFloat()*2f)
+    get() = RcSp(this.toFloat()*3f)
 
 // ─── Data model (per-user fields) ─────────────────────────────────────────────
 data class ProfileScreenData(

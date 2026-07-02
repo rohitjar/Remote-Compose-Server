@@ -1,31 +1,10 @@
+// Root project is a settings-only aggregator. All code lives in the modules:
+//   :core-ui          authoring runtime, modifier extensions, reusable components
+//   :feature-profile  the Profile screen
+//   :feature-samples  demo / showcase screens
+//   :server           runnable app — HTTP server, JSON DocumentBuilder, registry
+// Plugin versions are declared here (apply false) so modules apply them without a version.
 plugins {
-    kotlin("jvm") version "2.1.0"
-    kotlin("plugin.serialization") version "2.1.0"
-    application
-}
-
-application {
-    mainClass.set("com.remotecompose.server.MainKt")
-}
-
-dependencies {
-    // AndroidX Remote Compose — Creation (pure JVM, no Android SDK required)
-    implementation("androidx.compose.remote:remote-core:1.0.0-alpha13")
-
-    implementation("androidx.compose.remote:remote-creation-core:1.0.0-alpha13")
-    implementation("androidx.compose.remote:remote-creation-jvm:1.0.0-alpha13")
-
-    // JSON parsing
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-    }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    kotlin("jvm") version "2.1.0" apply false
+    kotlin("plugin.serialization") version "2.1.0" apply false
 }

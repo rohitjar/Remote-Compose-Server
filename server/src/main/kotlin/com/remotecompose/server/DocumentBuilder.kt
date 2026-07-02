@@ -10,11 +10,9 @@ import androidx.compose.remote.creation.RemoteComposeWriter
 import androidx.compose.remote.creation.actions.HostAction
 import androidx.compose.remote.creation.modifiers.RecordingModifier
 import androidx.compose.remote.creation.modifiers.RoundedRectShape
-import com.remotecompose.server.composables.DEFAULT_DENSITY
 import com.remotecompose.shared.ElementConfig
 import com.remotecompose.shared.LayoutConfig
 import com.remotecompose.shared.parseColorLong
-import java.rmi.Remote
 
 /**
  * Core conversion engine: takes a JSON LayoutConfig and produces a binary .rc document

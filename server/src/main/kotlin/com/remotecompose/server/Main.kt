@@ -1,6 +1,5 @@
 package com.remotecompose.server
 
-import com.remotecompose.server.composables.COMPOSABLE_REGISTRY
 import com.remotecompose.shared.LayoutConfig
 import kotlinx.serialization.json.Json
 import java.io.File

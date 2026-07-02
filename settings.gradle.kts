@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "remote-compose-server"
+
+include(":core-ui", ":feature-profile", ":feature-samples", ":server")

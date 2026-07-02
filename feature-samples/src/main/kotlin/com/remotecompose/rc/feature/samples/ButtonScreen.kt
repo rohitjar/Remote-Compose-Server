@@ -1,11 +1,8 @@
-package com.remotecompose.server.composables
+package com.remotecompose.rc.feature.samples
 
-import androidx.compose.remote.core.RemoteComposeState
 import androidx.compose.remote.core.operations.layout.managers.BoxLayout
 import androidx.compose.remote.creation.JvmRcPlatformServices
-import androidx.compose.remote.creation.Rc
 import androidx.compose.remote.creation.RemoteComposeContext
-import androidx.compose.remote.creation.RemoteComposeWriter.IMAGE_SCALE_FIT
 import androidx.compose.remote.creation.dsl.Modifier
 import androidx.compose.remote.creation.dsl.RcScope
 import androidx.compose.remote.creation.dsl.RcText
@@ -19,8 +16,7 @@ import androidx.compose.remote.creation.dsl.rsp
 import androidx.compose.remote.creation.dsl.size
 import androidx.compose.remote.creation.dsl.wrapContentHeight
 import androidx.compose.remote.creation.modifiers.RecordingModifier
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
+import com.remotecompose.rc.core.rcDocument
 
 fun RcScope.RemoteJarButton(query: RcText) {
     Row(modifier = Modifier.wrapContentHeight()) {
@@ -68,22 +64,10 @@ fun RcScope.RemoteJarButton(query: RcText) {
     }
 }
 
-@Serializable
-data class Profile(
-    val name: String = ""
-)
-
-private val json = Json {
-    ignoreUnknownKeys = true
-}
-
 fun ButtonScreen(): ByteArray = rcDocument {
     // Declare the named state at the document ROOT, before the layout tree,
     // so the player's inflater registers it via NamedVariable.apply().
     val query = remoteNamedText("USER:searchQuery", "Hi")
-//    val profile = runCatching {
-//        json.decodeFromString<Profile>(query.)
-//    }.getOrDefault(Profile())
 
     Box(
         modifier = Modifier

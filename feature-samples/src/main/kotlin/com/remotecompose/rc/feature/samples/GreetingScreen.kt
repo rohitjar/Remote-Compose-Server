@@ -1,8 +1,6 @@
-package com.remotecompose.server.composables
+package com.remotecompose.rc.feature.samples
 
-import androidx.compose.remote.core.RemoteComposeState
 import androidx.compose.remote.creation.dsl.Modifier
-import androidx.compose.remote.creation.dsl.RcImage
 import androidx.compose.remote.creation.dsl.background
 import androidx.compose.remote.creation.dsl.fillMaxSize
 import androidx.compose.remote.creation.dsl.fillMaxWidth
@@ -11,6 +9,7 @@ import androidx.compose.remote.creation.dsl.padding
 import androidx.compose.remote.creation.dsl.rdp
 import androidx.compose.remote.creation.dsl.rsp
 import androidx.compose.remote.creation.dsl.verticalScroll
+import com.remotecompose.rc.core.rcDocument
 
 
 fun GreetingScreen(
