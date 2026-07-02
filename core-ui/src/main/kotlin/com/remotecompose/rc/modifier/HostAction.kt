@@ -6,7 +6,7 @@ import androidx.compose.remote.creation.actions.Action
 import androidx.compose.remote.creation.actions.HostAction
 import androidx.compose.remote.creation.dsl.Modifier
 import androidx.compose.remote.creation.dsl.RcDp
-import androidx.compose.remote.creation.dsl.padding
+import androidx.compose.remote.creation.dsl.padding as vendorPadding
 import androidx.compose.remote.creation.modifiers.RecordingModifier
 import com.remotecompose.rc.core.rdp
 
@@ -61,16 +61,14 @@ fun Modifier.hostActionValue(
 ): Modifier = then(HostActionValueElement(name, type, payloadJson))
 
 
-public fun Modifier.padding(
+fun Modifier.padding(
     start: RcDp = 0.rdp,
     top: RcDp = 0.rdp,
     end: RcDp = 0.rdp,
     bottom: RcDp = 0.rdp,
-): Modifier = then(
-    Modifier.padding(
-        start.value,
-        top.value,
-        end.value,
-        bottom.value
-    )
+): Modifier = this.vendorPadding(
+    start.value,
+    top.value,
+    end.value,
+    bottom.value,
 )

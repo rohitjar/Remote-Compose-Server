@@ -21,14 +21,14 @@ import androidx.compose.remote.creation.profile.Profile
 //     `.rdp` / `.rsp` and bare floats are all authored in dp / sp and scaled to
 //     pixels ONCE, on the device, because DENSITY_BEHAVIOR_DP is set below.
 
-const val DEFAULT_DENSITY = 1f   // xxhdpi reference; pass the device's real density (densityDpi/160f) for exact
+const val DEFAULT_DENSITY = 2f   // pass the device's real density (densityDpi/160f) for exact
 private const val BASE_WIDTH_DP  = 1344
 private const val BASE_HEIGHT_DP = 2992
 
 private fun makeProfile() = RcProfile(
     Profile(
         CoreDocument.DOCUMENT_API_LEVEL,
-        RcProfiles.PROFILE_EXPERIMENTAL,
+        RcProfiles.PROFILE_ANDROIDX,
         JvmRcPlatformServices()
     ) { _, profile, _ ->
         RemoteComposeWriter(profile)
