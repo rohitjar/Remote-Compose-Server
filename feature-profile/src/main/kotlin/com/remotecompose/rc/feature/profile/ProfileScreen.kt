@@ -15,7 +15,6 @@ import androidx.compose.remote.creation.dsl.fillMaxSize
 import androidx.compose.remote.creation.dsl.fillMaxWidth
 import androidx.compose.remote.creation.dsl.height
 import androidx.compose.remote.creation.dsl.onClick
-import androidx.compose.remote.creation.dsl.padding
 import androidx.compose.remote.creation.dsl.ripple
 import androidx.compose.remote.creation.dsl.size
 import androidx.compose.remote.creation.dsl.width
@@ -24,16 +23,14 @@ import androidx.compose.remote.creation.dsl.wrapContentSize
 import androidx.compose.remote.creation.modifiers.RoundedRectShape
 import com.remotecompose.rc.core.RemoteUrlImage
 import com.remotecompose.rc.core.RenderContext
-import com.remotecompose.rc.core.dp
 import com.remotecompose.rc.core.rcDocument
+import com.remotecompose.rc.core.rdp
 import com.remotecompose.rc.core.rsp
 import com.remotecompose.rc.modifier.hostActionValue
+import com.remotecompose.rc.modifier.padding
 import com.remotecompose.rc.theme.Colors
 import com.remotecompose.rc.theme.Icons
 
-// Colors and icon URLs are shared design tokens — see :core-ui theme.Colors / theme.Icons.
-
-// ─── Entry point ──────────────────────────────────────────────────────────────
 fun ProfileScreen(
     ctx: RenderContext = RenderContext(),
     data: ProfileScreenData = ProfileScreenData(),
@@ -48,7 +45,7 @@ fun ProfileScreen(
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .background(Colors.purple900)
-                        .padding(dp(8), dp(12), dp(16), dp(0)),
+                        .padding(8.rdp, 12.rdp, 16.rdp),
                     vertical = RcVerticalPositioning.Center,
                 ) {
                     Row(
@@ -57,7 +54,7 @@ fun ProfileScreen(
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(dp(24), dp(24))
+                                .size(24.rdp)
                                 .hostActionValue(
                                     name = "analytics",
                                     payloadJson = """{"eventName":"profile_back_clicked","params":{"screen":"profile","source":"top_bar"}}""",
@@ -70,7 +67,7 @@ fun ProfileScreen(
                             )
                             RemoteUrlImage(Icons.back, Modifier.wrapContentSize(), scale = Rc.ImageScale.FILL_BOUNDS, size = 96)
                         }
-                        Spacer(modifier = Modifier.width(dp(6)))
+                        Spacer(modifier = Modifier.width(6.rdp))
                         Text(
                             text = data.title,
                             color = Colors.textPrimary,
@@ -91,10 +88,10 @@ fun ProfileScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(dp(8), dp(16), dp(16), dp(0)),
+                        .padding(8.rdp, 16.rdp, 16.rdp, 0.rdp),
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(bottom = dp(16)),
+                        modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(bottom = 16.rdp),
                         vertical = RcVerticalPositioning.Center,
                     ) {
                         Text(
@@ -104,7 +101,7 @@ fun ProfileScreen(
                             fontWeight = 700f,
                             modifier = Modifier.fillMaxWidth(),
                         )
-                        RemoteUrlImage(Icons.edit, Modifier.size(dp(20), dp(20)))
+                        RemoteUrlImage(Icons.edit, Modifier.size(20.rdp, 20.rdp))
                     }
                 }
 
@@ -147,13 +144,13 @@ fun ProfileScreen(
 
 // 16dp gap between rows.
 private fun RcScope.RowGap() {
-    Box(modifier = Modifier.fillMaxWidth().height(dp(16))) {}
+    Box(modifier = Modifier.fillMaxWidth().height(16.rdp)) {}
 }
 
 private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
-    val cardShape   = RoundedRectShape(dp(16), dp(16), dp(0), dp(0)) // top corners only
-    val avatarShape = RoundedRectShape(dp(30), dp(30), dp(30), dp(30)) // 60dp circle
-    val bandShape   = RoundedRectShape(dp(0), dp(0), dp(8), dp(8))    // bottom corners only (Figma: 8dp)
+    val cardShape   = RoundedRectShape(16.rdp.value, 16.rdp.value, 0.rdp.value, 0.rdp.value) // top corners only
+    val avatarShape = RoundedRectShape(30.rdp.value, 30.rdp.value, 30.rdp.value, 30.rdp.value) // 60dp circle
+    val bandShape   = RoundedRectShape(0.rdp.value, 0.rdp.value, 8.rdp.value, 8.rdp.value)    // bottom corners only (Figma: 8dp)
 
     Box(
         modifier = Modifier
@@ -163,7 +160,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
             .background(Colors.purple900),
     ) {
         // Card inset: 16dp from band top, 20dp side margins.
-        Box(modifier = Modifier.fillMaxWidth().padding(dp(10), dp(8), dp(10), dp(0))) {
+        Box(modifier = Modifier.fillMaxWidth().padding(10.rdp, 8.rdp, 10.rdp, 0.rdp)) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -174,7 +171,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         paint {
                             linearGradient(
                                 startX = 0f, startY = 0f,
-                                endX = dp(320), endY = dp(76),
+                                endX = 320.rdp.value, endY = 76.rdp.value,
                                 colors = intArrayOf(0x3DFFFFFF, 0x00FFFFFF),
                             )
                         }
@@ -184,15 +181,15 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         // Card stroke (#F1EAFA, 2dp): top/left/right only, rounded top
                         // corners — Figma omits a bottom edge. Drawn last, on top of the
                         // fill and content above, since it'd otherwise be painted over.
-                        val strokeW = dp(2)
-                        val inset = strokeW / 2f
-                        val radius = dp(16)
+                        val strokeW = 2.rdp
+                        val inset = strokeW.value / 2f
+                        val radius = 16.rdp.value
                         val w = this.width
                         val h = this.height
                         paint {
                             color(Colors.cardBorderLight)
                             style(RcPaintStyle.Stroke)
-                            strokeWidth(strokeW)
+                            strokeWidth(strokeW.value)
                         }
                         drawArc(
                             inset.rf, inset.rf,
@@ -208,7 +205,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         drawLine(inset.rf, (inset + radius).rf, inset.rf, h)
                         drawLine(w - inset, (inset + radius).rf, w - inset, h)
                     }
-                    .padding(dp(8), dp(8), dp(8), dp(8))
+                    .padding(8.rdp, 8.rdp, 8.rdp, 8.rdp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth().wrapContentHeight(),
@@ -217,7 +214,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                     // Avatar: 60dp circle, "AS" initials centered.
                     Box(
                         modifier = Modifier
-                            .size(dp(60), dp(60))
+                            .size(60.rdp, 60.rdp)
                             .clip(avatarShape)
                             .background(Colors.cardBorderLight),
                         horizontal = RcHorizontalPositioning.Center,
@@ -231,7 +228,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.width(dp(12)).wrapContentHeight()) // 12dp gap
+                    Spacer(modifier = Modifier.width(12.rdp).wrapContentHeight()) // 12dp gap
 
                     Column(modifier = Modifier.wrapContentHeight()) {
                         Text(
@@ -240,7 +237,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                             fontSize = 16.rsp,
                             fontWeight = 700f,
                         )
-                        Box(modifier = Modifier.fillMaxWidth().height(dp(4))) {} // 4dp gap
+                        Box(modifier = Modifier.fillMaxWidth().height(4.rdp)) {} // 4dp gap
                         Text(
                             text = phone,
                             color = Colors.textPrimary,
@@ -265,7 +262,7 @@ private fun RcScope.ProfileRowItem(
     Column(modifier = Modifier.fillMaxWidth()) {
         var rowModifier = Modifier
             .fillMaxWidth()
-            .padding(dp(8), dp(4), dp(16), dp(10))
+            .padding(8.rdp, 4.rdp, 16.rdp, 10.rdp)
         if (actionName != null) {
             rowModifier = if (actionPayload != null) {
                 rowModifier.hostActionValue(actionName, actionPayload).ripple()
@@ -277,7 +274,7 @@ private fun RcScope.ProfileRowItem(
             modifier = rowModifier,
             vertical = RcVerticalPositioning.Center,
         ) {
-            Box(modifier = Modifier.width(dp(140)).wrapContentHeight()) {
+            Box(modifier = Modifier.width(140.rdp).wrapContentHeight()) {
                 Text(
                     text = label,
                     color = Colors.textSecondary,
@@ -286,7 +283,7 @@ private fun RcScope.ProfileRowItem(
                 )
             }
             if (hasValue) {
-                Box(modifier = Modifier.width(dp(24)).wrapContentHeight()) {}
+                Box(modifier = Modifier.width(24.rdp).wrapContentHeight()) {}
                 Text(
                     text = value,
                     color = Colors.textPrimary,
@@ -298,7 +295,7 @@ private fun RcScope.ProfileRowItem(
                 Spacer(modifier = Modifier.weight(1f))
             }
             if (trailingChevron) {
-                RemoteUrlImage(Icons.chevronRight, Modifier.size(dp(24)), size = 96)
+                RemoteUrlImage(Icons.chevronRight, Modifier.size(24.rdp), size = 96)
             }
         }
         Divider()
@@ -306,20 +303,20 @@ private fun RcScope.ProfileRowItem(
 }
 
 private fun RcScope.KycRow(isVerified: Boolean) {
-    val chipShape = RoundedRectShape(dp(8), dp(8), dp(8), dp(8))
+    val chipShape = RoundedRectShape(8.rdp.value, 8.rdp.value, 8.rdp.value, 8.rdp.value)
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .hostActionValue("deeplink", "dl.myjar.app/kyc")
                 .fillMaxWidth()
-                // Match ProfileRowItem's right inset (dp(16)) so the chevron aligns
+                // Match ProfileRowItem's right inset (16.rdp) so the chevron aligns
                 // with the chevrons on the other rows instead of running to the edge.
-                .padding(dp(8), dp(4), dp(16), dp(10))
+                .padding(8.rdp, 4.rdp, 16.rdp, 10.rdp)
                 .ripple(),
             vertical = RcVerticalPositioning.Center,
         ) {
-            Box(modifier = Modifier.width(dp(140)).wrapContentHeight()) {
+            Box(modifier = Modifier.width(140.rdp).wrapContentHeight()) {
                 Text(
                     text = "KYC Verification",
                     color = Colors.textSecondary,
@@ -328,7 +325,7 @@ private fun RcScope.KycRow(isVerified: Boolean) {
                     maxLines = 1,
                 )
             }
-            Box(modifier = Modifier.width(dp(24)).wrapContentHeight()) {}
+            Box(modifier = Modifier.width(24.rdp).wrapContentHeight()) {}
 
             if (isVerified) {
                 Box(
@@ -336,15 +333,15 @@ private fun RcScope.KycRow(isVerified: Boolean) {
                         .wrapContentHeight()
                         .clip(chipShape)
                         .background(Colors.green600)
-                        .padding(dp(8), dp(4), dp(10), dp(4)),
+                        .padding(8.rdp, 4.rdp, 10.rdp, 4.rdp),
                     vertical = RcVerticalPositioning.Center,
                 ) {
                     Row(
                         modifier = Modifier.wrapContentHeight(),
                         vertical = RcVerticalPositioning.Center,
                     ) {
-                        RemoteUrlImage(Icons.check, Modifier.size(dp(16), dp(16)))
-                        Box(modifier = Modifier.width(dp(4)).wrapContentHeight()) {}
+                        RemoteUrlImage(Icons.check, Modifier.size(16.rdp, 16.rdp))
+                        Box(modifier = Modifier.width(4.rdp).wrapContentHeight()) {}
                         Text(
                             text = "Verified",
                             color = Colors.textPrimary,
@@ -364,12 +361,12 @@ private fun RcScope.KycRow(isVerified: Boolean) {
 
             // flexible spacer pushes the chevron to the right edge (Figma)
             Spacer(modifier = Modifier.weight(0.5f))
-            RemoteUrlImage(Icons.chevronRight, Modifier.size(dp(24)), size = 96)
+            RemoteUrlImage(Icons.chevronRight, Modifier.size(24.rdp), size = 96)
         }
         Divider()
     }
 }
 
 private fun RcScope.Divider() {
-    Box(modifier = Modifier.fillMaxWidth().padding(start = dp(8), end = dp(8)).height(dp(1)).background(Colors.divider)) {}
+    Box(modifier = Modifier.fillMaxWidth().padding(start = 8.rdp, end = 8.rdp).height(1.rdp).background(Colors.divider)) {}
 }

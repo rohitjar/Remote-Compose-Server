@@ -33,9 +33,6 @@ internal fun <T> withDensity(density: Float, block: () -> T): T {
 /** Logical dp → device px (baked with the current request density). For modifier dimensions. */
 fun dp(value: Number): Float = value.toFloat() * currentDensity()
 
-/** Logical sp → device px (baked with the current request density). */
-fun sp(value: Number): Float = value.toFloat() * currentDensity()
-
 val Int.rdp: RcDp get() = RcDp(this * currentDensity())
 val Float.rdp: RcDp get() = RcDp(this * currentDensity())
 
