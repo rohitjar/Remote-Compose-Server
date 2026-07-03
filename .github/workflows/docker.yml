@@ -1,0 +1,34 @@
+name: Build & publish Docker image
+
+# Run this robot on every push to the main branch (or when triggered by hand).
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write            # allow pushing the image to GHCR
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}   # provided automatically, no setup
+
+      - name: Build the image and push it
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          # Image name must be lowercase. Tagged both :latest and :<commit-sha>.
+          tags: |
+            ghcr.io/rohitjar/remote-compose-server:latest
+            ghcr.io/rohitjar/remote-compose-server:${{ github.sha }}

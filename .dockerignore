@@ -1,0 +1,9 @@
+# Keep the Docker build context small — these are rebuilt inside the image anyway.
+.git
+.gradle
+.idea
+.kotlin
+**/build
+build
+--output
+*.log
