@@ -41,7 +41,7 @@ fun ProfileScreen(
         Box(modifier = Modifier.fillMaxSize().background(Colors.bgProfile)) {
             Column(modifier = Modifier.fillMaxWidth()) {
 
-                // Top bar: back arrow + title — same static color as band.
+                // Top bar: back arrow + title
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -57,6 +57,7 @@ fun ProfileScreen(
                         Box(
                             modifier = Modifier
                                 .size(24.rdp)
+                                .onClick { hostAction("onBack") }
                                 .hostActionValue(
                                     name = "analytics",
                                     payloadJson = """{"eventName":"profile_back_clicked","params":{"screen":"profile","source":"top_bar"}}""",
@@ -119,7 +120,7 @@ fun ProfileScreen(
                         Column(modifier = Modifier.fillMaxWidth()) {
                             ProfileRowItem(label = "Name", value = data.userName)
                             RowGap()
-                            ProfileRowItem(label = "Mobile ", value = data.phoneNumber, actionPayload = "dl.myjar.app/agePopUp")
+                            ProfileRowItem(label = "Mobile ", value = data.phoneNumber)
                             RowGap()
                             ProfileRowItem(label = "Age", value = data.age, actionPayload = "dl.myjar.app/agePopUp")
                             RowGap()
@@ -235,7 +236,7 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                             url = "https://cdn.myjar.app/profilePics/64d211e6c82e5256c8c698276a290c94cd6c6d0339b75c42.jpg",
                             width = 230,
                             height = 512,
-                            modifier = Modifier,
+                            modifier = Modifier.onClick { hostAction("editImage") },
                             scale = RemoteComposeWriter.IMAGE_SCALE_FILL_BOUNDS
                         )
 //                        Text(
@@ -273,20 +274,16 @@ private fun RcScope.ProfileRowItem(
     label: String,
     value: String = "",
     trailingChevron: Boolean = false,
-    actionName: String? = "deeplink",
-    actionPayload: String? = "dl.myjar.app/defaultDeeplink",
+    actionName: String = "deeplink",
+    actionPayload: String? = null,
 ) {
     val hasValue = value.isNotEmpty()
     Column(modifier = Modifier.fillMaxWidth()) {
         var rowModifier = Modifier
             .fillMaxWidth()
             .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp)
-        if (actionName != null) {
-            rowModifier = if (actionPayload != null) {
-                rowModifier.hostActionValue(actionName, actionPayload)
-            } else {
-                rowModifier.onClick { hostAction(actionName) }
-            }
+        if (actionPayload != null) {
+            rowModifier = rowModifier.hostActionValue(actionName, actionPayload)
         }
         Row(
             modifier = rowModifier,
