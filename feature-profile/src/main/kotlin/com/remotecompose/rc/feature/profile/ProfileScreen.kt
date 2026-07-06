@@ -16,8 +16,8 @@ import androidx.compose.remote.creation.dsl.fillMaxSize
 import androidx.compose.remote.creation.dsl.fillMaxWidth
 import androidx.compose.remote.creation.dsl.height
 import androidx.compose.remote.creation.dsl.onClick
-import androidx.compose.remote.creation.dsl.ripple
 import androidx.compose.remote.creation.dsl.size
+import androidx.compose.remote.creation.dsl.verticalScroll
 import androidx.compose.remote.creation.dsl.width
 import androidx.compose.remote.creation.dsl.wrapContentHeight
 import androidx.compose.remote.creation.dsl.wrapContentSize
@@ -79,66 +79,74 @@ fun ProfileScreen(
                     }
                 }
 
-                // Profile card (avatar + name + phone) — exact Figma "main details" frame.
-                ProfileCard(
-                    initials = data.userInitials,
-                    name = data.userName,
-                    phone = data.phoneNumber,
-                )
+                // Scrollable content below the pinned top bar.
+                Column(modifier = Modifier.fillMaxWidth().verticalScroll()) {
 
-                // "Profile Details" header + edit icon.
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.rdp, 16.rdp, 16.rdp, 0.rdp),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(bottom = 16.rdp),
-                        vertical = RcVerticalPositioning.Center,
+                    // Profile card (avatar + name + phone) — exact Figma "main details" frame.
+                    ProfileCard(
+                        initials = data.userInitials,
+                        name = data.userName,
+                        phone = data.phoneNumber,
+                    )
+
+                    // "Profile Details" header + edit icon.
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.rdp, 16.rdp, 16.rdp, 0.rdp),
                     ) {
-                        Text(
-                            text = "Profile Details",
-                            color = Colors.textPrimary,
-                            fontSize = 14.rsp,
-                            fontWeight = 700f,
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                        RemoteUrlImage(Icons.edit, Modifier.size(20.rdp, 20.rdp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(bottom = 16.rdp),
+                            vertical = RcVerticalPositioning.Center,
+                        ) {
+                            Text(
+                                text = "Profile Details",
+                                color = Colors.textPrimary,
+                                fontSize = 14.rsp,
+                                fontWeight = 700f,
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                            RemoteUrlImage(Icons.edit, Modifier.size(20.rdp, 20.rdp))
+                        }
                     }
-                }
 
-                // Detail rows.
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.rdp, end = 16.rdp),
-                ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        ProfileRowItem(label = "Age", value = data.age, actionPayload = "dl.myjar.app/agePopUp")
-                        RowGap()
-                        ProfileRowItem(label = "Gender", value = data.gender, actionPayload = "dl.myjar.app/genderPopUp")
-                        RowGap()
-                        KycRow(isVerified = data.kycVerified)
-                        RowGap()
-                        ProfileRowItem(
-                            label = "Manage UPI ID",
-                            value = data.primaryUpiId,
-                            trailingChevron = true,
-                            actionPayload = "dl.myjar.app/manageUpiId"
-                        )
-                        RowGap()
-                        ProfileRowItem(
-                            label = "Saved Addresses",
-                            value = data.savedAddressCount.toString(),
-                            trailingChevron = true,
-                            actionPayload = "dl.myjar.app/savedAddress",
-                        )
-                        RowGap()
-                        ProfileRowItem(
-                            label = "Nominee Details",
-                            trailingChevron = true,
-                            actionPayload = "dl.myjar.app/nomineeDetails",
-                        )
+                    // Detail rows.
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.rdp, end = 16.rdp),
+                    ) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            ProfileRowItem(label = "Name", value = data.userName)
+                            RowGap()
+                            ProfileRowItem(label = "Mobile ", value = data.phoneNumber, actionPayload = "dl.myjar.app/agePopUp")
+                            RowGap()
+                            ProfileRowItem(label = "Age", value = data.age, actionPayload = "dl.myjar.app/agePopUp")
+                            RowGap()
+                            ProfileRowItem(label = "Gender", value = data.gender, actionPayload = "dl.myjar.app/genderPopUp")
+                            RowGap()
+                            KycRow(isVerified = data.kycVerified)
+                            RowGap()
+                            ProfileRowItem(
+                                label = "Manage UPI ID",
+                                value = data.primaryUpiId,
+                                trailingChevron = true,
+                                actionPayload = "dl.myjar.app/manageUpiId"
+                            )
+                            RowGap()
+                            ProfileRowItem(
+                                label = "Saved Addresses",
+                                value = data.savedAddressCount.toString(),
+                                trailingChevron = true,
+                                actionPayload = "dl.myjar.app/savedAddress",
+                            )
+                            RowGap()
+                            ProfileRowItem(
+                                label = "Nominee Details",
+                                trailingChevron = true,
+                                actionPayload = "dl.myjar.app/nomineeDetails",
+                            )
+                        }
                     }
                 }
             }
@@ -275,9 +283,9 @@ private fun RcScope.ProfileRowItem(
             .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp)
         if (actionName != null) {
             rowModifier = if (actionPayload != null) {
-                rowModifier.hostActionValue(actionName, actionPayload).ripple()
+                rowModifier.hostActionValue(actionName, actionPayload)
             } else {
-                rowModifier.onClick { hostAction(actionName) }.ripple()
+                rowModifier.onClick { hostAction(actionName) }
             }
         }
         Row(
@@ -320,8 +328,7 @@ private fun RcScope.KycRow(isVerified: Boolean) {
             modifier = Modifier
                 .hostActionValue("deeplink", "dl.myjar.app/kyc")
                 .fillMaxWidth()
-                .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp)
-                .ripple(),
+                .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp),
             vertical = RcVerticalPositioning.Center,
         ) {
             Box(modifier = Modifier.width(140.rdp).wrapContentHeight()) {
