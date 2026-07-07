@@ -38,7 +38,7 @@ fun ProfileScreen(
     data: ProfileScreenData = ProfileScreenData(),
 ): ByteArray =
     rcDocument(ctx) {
-        Box(modifier = Modifier.fillMaxSize().background(Colors.bgProfile).padding(top = ctx.safeArea.rdp)) {
+        Box(modifier = Modifier.fillMaxSize().background(Colors.bgProfile).padding(top = ctx.safeAreaTop.rdp)) {
             Column(modifier = Modifier.fillMaxWidth()) {
 
                 // Top bar: back arrow + title

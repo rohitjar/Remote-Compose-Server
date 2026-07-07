@@ -78,7 +78,8 @@ private fun HttpExchange.renderContext(): RenderContext {
         density = q["density"]?.toFloatOrNull() ?: default.density,
         widthDp = q["width"]?.toIntOrNull() ?: default.widthDp,
         heightDp = q["height"]?.toIntOrNull() ?: default.heightDp,
-        safeArea = q["safeArea"]?.toIntOrNull() ?: default.safeArea
+        safeAreaTop = q["safeAreaTop"]?.toIntOrNull() ?: default.safeAreaTop,
+        safeAreaBottom = q["safeAreaBottom"]?.toIntOrNull() ?: default.safeAreaBottom
     )
 }
 
