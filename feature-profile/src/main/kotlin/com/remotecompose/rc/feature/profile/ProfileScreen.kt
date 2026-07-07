@@ -38,7 +38,7 @@ fun ProfileScreen(
     data: ProfileScreenData = ProfileScreenData(),
 ): ByteArray =
     rcDocument(ctx) {
-        Box(modifier = Modifier.fillMaxSize().background(Colors.bgProfile)) {
+        Box(modifier = Modifier.fillMaxSize().background(Colors.bgProfile).padding(top = ctx.safeArea.rdp)) {
             Column(modifier = Modifier.fillMaxWidth()) {
 
                 // Top bar: back arrow + title
@@ -80,9 +80,9 @@ fun ProfileScreen(
                     }
                 }
 
-                // Scrollable content below the pinned top bar.
-                Column(modifier = Modifier.fillMaxWidth().verticalScroll()) {
-
+                Column(
+                    modifier = Modifier.fillMaxWidth().verticalScroll()
+                ) {
                     // Profile card (avatar + name + phone) — exact Figma "main details" frame.
                     ProfileCard(
                         initials = data.userInitials,
@@ -97,7 +97,8 @@ fun ProfileScreen(
                             .padding(16.rdp, 16.rdp, 16.rdp, 0.rdp),
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(bottom = 16.rdp),
+                            modifier = Modifier.fillMaxWidth().wrapContentHeight()
+                                .padding(bottom = 16.rdp),
                             vertical = RcVerticalPositioning.Center,
                         ) {
                             Text(
@@ -122,9 +123,17 @@ fun ProfileScreen(
                             RowGap()
                             ProfileRowItem(label = "Mobile ", value = data.phoneNumber)
                             RowGap()
-                            ProfileRowItem(label = "Age", value = data.age, actionPayload = "dl.myjar.app/agePopUp")
+                            ProfileRowItem(
+                                label = "Age",
+                                value = data.age,
+                                actionPayload = "dl.myjar.app/agePopUp"
+                            )
                             RowGap()
-                            ProfileRowItem(label = "Gender", value = data.gender, actionPayload = "dl.myjar.app/genderPopUp")
+                            ProfileRowItem(
+                                label = "Gender",
+                                value = data.gender,
+                                actionPayload = "dl.myjar.app/genderPopUp"
+                            )
                             RowGap()
                             KycRow(isVerified = data.kycVerified)
                             RowGap()

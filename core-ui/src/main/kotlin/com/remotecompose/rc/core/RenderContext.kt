@@ -13,4 +13,5 @@ data class RenderContext(
     val density: Float = DEFAULT_DENSITY,
     val widthDp: Int = 360,
     val heightDp: Int = 800,
+    val safeArea: Int = 40
 )
