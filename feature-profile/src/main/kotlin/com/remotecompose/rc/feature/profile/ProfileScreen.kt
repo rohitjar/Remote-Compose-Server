@@ -38,8 +38,15 @@ fun ProfileScreen(
     data: ProfileScreenData = ProfileScreenData(),
 ): ByteArray =
     rcDocument(ctx) {
-        Box(modifier = Modifier.fillMaxSize().background(Colors.bgProfile).padding(top = ctx.safeAreaTop.rdp)) {
-            Column(modifier = Modifier.fillMaxWidth()) {
+        // Safe-area strips match the profile card band (purple900); the content
+        // column paints its own bgProfile surface so rows keep their color.
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Colors.purple900)
+                .padding(top = ctx.safeAreaTop.rdp, bottom = ctx.safeAreaBottom.rdp),
+        ) {
+            Column(modifier = Modifier.fillMaxSize().background(Colors.bgProfile)) {
 
                 // Top bar: back arrow + title
                 Box(
@@ -178,7 +185,42 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
             .fillMaxWidth()
             .wrapContentHeight()
             .clip(bandShape)
-            .background(Colors.purple900),
+            .drawWithContent {
+                paint { color(Colors.purple900) }
+                drawRect(0f.rf, 0f.rf, this.width, this.height)
+                drawComponentContent()
+
+                // Band hairline (#554766, 1dp): Figma strokes the bottom edge only,
+                // inside-aligned, following the 8dp bottom corner radius.
+                val strokeW = 1.rdp
+                val inset = strokeW.value / 2f
+                val radius = 8.rdp.value
+                val w = this.width
+                val h = this.height
+                paint {
+                    // Flat two-stop gradient instead of color(): the card's fill
+                    // gradient (drawn as part of the content above) leaks its shader
+                    // into this shared paint and color() alone doesn't clear it.
+                    color(Colors.white)
+                    linearGradient(
+                        0f, 0f, 1f, 0f,
+                        colors = intArrayOf(Colors.bandBorder, Colors.bandBorder),
+                    )
+                    style(RcPaintStyle.Stroke)
+                    strokeWidth(strokeW.value)
+                }
+                drawArc(
+                    inset.rf, h - inset - radius * 2f,
+                    (inset + radius * 2f).rf, h - inset,
+                    90f.rf, 90f.rf,
+                )
+                drawArc(
+                    w - inset - radius * 2f, h - inset - radius * 2f,
+                    w - inset, h - inset,
+                    0f.rf, 90f.rf,
+                )
+                drawLine((inset + radius).rf, h - inset, w - inset - radius, h - inset)
+            },
     ) {
         // Card inset: 16dp from band top, 20dp side margins.
         Box(modifier = Modifier.fillMaxWidth().padding(20.rdp, 16.rdp, 20.rdp, 0.rdp)) {
@@ -199,32 +241,54 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         drawRect(0f.rf, 0f.rf, this.width, this.height)
                         drawComponentContent()
 
-                        // Card stroke (#F1EAFA, 2dp): top/left/right only, rounded top
-                        // corners — Figma omits a bottom edge. Drawn last, on top of the
-                        // fill and content above, since it'd otherwise be painted over.
+                        // Card stroke (2dp): top/left/right only, rounded top corners —
+                        // Figma omits a bottom edge. Two passes matching the two Figma
+                        // strokes: a solid #8D54D6 @40% base, then a #F1EAFA radial
+                        // highlight fading out from the top-left corner. The base pass
+                        // uses a flat two-stop gradient because color() alone doesn't
+                        // clear the fill's leaked shader from the shared paint.
                         val strokeW = 2.rdp
                         val inset = strokeW.value / 2f
                         val radius = 16.rdp.value
                         val w = this.width
                         val h = this.height
+                        val strokeOutline = {
+                            drawArc(
+                                inset.rf, inset.rf,
+                                (inset + radius * 2f).rf, (inset + radius * 2f).rf,
+                                180f.rf, 90f.rf,
+                            )
+                            drawArc(
+                                w - inset - radius * 2f, inset.rf,
+                                w - inset, (inset + radius * 2f).rf,
+                                270f.rf, 90f.rf,
+                            )
+                            drawLine((inset + radius).rf, inset.rf, w - inset - radius, inset.rf)
+                            drawLine(inset.rf, (inset + radius).rf, inset.rf, h)
+                            drawLine(w - inset, (inset + radius).rf, w - inset, h)
+                        }
                         paint {
-                            color(Colors.cardBorderLight)
+                            color(Colors.white) // full alpha so the shader isn't dimmed
+                            linearGradient(
+                                0f, 0f, 1f, 0f,
+                                colors = intArrayOf(Colors.cardBorderBase, Colors.cardBorderBase),
+                            )
                             style(RcPaintStyle.Stroke)
                             strokeWidth(strokeW.value)
                         }
-                        drawArc(
-                            inset.rf, inset.rf,
-                            (inset + radius * 2f).rf, (inset + radius * 2f).rf,
-                            180f.rf, 90f.rf,
-                        )
-                        drawArc(
-                            w - inset - radius * 2f, inset.rf,
-                            w - inset, (inset + radius * 2f).rf,
-                            270f.rf, 90f.rf,
-                        )
-                        drawLine((inset + radius).rf, inset.rf, w - inset - radius, inset.rf)
-                        drawLine(inset.rf, (inset + radius).rf, inset.rf, h)
-                        drawLine(w - inset, (inset + radius).rf, w - inset, h)
+                        strokeOutline()
+                        paint {
+                            color(Colors.white)
+                            radialGradient(
+                                centerX = 0f, centerY = 0f,
+                                radius = 320.rdp.value,
+                                colors = intArrayOf(Colors.cardBorderGlow, Colors.cardBorderGlowEnd),
+                                positions = floatArrayOf(0f, 0.7f),
+                            )
+                            style(RcPaintStyle.Stroke)
+                            strokeWidth(strokeW.value)
+                        }
+                        strokeOutline()
                     }
                     .padding(16.rdp, 16.rdp, 16.rdp, 16.rdp)
             ) {

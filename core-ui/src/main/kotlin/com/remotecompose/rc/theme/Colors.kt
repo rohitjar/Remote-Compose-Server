@@ -25,7 +25,10 @@ object Colors {
     const val bgSurface2       = 0xFF1F1F2E.toInt() // color_bg_surface_2
 
     // Lines / borders / misc
-    const val cardBorderLight  = 0xFFF1EAFA.toInt() // card stroke + avatar bg (#F1EAFA)
+    const val cardBorderLight  = 0xFFF1EAFA.toInt() // avatar bg (#F1EAFA)
+    const val cardBorderBase   = 0x668D54D6         // card stroke base (#8D54D6 @ 40%)
+    const val cardBorderGlow   = 0x66F1EAFA         // card stroke highlight start (#F1EAFA @ 40%)
+    const val cardBorderGlowEnd = 0x00F1EAFA        // card stroke highlight end (transparent)
     const val bandBorder       = 0xFF554766.toInt() // color_bg_label (band hairline)
     const val divider          = 0x52837299         // rgba(131,114,153,0.32)
     const val ctaCaution       = 0xFF374151.toInt() // color_cta_caution_state
