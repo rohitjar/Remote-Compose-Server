@@ -133,13 +133,13 @@ fun ProfileScreen(
                             ProfileRowItem(
                                 label = "Age",
                                 value = data.age,
-                                actionPayload = "dl.myjar.app/agePopUp"
+                                actionPayload = "dl.myjar.app/dynamicUI/greeting"
                             )
                             RowGap()
                             ProfileRowItem(
                                 label = "Gender",
                                 value = data.gender,
-                                actionPayload = "dl.myjar.app/genderPopUp"
+                                actionPayload = "dl.myjar.app/button"
                             )
                             RowGap()
                             KycRow(isVerified = data.kycVerified)
