@@ -21,6 +21,11 @@ class JarImageScreenProvider : Screen {
     override fun render(ctx: RenderContext): ByteArray = JarImageScreen(ctx)
 }
 
+class ImageListScreenProvider : Screen {
+    override val key = "image_list"
+    override fun render(ctx: RenderContext): ByteArray = ImageListScreen(ctx)
+}
+
 class ButtonScreenProvider : Screen {
     override val key = "button"
     override fun render(ctx: RenderContext): ByteArray = ButtonScreen(ctx)

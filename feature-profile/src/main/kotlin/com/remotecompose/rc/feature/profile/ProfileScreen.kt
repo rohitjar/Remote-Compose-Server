@@ -138,7 +138,7 @@ fun ProfileScreen(
                             ProfileRowItem(
                                 label = "Gender",
                                 value = data.gender,
-                                actionPayload = "dl.myjar.app/dynamicUI/button"
+                                actionPayload = "dl.myjar.app/dynamicUI/image_list"
                             )
                             RowGap()
                             KycRow(isVerified = data.kycVerified)
@@ -147,7 +147,7 @@ fun ProfileScreen(
                                 label = "Manage UPI ID",
                                 value = data.primaryUpiId,
                                 trailingChevron = true,
-                                actionPayload = "dl.myjar.app/manageUpiId"
+                                actionPayload = "dl.myjar.app/dynamicUI/button"
                             )
                             RowGap()
                             ProfileRowItem(
@@ -395,7 +395,7 @@ private fun RcScope.KycRow(isVerified: Boolean) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
-                .hostActionValue("deeplink", "dl.myjar.app/kyc")
+                .hostActionValue("deeplink", "dl.myjar.app/image_list")
                 .fillMaxWidth()
                 .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp),
             vertical = RcVerticalPositioning.Center,

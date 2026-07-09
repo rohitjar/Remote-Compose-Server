@@ -1,5 +1,6 @@
 com.remotecompose.rc.feature.samples.GreetingScreenProvider
 com.remotecompose.rc.feature.samples.JarButtonScreenProvider
 com.remotecompose.rc.feature.samples.JarImageScreenProvider
+com.remotecompose.rc.feature.samples.ImageListScreenProvider
 com.remotecompose.rc.feature.samples.ButtonScreenProvider
 com.remotecompose.rc.feature.samples.DummyScreenProvider
