@@ -31,7 +31,6 @@ import com.remotecompose.rc.modifier.hostActionValue
 import com.remotecompose.rc.modifier.padding
 import com.remotecompose.rc.theme.Colors
 import com.remotecompose.rc.theme.Icons
-import java.rmi.Remote
 
 fun ProfileScreen(
     ctx: RenderContext = RenderContext(),
@@ -139,7 +138,7 @@ fun ProfileScreen(
                             ProfileRowItem(
                                 label = "Gender",
                                 value = data.gender,
-                                actionPayload = "dl.myjar.app/button"
+                                actionPayload = "dl.myjar.app/dynamicUI/button"
                             )
                             RowGap()
                             KycRow(isVerified = data.kycVerified)
@@ -305,19 +304,19 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
                         horizontal = RcHorizontalPositioning.Center,
                         vertical = RcVerticalPositioning.Center,
                     ) {
-                        RemoteUrlImage(
-                            url = "https://cdn.myjar.app/profilePics/64d211e6c82e5256c8c698276a290c94cd6c6d0339b75c42.jpg",
-                            width = 230,
-                            height = 512,
-                            modifier = Modifier.onClick { hostAction("editImage") },
-                            scale = RemoteComposeWriter.IMAGE_SCALE_FILL_BOUNDS
-                        )
-//                        Text(
-//                            text = initials,
-//                            color = Colors.purple500,
-//                            fontSize = 24.rsp,
-//                            fontWeight = 700f,
+//                        RemoteUrlImage(
+//                            url = "https://cdn.myjar.app/profilePics/64d211e6c82e5256c8c698276a290c94cd6c6d0339b75c42.jpg",
+//                            width = 230,
+//                            height = 512,
+//                            modifier = Modifier.onClick { hostAction("editImage") },
+//                            scale = RemoteComposeWriter.IMAGE_SCALE_FILL_BOUNDS
 //                        )
+                        Text(
+                            text = initials,
+                            color = Colors.purple500,
+                            fontSize = 24.rsp,
+                            fontWeight = 700f,
+                        )
                     }
 
                     Spacer(modifier = Modifier.width(12.rdp).wrapContentHeight()) // 12dp gap
