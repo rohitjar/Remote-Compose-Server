@@ -3,7 +3,6 @@
 package com.remotecompose.rc.feature.profile
 
 import androidx.compose.remote.creation.Rc
-import androidx.compose.remote.creation.RemoteComposeWriter
 import androidx.compose.remote.creation.dsl.Modifier
 import androidx.compose.remote.creation.dsl.RcHorizontalPositioning
 import androidx.compose.remote.creation.dsl.RcPaintStyle
@@ -15,7 +14,6 @@ import androidx.compose.remote.creation.dsl.drawWithContent
 import androidx.compose.remote.creation.dsl.fillMaxSize
 import androidx.compose.remote.creation.dsl.fillMaxWidth
 import androidx.compose.remote.creation.dsl.height
-import androidx.compose.remote.creation.dsl.onClick
 import androidx.compose.remote.creation.dsl.size
 import androidx.compose.remote.creation.dsl.verticalScroll
 import androidx.compose.remote.creation.dsl.width
@@ -27,7 +25,7 @@ import com.remotecompose.rc.core.RenderContext
 import com.remotecompose.rc.core.rcDocument
 import com.remotecompose.rc.core.rdp
 import com.remotecompose.rc.core.rsp
-import com.remotecompose.rc.modifier.hostActionValue
+import com.remotecompose.rc.modifier.onClick
 import com.remotecompose.rc.modifier.padding
 import com.remotecompose.rc.theme.Colors
 import com.remotecompose.rc.theme.Icons
@@ -63,11 +61,16 @@ fun ProfileScreen(
                         Box(
                             modifier = Modifier
                                 .size(24.rdp)
-                                .onClick { hostAction("onBack") }
-                                .hostActionValue(
-                                    name = "analytics",
-                                    payloadJson = """{"eventName":"profile_back_clicked","params":{"screen":"profile","source":"top_bar"}}""",
-                                ),
+                                .onClick {
+                                    hostAction("onBack")
+                                    analyticsApi.postEvent(
+                                        event = "profile_back_clicked",
+                                        values = mapOf(
+                                            "screen" to "profile",
+                                            "source" to "top_bar",
+                                        ),
+                                    )
+                                },
                             horizontal = RcHorizontalPositioning.Center,
                             vertical = RcVerticalPositioning.Center,
                         ) {
@@ -355,7 +358,17 @@ private fun RcScope.ProfileRowItem(
             .fillMaxWidth()
             .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp)
         if (actionPayload != null) {
-            rowModifier = rowModifier.hostActionValue(actionName, actionPayload)
+            rowModifier = rowModifier.onClick {
+                hostAction(actionName, actionPayload)
+                analyticsApi.postEvent(
+                    event = "profile_row_clicked",
+                    values = mapOf(
+                        "screen" to "profile",
+                        "label" to label,
+                        "deeplink" to actionPayload,
+                    ),
+                )
+            }
         }
         Row(
             modifier = rowModifier,
@@ -395,7 +408,17 @@ private fun RcScope.KycRow(isVerified: Boolean) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
-                .hostActionValue("deeplink", "dl.myjar.app/image_list")
+                .onClick {
+                    hostAction("deeplink", "dl.myjar.app/image_list")
+                    analyticsApi.postEvent(
+                        event = "profile_row_clicked",
+                        values = mapOf(
+                            "screen" to "profile",
+                            "label" to "KYC Verification",
+                            "deeplink" to "dl.myjar.app/image_list",
+                        ),
+                    )
+                }
                 .fillMaxWidth()
                 .padding(8.rdp, 4.rdp, 0.rdp, 10.rdp),
             vertical = RcVerticalPositioning.Center,
