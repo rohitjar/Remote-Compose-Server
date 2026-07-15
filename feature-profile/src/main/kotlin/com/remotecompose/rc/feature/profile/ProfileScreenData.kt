@@ -4,13 +4,13 @@ import com.remotecompose.rc.core.ScreenData
 
 data class ProfileScreenData(
     val title: String = "Profile",
-    val userName: String = "Rohit Kumar",
-    val userInitials: String = "RK",
+    val userName: String = "Shashank Chudakad",
+    val userInitials: String = "SC",
     val phoneNumber: String = "+91-9999911111",
     val age: String = "23",
-    val gender: String = "Male",
+    val gender: String = "Transgender",
     val kycVerified: Boolean = true,
-    val primaryUpiId: String = "9999999999@ybl",
+    val primaryUpiId: String = "chamar@ybl",
     val savedAddressCount: Int = 2,
 )
 
