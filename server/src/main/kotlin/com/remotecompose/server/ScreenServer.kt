@@ -1,20 +1,37 @@
 package com.remotecompose.server
 
+import com.remotecompose.rc.core.ClientContext
+import com.remotecompose.rc.core.EndpointRef
 import com.remotecompose.rc.core.RenderContext
+import com.remotecompose.rc.core.Screen
+import com.remotecompose.rc.core.ScreenManifest
+import com.remotecompose.rc.core.ScreenRequest
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
 import java.net.InetSocketAddress
+import java.net.URLDecoder
 
 /**
- * Server-driven-UI HTTP server. Exposes one endpoint per registered screen:
+ * Server-driven-UI HTTP server, manifest-first ("static API") design.
  *
- *   GET /<screen>?density=<float>&width=<dp>&height=<dp>   → binary .rc document
+ * The consumer hardcodes exactly ONE URL shape — the manifest:
  *
- * e.g. GET /profile?density=3.0&width=360&height=800
+ *   GET /v1/screens/{key}                       → ScreenManifest JSON (layoutVersion + links)
  *
- * density/width/height are optional; each falls back to the [RenderContext] default.
- * Endpoints are derived from [COMPOSABLE_REGISTRY], so adding a screen there exposes it
- * automatically — no per-endpoint wiring.
+ * Every other URL is taken from the manifest verbatim:
+ *
+ *   GET  /v1/screens/{key}/binary/{version}?density=&width=&height=
+ *          → binary .rc skeleton. Version-pinned → served with `Cache-Control: immutable`.
+ *            A stale {version} answers 409 so the consumer re-fetches the manifest.
+ *   GET  /v1/screens/{key}/data                 → per-user ScreenData JSON
+ *   POST /v1/analytics                          → host-action analytics events (ingest stub)
+ *
+ * Legacy convenience endpoint (CLI / manual curl, not used by the app):
+ *
+ *   GET /{key}?density=&width=&height=          → binary .rc
+ *
+ * Endpoints are derived from [ScreenRegistry], so adding a screen exposes its full v1
+ * surface automatically — no per-endpoint wiring.
  */
 fun startScreenServer(port: Int) {
     val server = HttpServer.create(InetSocketAddress(port), 0)
@@ -25,31 +42,184 @@ fun startScreenServer(port: Int) {
         exchange.respondJson(200, """{"status":"ok","screens":${ScreenRegistry.screens.keys.jsonArray()}}""")
     }
 
+    server.createContext("/v1/analytics") { exchange -> exchange.serveAnalytics() }
+
     ScreenRegistry.screens.forEach { (key, screen) ->
-        server.createContext("/$key") { exchange -> exchange.serveScreen(key, screen::render) }
+        // JDK HttpServer routes by longest prefix; the deeper contexts win over the manifest.
+        server.createContext("/v1/screens/$key") { exchange -> exchange.serveManifest(key, screen) }
+        server.createContext("/v1/screens/$key/binary") { exchange -> exchange.serveBinary(key, screen) }
+        server.createContext("/v1/screens/$key/data") { exchange -> exchange.serveData(key, screen) }
+        // Legacy binary endpoint, kept for the CLI and manual inspection.
+        server.createContext("/$key") { exchange -> exchange.serveLegacyBinary(key, screen) }
     }
 
     server.executor = null
     server.start()
 
-    val endpoints = ScreenRegistry.screens.keys.sorted().joinToString("\n") { "    GET  http://localhost:$port/$it" }
+    val endpoints = ScreenRegistry.screens.keys.sorted().joinToString("\n") {
+        "    GET  http://localhost:$port/v1/screens/$it   (manifest → binary/{v}, data)"
+    }
     println(
         """
         🚀 Screen server running on port $port
 
-        Endpoints:
-            GET  http://localhost:$port/health
+        Consumer API (manifest-first):
         $endpoints
+            POST http://localhost:$port/v1/analytics
+            GET  http://localhost:$port/health
 
-        Query params (optional): density, width, height
-        e.g. http://localhost:$port/profile?density=3.0&width=360&height=800
+        Binary query params (optional): density, width, height
+        e.g. curl http://localhost:$port/v1/screens/profile
 
         Press Ctrl+C to stop
         """.trimIndent()
     )
 }
 
-private fun HttpExchange.serveScreen(key: String, factory: (RenderContext) -> ByteArray) {
+// ─── v1: manifest ─────────────────────────────────────────────────────────────
+
+private fun HttpExchange.serveManifest(key: String, screen: Screen) {
+    cors()
+    if (isPreflight()) return
+    // This context is the prefix fallback for /v1/screens/{key}/*; only the exact path is the manifest.
+    if (requestURI.path.trimEnd('/') != "/v1/screens/$key") {
+        respondJson(404, """{"error":"Unknown resource ${requestURI.path}"}""")
+        return
+    }
+    serveGetJsonBody {
+        val base = publicBaseUrl()
+        // Both binary and data accept GET (query params) AND POST (the standard
+        // {args, context} envelope); the method advertised here is what shipped clients
+        // will use — flipping a verb is a server-side change, no app release.
+        // Binary stays GET so its version-pinned URL remains cacheable at every layer.
+        ScreenManifest(
+            screen = key,
+            layoutVersion = screen.layoutVersion,
+            binary = EndpointRef("$base/v1/screens/$key/binary/${screen.layoutVersion}"),
+            data = EndpointRef("$base/v1/screens/$key/data", method = "POST"),
+            analytics = EndpointRef("$base/v1/analytics", method = "POST"),
+        ).toJson()
+    }
+}
+
+/**
+ * Builds the [ScreenRequest] from either transport:
+ *  - POST → body is the standard `{args, context}` envelope.
+ *  - GET  → `density`/`width`/`height` query params become the context; an optional
+ *           `args` query param carries URL-encoded JSON.
+ */
+private fun HttpExchange.screenRequest(): ScreenRequest {
+    if (requestMethod == "POST") {
+        val body = requestBody.readBytes().decodeToString()
+        return if (body.isBlank()) ScreenRequest() else ScreenRequest.fromJson(body)
+    }
+    val q = requestURI.rawQuery.parseQuery()
+    val argsJson = q["args"]?.let { URLDecoder.decode(it, Charsets.UTF_8) }
+    val args = argsJson?.let { ScreenRequest.fromJson("""{"args":$it}""").args }
+    return ScreenRequest(
+        args = args ?: ScreenRequest().args,
+        context = ClientContext(
+            density = q["density"]?.toFloatOrNull(),
+            widthDp = q["width"]?.toIntOrNull(),
+            heightDp = q["height"]?.toIntOrNull(),
+            safeAreaTop = q["safeAreaTop"]?.toIntOrNull(),
+            safeAreaBottom = q["safeAreaBottom"]?.toIntOrNull(),
+        ),
+    )
+}
+
+// ─── v1: per-user data (GET or POST envelope) ─────────────────────────────────
+
+private fun HttpExchange.serveData(key: String, screen: Screen) {
+    cors()
+    if (isPreflight()) return
+    if (requestMethod != "GET" && requestMethod != "POST") {
+        respondJson(405, """{"error":"Method not allowed. Use GET or POST."}""")
+        return
+    }
+    try {
+        val request = screenRequest()
+        val json = screen.data(request).toJson()
+        respondJson(200, json)
+        println("✓ $requestMethod /v1/screens/$key/data args=${request.args} → ${json.length} bytes")
+    } catch (e: Exception) {
+        respondJson(400, """{"error":"${e.message?.replace("\"", "'")}"}""")
+        System.err.println("✗ /v1/screens/$key/data failed: ${e.message}")
+    }
+}
+
+/**
+ * Base URL for the links we hand out, reconstructed from the request so the manifest works
+ * unchanged through localhost, adb-reverse, LAN IPs, or an HTTPS tunnel.
+ */
+private fun HttpExchange.publicBaseUrl(): String {
+    val proto = requestHeaders.getFirst("X-Forwarded-Proto") ?: "http"
+    val host = requestHeaders.getFirst("Host") ?: "localhost"
+    return "$proto://$host"
+}
+
+// ─── v1: version-pinned binary ────────────────────────────────────────────────
+
+private fun HttpExchange.serveBinary(key: String, screen: Screen) {
+    cors()
+    if (isPreflight()) return
+    if (requestMethod != "GET" && requestMethod != "POST") {
+        respondJson(405, """{"error":"Method not allowed. Use GET or POST."}""")
+        return
+    }
+    val requested = requestURI.path.removePrefix("/v1/screens/$key/binary").trim('/')
+    val version = requested.toIntOrNull()
+    if (version == null) {
+        respondJson(400, """{"error":"Missing or invalid version in path; expected /v1/screens/$key/binary/{version}"}""")
+        return
+    }
+    // The URL identifies immutable bytes; a stale version means the client's manifest is
+    // outdated — tell it to re-bootstrap rather than serving a layout it didn't expect.
+    if (version != screen.layoutVersion) {
+        respondJson(409, """{"error":"Stale layoutVersion $version","currentLayoutVersion":${screen.layoutVersion}}""")
+        return
+    }
+    try {
+        val request = screenRequest()
+        val binary = screen.render(request)
+        val ctx = request.context.toRenderContext()
+        responseHeaders.set("Content-Type", "application/octet-stream")
+        responseHeaders.set("Content-Disposition", "attachment; filename=\"$key-v$version.rc\"")
+        // Only GET responses are cacheable; POST is for callers that need the envelope.
+        if (requestMethod == "GET") {
+            responseHeaders.set("Cache-Control", "public, max-age=31536000, immutable")
+        }
+        sendResponseHeaders(200, binary.size.toLong())
+        responseBody.use { it.write(binary) }
+        println("✓ $requestMethod /v1/screens/$key/binary/$version density=${ctx.density} ${ctx.widthDp}x${ctx.heightDp}dp → ${binary.size} bytes")
+    } catch (e: Exception) {
+        respondJson(400, """{"error":"${e.message?.replace("\"", "'")}"}""")
+        System.err.println("✗ /v1/screens/$key/binary failed: ${e.message}")
+    }
+}
+
+// ─── v1: analytics ingest (stub) ──────────────────────────────────────────────
+
+/**
+ * Accepts the JSON payloads baked by the authoring analytics DSL (HostActionAnalyticsApi)
+ * and forwarded by the consumer. Stub implementation: logs and acknowledges — swap the
+ * println for a queue/warehouse write without touching the consumer.
+ */
+private fun HttpExchange.serveAnalytics() {
+    cors()
+    if (isPreflight()) return
+    if (requestMethod != "POST") {
+        respondJson(405, """{"error":"Method not allowed. Use POST."}""")
+        return
+    }
+    val body = requestBody.readBytes().decodeToString()
+    println("📊 /v1/analytics ← $body")
+    respondJson(202, """{"accepted":true}""")
+}
+
+// ─── legacy binary (CLI / manual) ─────────────────────────────────────────────
+
+private fun HttpExchange.serveLegacyBinary(key: String, screen: Screen) {
     cors()
     if (isPreflight()) return
     if (requestMethod != "GET") {
@@ -58,15 +228,39 @@ private fun HttpExchange.serveScreen(key: String, factory: (RenderContext) -> By
     }
     try {
         val ctx = renderContext()
-        val binary = factory(ctx)
+        val binary = screen.render(ctx)
         responseHeaders.set("Content-Type", "application/octet-stream")
         responseHeaders.set("Content-Disposition", "attachment; filename=\"$key.rc\"")
         sendResponseHeaders(200, binary.size.toLong())
         responseBody.use { it.write(binary) }
-        println("✓ /$key density=${ctx.density} ${ctx.widthDp}x${ctx.heightDp}dp → ${binary.size} bytes")
+        println("✓ /$key (legacy) density=${ctx.density} ${ctx.widthDp}x${ctx.heightDp}dp → ${binary.size} bytes")
     } catch (e: Exception) {
         respondJson(400, """{"error":"${e.message?.replace("\"", "'")}"}""")
         System.err.println("✗ /$key failed: ${e.message}")
+    }
+}
+
+// ─── shared plumbing ──────────────────────────────────────────────────────────
+
+/** GET-only JSON endpoint with CORS; body built lazily so errors surface as 500 JSON. */
+private fun HttpExchange.serveGetJson(body: () -> String) {
+    cors()
+    if (isPreflight()) return
+    serveGetJsonBody(body)
+}
+
+private fun HttpExchange.serveGetJsonBody(body: () -> String) {
+    if (requestMethod != "GET") {
+        respondJson(405, """{"error":"Method not allowed. Use GET."}""")
+        return
+    }
+    try {
+        val json = body()
+        respondJson(200, json)
+        println("✓ ${requestURI.path} → ${json.length} bytes")
+    } catch (e: Exception) {
+        respondJson(500, """{"error":"${e.message?.replace("\"", "'")}"}""")
+        System.err.println("✗ ${requestURI.path} failed: ${e.message}")
     }
 }
 
@@ -91,7 +285,7 @@ private fun String?.parseQuery(): Map<String, String> =
 
 private fun HttpExchange.cors() {
     responseHeaders.set("Access-Control-Allow-Origin", "*")
-    responseHeaders.set("Access-Control-Allow-Methods", "GET, OPTIONS")
+    responseHeaders.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
     responseHeaders.set("Access-Control-Allow-Headers", "Content-Type")
 }
 

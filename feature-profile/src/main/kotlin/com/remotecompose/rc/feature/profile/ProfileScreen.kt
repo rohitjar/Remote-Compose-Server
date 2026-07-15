@@ -5,8 +5,10 @@ package com.remotecompose.rc.feature.profile
 import androidx.compose.remote.creation.Rc
 import androidx.compose.remote.creation.dsl.Modifier
 import androidx.compose.remote.creation.dsl.RcHorizontalPositioning
+import androidx.compose.remote.creation.dsl.RcInteger
 import androidx.compose.remote.creation.dsl.RcPaintStyle
 import androidx.compose.remote.creation.dsl.RcScope
+import androidx.compose.remote.creation.dsl.RcText
 import androidx.compose.remote.creation.dsl.RcVerticalPositioning
 import androidx.compose.remote.creation.dsl.background
 import androidx.compose.remote.creation.dsl.clip
@@ -16,6 +18,7 @@ import androidx.compose.remote.creation.dsl.fillMaxWidth
 import androidx.compose.remote.creation.dsl.height
 import androidx.compose.remote.creation.dsl.size
 import androidx.compose.remote.creation.dsl.verticalScroll
+import androidx.compose.remote.creation.dsl.visibility
 import androidx.compose.remote.creation.dsl.width
 import androidx.compose.remote.creation.dsl.wrapContentHeight
 import androidx.compose.remote.creation.dsl.wrapContentSize
@@ -32,9 +35,24 @@ import com.remotecompose.rc.theme.Icons
 
 fun ProfileScreen(
     ctx: RenderContext = RenderContext(),
-    data: ProfileScreenData = ProfileScreenData(),
 ): ByteArray =
     rcDocument(ctx) {
+        // Named USER: slots — every per-user value lives here so the binary itself is
+        // user-agnostic (one cached skeleton for all users; the consumer fills these via
+        // StateUpdater.setUserLocal*). MUST stay at document root: nested declarations
+        // never register in the player's variable table and overrides silently no-op.
+        // Bare slot names (after USER:) must match the keys in ProfileScreenData.toScreenData().
+        val name        = remoteNamedText("USER:profile.name", "")
+        val initials    = remoteNamedText("USER:profile.initials", "")
+        val phone       = remoteNamedText("USER:profile.phone", "")
+        val age         = remoteNamedText("USER:profile.age", "")
+        val gender      = remoteNamedText("USER:profile.gender", "")
+        val upi         = remoteNamedText("USER:profile.upi", "")
+        val addresses   = remoteNamedText("USER:profile.addressCount", "")
+        // KYC renders both variants; these toggles show exactly one (1=VISIBLE, 0=GONE).
+        val kycVerified = remoteNamedInteger("USER:profile.kyc.verified", 0)
+        val kycPending  = remoteNamedInteger("USER:profile.kyc.pending", 1)
+
         // Safe-area strips match the profile card band (purple900); the content
         // column paints its own bgProfile surface so rows keep their color.
         Box(
@@ -81,7 +99,7 @@ fun ProfileScreen(
                         }
                         Spacer(modifier = Modifier.width(6.rdp))
                         Text(
-                            text = data.title,
+                            text = "Profile",
                             color = Colors.textPrimary,
                             fontSize = 14.rsp,
                             fontWeight = 700f,
@@ -94,9 +112,9 @@ fun ProfileScreen(
                 ) {
                     // Profile card (avatar + name + phone) — exact Figma "main details" frame.
                     ProfileCard(
-                        initials = data.userInitials,
-                        name = data.userName,
-                        phone = data.phoneNumber,
+                        initials = initials,
+                        name = name,
+                        phone = phone,
                     )
 
                     // "Profile Details" header + edit icon.
@@ -128,34 +146,34 @@ fun ProfileScreen(
                             .padding(start = 16.rdp, end = 16.rdp),
                     ) {
                         Column(modifier = Modifier.fillMaxWidth()) {
-                            ProfileRowItem(label = "Name", value = data.userName)
+                            ProfileRowItem(label = "Name", value = name)
                             RowGap()
-                            ProfileRowItem(label = "Mobile ", value = data.phoneNumber)
+                            ProfileRowItem(label = "Mobile ", value = phone)
                             RowGap()
                             ProfileRowItem(
                                 label = "Age",
-                                value = data.age,
+                                value = age,
                                 actionPayload = "dl.myjar.app/dynamicUI/greeting"
                             )
                             RowGap()
                             ProfileRowItem(
                                 label = "Gender",
-                                value = data.gender,
+                                value = gender,
                                 actionPayload = "dl.myjar.app/dynamicUI/image_list"
                             )
                             RowGap()
-                            KycRow(isVerified = data.kycVerified)
+                            KycRow(verifiedVis = kycVerified, pendingVis = kycPending)
                             RowGap()
                             ProfileRowItem(
                                 label = "Manage UPI ID",
-                                value = data.primaryUpiId,
+                                value = upi,
                                 trailingChevron = true,
                                 actionPayload = "dl.myjar.app/dynamicUI/button"
                             )
                             RowGap()
                             ProfileRowItem(
                                 label = "Saved Addresses",
-                                value = data.savedAddressCount.toString(),
+                                value = addresses,
                                 trailingChevron = true,
                                 actionPayload = "dl.myjar.app/savedAddress",
                             )
@@ -177,7 +195,7 @@ private fun RcScope.RowGap() {
     Box(modifier = Modifier.fillMaxWidth().height(16.rdp)) {}
 }
 
-private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
+private fun RcScope.ProfileCard(initials: RcText, name: RcText, phone: RcText) {
     val cardShape   = RoundedRectShape(16.rdp.value, 16.rdp.value, 0.rdp.value, 0.rdp.value) // top corners only
     val avatarShape = RoundedRectShape(30.rdp.value, 30.rdp.value, 30.rdp.value, 30.rdp.value) // 60dp circle
     val bandShape   = RoundedRectShape(0.rdp.value, 0.rdp.value, 8.rdp.value, 8.rdp.value)    // bottom corners only (Figma: 8dp)
@@ -347,12 +365,11 @@ private fun RcScope.ProfileCard(initials: String, name: String, phone: String) {
 
 private fun RcScope.ProfileRowItem(
     label: String,
-    value: String = "",
+    value: RcText? = null,
     trailingChevron: Boolean = false,
     actionName: String = "deeplink",
     actionPayload: String? = null,
 ) {
-    val hasValue = value.isNotEmpty()
     Column(modifier = Modifier.fillMaxWidth()) {
         var rowModifier = Modifier
             .fillMaxWidth()
@@ -382,7 +399,7 @@ private fun RcScope.ProfileRowItem(
                     fontWeight = 700f,
                 )
             }
-            if (hasValue) {
+            if (value != null) {
                 Box(modifier = Modifier.width(24.rdp).wrapContentHeight()) {}
                 Text(
                     text = value,
@@ -402,7 +419,9 @@ private fun RcScope.ProfileRowItem(
     }
 }
 
-private fun RcScope.KycRow(isVerified: Boolean) {
+// Bakes BOTH the "Verified" chip and the "Complete Now" text; the consumer shows exactly
+// one by setting the profile.kyc.verified / profile.kyc.pending ints (1=VISIBLE, 0=GONE).
+private fun RcScope.KycRow(verifiedVis: RcInteger, pendingVis: RcInteger) {
     val chipShape = RoundedRectShape(8.rdp.value, 8.rdp.value, 8.rdp.value, 8.rdp.value)
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -434,37 +453,36 @@ private fun RcScope.KycRow(isVerified: Boolean) {
             }
             Box(modifier = Modifier.width(24.rdp).wrapContentHeight()) {}
 
-            if (isVerified) {
-                Box(
-                    modifier = Modifier
-                        .wrapContentHeight()
-                        .clip(chipShape)
-                        .background(Colors.green600)
-                        .padding(8.rdp, 4.rdp, 10.rdp, 4.rdp),
+            Box(
+                modifier = Modifier
+                    .visibility(verifiedVis)
+                    .wrapContentHeight()
+                    .clip(chipShape)
+                    .background(Colors.green600)
+                    .padding(8.rdp, 4.rdp, 10.rdp, 4.rdp),
+                vertical = RcVerticalPositioning.Center,
+            ) {
+                Row(
+                    modifier = Modifier.wrapContentHeight(),
                     vertical = RcVerticalPositioning.Center,
                 ) {
-                    Row(
-                        modifier = Modifier.wrapContentHeight(),
-                        vertical = RcVerticalPositioning.Center,
-                    ) {
-                        RemoteUrlImage(Icons.check, Modifier.size(16.rdp, 16.rdp))
-                        Box(modifier = Modifier.width(4.rdp).wrapContentHeight()) {}
-                        Text(
-                            text = "Verified",
-                            color = Colors.textPrimary,
-                            fontSize = 14.rsp,
-                            fontWeight = 500f,
-                        )
-                    }
+                    RemoteUrlImage(Icons.check, Modifier.size(16.rdp, 16.rdp))
+                    Box(modifier = Modifier.width(4.rdp).wrapContentHeight()) {}
+                    Text(
+                        text = "Verified",
+                        color = Colors.textPrimary,
+                        fontSize = 14.rsp,
+                        fontWeight = 500f,
+                    )
                 }
-            } else {
-                Text(
-                    text = "Complete Now",
-                    color = Colors.textPrimary,
-                    fontSize = 14.rsp,
-                    fontWeight = 500f,
-                )
             }
+            Text(
+                text = "Complete Now",
+                color = Colors.textPrimary,
+                fontSize = 14.rsp,
+                fontWeight = 500f,
+                modifier = Modifier.visibility(pendingVis),
+            )
 
             // flexible spacer pushes the chevron to the right edge (Figma)
             Spacer(modifier = Modifier.weight(0.5f))

@@ -6,6 +6,10 @@
 
 This is a standalone reference for building server-driven UI (SDUI) with Remote Compose: how it works internally, the full authoring (creation) and runtime (player) API surface, the three ways to change a running document, the gotchas we proved empirically, and the architecture options for scaling.
 
+> **See also:** [ARCHITECTURE.md](ARCHITECTURE.md) — the shared-binary architecture this
+> project implements on top of these mechanics (one cached binary per layout version,
+> per-user data injected client-side via named `USER:` slots).
+
 ---
 
 ## 0. TL;DR & mental model
