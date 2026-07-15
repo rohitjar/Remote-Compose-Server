@@ -151,11 +151,21 @@ private fun HttpExchange.serveData(key: String, screen: Screen) {
 /**
  * Base URL for the links we hand out, reconstructed from the request so the manifest works
  * unchanged through localhost, adb-reverse, LAN IPs, or an HTTPS tunnel.
+ *
+ * When the server sits behind a path-prefixed reverse proxy (e.g. nginx routing
+ * `https://host/rc/*` → `localhost:8091/*`), the prefix the proxy strips must be restored,
+ * or the links point at the wrong upstream. Two ways, in precedence order:
+ *  1. `RC_PUBLIC_BASE_URL` env var — used verbatim (e.g. `https://host/rc`); no proxy
+ *     config needed.
+ *  2. `X-Forwarded-Prefix` header — set by the proxy (`proxy_set_header X-Forwarded-Prefix /rc;`).
  */
 private fun HttpExchange.publicBaseUrl(): String {
+    System.getenv("RC_PUBLIC_BASE_URL")?.takeIf { it.isNotBlank() }?.let { return it.trimEnd('/') }
     val proto = requestHeaders.getFirst("X-Forwarded-Proto") ?: "http"
     val host = requestHeaders.getFirst("Host") ?: "localhost"
-    return "$proto://$host"
+    val prefix = requestHeaders.getFirst("X-Forwarded-Prefix")
+        ?.trim('/')?.takeIf { it.isNotEmpty() }?.let { "/$it" }.orEmpty()
+    return "$proto://$host$prefix"
 }
 
 // ─── v1: version-pinned binary ────────────────────────────────────────────────
