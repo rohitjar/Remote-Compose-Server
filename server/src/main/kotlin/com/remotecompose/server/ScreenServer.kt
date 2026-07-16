@@ -8,6 +8,7 @@ import com.remotecompose.rc.core.ScreenManifest
 import com.remotecompose.rc.core.ScreenRequest
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
+import java.io.File
 import java.net.InetSocketAddress
 import java.net.URLDecoder
 
@@ -31,6 +32,11 @@ import java.net.URLDecoder
  *   POST /v1/parse                              → body is a RemoteCompose JSON document
  *          (the official androidx-main JSON format) → binary .rc bytes, parsed by
  *          androidx.compose.remote.creation.json.RemoteComposeJsonParser.
+ *   POST /v1/parse/{name}                       → same body, but SAVES the binary as
+ *          {name}.rc in the documents dir ($RC_DOCUMENTS_DIR, default ./rc-documents)
+ *          and returns JSON {name, bytes, path, url}.
+ *   GET  /v1/documents                          → list saved documents (JSON)
+ *   GET  /v1/documents/{name}.rc                → serve a saved binary
  *
  * Legacy convenience endpoint (CLI / manual curl, not used by the app):
  *
@@ -51,6 +57,8 @@ fun startScreenServer(port: Int) {
     server.createContext("/v1/analytics") { exchange -> exchange.serveAnalytics() }
 
     server.createContext("/v1/parse") { exchange -> exchange.serveParse() }
+
+    server.createContext("/v1/documents") { exchange -> exchange.serveDocument() }
 
     ScreenRegistry.screens.forEach { (key, screen) ->
         // JDK HttpServer routes by longest prefix; the deeper contexts win over the manifest.
@@ -219,10 +227,19 @@ private fun HttpExchange.serveBinary(key: String, screen: Screen) {
 
 // ─── v1: RemoteCompose JSON document → binary ─────────────────────────────────
 
+/** Where `POST /v1/parse/{name}` saves binaries and `GET /v1/documents/{name}.rc` serves them from. */
+private val documentsDir: File
+    get() = File(System.getenv("RC_DOCUMENTS_DIR")?.takeIf { it.isNotBlank() } ?: "rc-documents")
+
+private val documentNameRegex = Regex("[A-Za-z0-9_-]+")
+
 /**
  * Parses a RemoteCompose JSON document (the official androidx-main JSON format —
  * `{header, resources, root}`) straight into the binary .rc encoding via
  * [parseRemoteComposeJson], which also understands URL `bitmap` ids.
+ *
+ * `POST /v1/parse` returns the binary directly; `POST /v1/parse/{name}` saves it as
+ * `{name}.rc` in [documentsDir] and returns JSON with the saved path and serving URL.
  */
 private fun HttpExchange.serveParse() {
     cors()
@@ -232,21 +249,73 @@ private fun HttpExchange.serveParse() {
         return
     }
     try {
+        val name = requestURI.path.removePrefix("/v1/parse").trim('/').removeSuffix(".rc")
+        if (name.isNotEmpty() && !name.matches(documentNameRegex)) {
+            respondJson(400, """{"error":"Invalid document name '$name'; use letters, digits, _ or -"}""")
+            return
+        }
         val json = requestBody.readBytes().decodeToString()
         if (json.isBlank()) {
             respondJson(400, """{"error":"Empty body; expected a RemoteCompose JSON document"}""")
             return
         }
         val binary = parseRemoteComposeJson(json)
-        responseHeaders.set("Content-Type", "application/octet-stream")
-        responseHeaders.set("Content-Disposition", "attachment; filename=\"document.rc\"")
-        sendResponseHeaders(200, binary.size.toLong())
-        responseBody.use { it.write(binary) }
-        println("✓ POST /v1/parse ← ${json.length} chars JSON → ${binary.size} bytes")
+        if (name.isEmpty()) {
+            responseHeaders.set("Content-Type", "application/octet-stream")
+            responseHeaders.set("Content-Disposition", "attachment; filename=\"document.rc\"")
+            sendResponseHeaders(200, binary.size.toLong())
+            responseBody.use { it.write(binary) }
+            println("✓ POST /v1/parse ← ${json.length} chars JSON → ${binary.size} bytes")
+            return
+        }
+        documentsDir.mkdirs()
+        val file = File(documentsDir, "$name.rc")
+        file.writeBytes(binary)
+        val url = "${publicBaseUrl()}/v1/documents/$name.rc"
+        respondJson(
+            200,
+            """{"name":"$name","bytes":${binary.size},"path":"${file.absolutePath}","url":"$url"}"""
+        )
+        println("✓ POST /v1/parse/$name ← ${json.length} chars JSON → ${binary.size} bytes saved to ${file.absolutePath}")
     } catch (e: Exception) {
         respondJson(400, """{"error":"${e.message?.replace("\"", "'")}"}""")
         System.err.println("✗ /v1/parse failed: ${e.message}")
     }
+}
+
+/**
+ * `GET /v1/documents` lists saved documents; `GET /v1/documents/{name}.rc` serves one.
+ * Names are validated against [documentNameRegex], which also rules out path traversal.
+ */
+private fun HttpExchange.serveDocument() {
+    cors()
+    if (isPreflight()) return
+    if (requestMethod != "GET") {
+        respondJson(405, """{"error":"Method not allowed. Use GET."}""")
+        return
+    }
+    val name = requestURI.path.removePrefix("/v1/documents").trim('/').removeSuffix(".rc")
+    if (name.isEmpty()) {
+        val docs = documentsDir.listFiles { f -> f.extension == "rc" }
+            ?.map { it.nameWithoutExtension }?.sorted() ?: emptyList()
+        respondJson(200, """{"documents":${docs.jsonArray()}}""")
+        return
+    }
+    if (!name.matches(documentNameRegex)) {
+        respondJson(400, """{"error":"Invalid document name '$name'"}""")
+        return
+    }
+    val file = File(documentsDir, "$name.rc")
+    if (!file.isFile) {
+        respondJson(404, """{"error":"No saved document named '$name'"}""")
+        return
+    }
+    val binary = file.readBytes()
+    responseHeaders.set("Content-Type", "application/octet-stream")
+    responseHeaders.set("Content-Disposition", "attachment; filename=\"$name.rc\"")
+    sendResponseHeaders(200, binary.size.toLong())
+    responseBody.use { it.write(binary) }
+    println("✓ GET /v1/documents/$name.rc → ${binary.size} bytes")
 }
 
 // ─── v1: analytics ingest (stub) ──────────────────────────────────────────────

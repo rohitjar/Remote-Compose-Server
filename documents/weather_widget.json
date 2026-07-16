@@ -3,15 +3,16 @@
     "width": 330,
     "height": 700,
     "contentDescription": "Aurum Playground document",
-    "apiLevel": 8,
-    "densityBehavior": 2
+    "apiLevel": 7
   },
   "root": {
     "column": {
       "verticalAlignment": "top",
       "horizontalAlignment": "start",
       "modifiers": [
-        "fillMaxSize",
+        {
+          "fillMaxSize": 1
+        },
         {
           "background": "#201929"
         }
@@ -30,7 +31,7 @@
               {
                 "text": {
                   "value": "Profile",
-                  "fontSize": 18,
+                  "fontSize": "18 * windowWidth / 360",
                   "fontWeight": 600,
                   "color": "#F6F7FA"
                 }
@@ -42,6 +43,11 @@
           "column": {
             "verticalAlignment": "top",
             "horizontalAlignment": "start",
+            "modifiers": [
+              {
+                "fillMaxWidth": 1
+              }
+            ],
             "children": [
               {
                 "box": {
@@ -78,6 +84,9 @@
                         "verticalAlignment": "center",
                         "modifiers": [
                           {
+                            "fillMaxWidth": 1
+                          },
+                          {
                             "background": "#5A21A3"
                           },
                           {
@@ -94,7 +103,7 @@
                           {
                             "offset": [
                               0,
-                              8
+                              "8 * windowWidth / 360"
                             ]
                           }
                         ],
@@ -105,10 +114,10 @@
                               "verticalAlignment": "center",
                               "modifiers": [
                                 {
-                                  "width": 60
+                                  "width": "60 * windowWidth / 360"
                                 },
                                 {
-                                  "height": 60
+                                  "height": "60 * windowWidth / 360"
                                 },
                                 {
                                   "background": "#FFFFFF"
@@ -118,7 +127,7 @@
                                 {
                                   "text": {
                                     "value": "AS",
-                                    "fontSize": 24,
+                                    "fontSize": "24 * windowWidth / 360",
                                     "fontWeight": 700,
                                     "color": "#7029CC",
                                     "modifiers": [
@@ -139,7 +148,7 @@
                                 {
                                   "text": {
                                     "value": "Aurum",
-                                    "fontSize": 16,
+                                    "fontSize": "16 * windowWidth / 360",
                                     "fontWeight": 700,
                                     "color": "#ffffff",
                                     "textAlign": "center"
@@ -149,7 +158,7 @@
                                   "spacer": {
                                     "modifiers": [
                                       {
-                                        "height": 5
+                                        "height": "5 * windowWidth / 360"
                                       }
                                     ]
                                   }
@@ -157,7 +166,7 @@
                                 {
                                   "text": {
                                     "value": "+91-9869409330",
-                                    "fontSize": 14,
+                                    "fontSize": "14 * windowWidth / 360",
                                     "fontWeight": 500,
                                     "color": "#ffffff",
                                     "textAlign": "center"
@@ -189,6 +198,9 @@
                 }
               },
               {
+                "fillMaxWidth": 1
+              },
+              {
                 "background": "#201929"
               },
               {
@@ -197,7 +209,7 @@
               {
                 "offset": [
                   0,
-                  -1
+                  "-1 * windowWidth / 360"
                 ]
               }
             ],
@@ -206,7 +218,7 @@
                 "spacer": {
                   "modifiers": [
                     {
-                      "height": 22
+                      "height": "22 * windowWidth / 360"
                     }
                   ]
                 }
@@ -215,11 +227,16 @@
                 "row": {
                   "horizontalAlignment": "spaceBetween",
                   "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "fillMaxWidth": 1
+                    }
+                  ],
                   "children": [
                     {
                       "text": {
                         "value": "Profile Details",
-                        "fontSize": 16,
+                        "fontSize": "16 * windowWidth / 360",
                         "fontWeight": 700,
                         "color": "#ffffff"
                       }
@@ -230,10 +247,10 @@
                         "verticalAlignment": "center",
                         "modifiers": [
                           {
-                            "width": 32
+                            "width": "32 * windowWidth / 360"
                           },
                           {
-                            "height": 32
+                            "height": "32 * windowWidth / 360"
                           },
                           {
                             "background": "#372B47"
@@ -247,10 +264,10 @@
                             "box": {
                               "modifiers": [
                                 {
-                                  "width": 16
+                                  "width": "16 * windowWidth / 360"
                                 },
                                 {
-                                  "height": 16
+                                  "height": "16 * windowWidth / 360"
                                 }
                               ]
                             }
@@ -265,7 +282,7 @@
                 "spacer": {
                   "modifiers": [
                     {
-                      "height": 8
+                      "height": "8 * windowWidth / 360"
                     }
                   ]
                 }
@@ -282,13 +299,16 @@
                         "end": 0,
                         "bottom": 14
                       }
+                    },
+                    {
+                      "fillMaxWidth": 1
                     }
                   ],
                   "children": [
                     {
                       "text": {
                         "value": "Age",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#beb4cc",
                         "overflow": "ellipsis",
@@ -302,7 +322,7 @@
                     {
                       "text": {
                         "value": "28",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#ffffff",
                         "overflow": "ellipsis",
@@ -343,13 +363,16 @@
                         "end": 0,
                         "bottom": 14
                       }
+                    },
+                    {
+                      "fillMaxWidth": 1
                     }
                   ],
                   "children": [
                     {
                       "text": {
                         "value": "Gender",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#beb4cc",
                         "overflow": "ellipsis",
@@ -363,7 +386,7 @@
                     {
                       "text": {
                         "value": "Male",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#ffffff",
                         "overflow": "ellipsis",
@@ -404,13 +427,16 @@
                         "end": 0,
                         "bottom": 12
                       }
+                    },
+                    {
+                      "fillMaxWidth": 1
                     }
                   ],
                   "children": [
                     {
                       "text": {
                         "value": "KYC Verification",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#beb4cc",
                         "overflow": "ellipsis",
@@ -437,7 +463,7 @@
                               "verticalAlignment": "center",
                               "modifiers": [
                                 {
-                                  "height": 30
+                                  "height": "30 * windowWidth / 360"
                                 },
                                 {
                                   "background": "#14CC52"
@@ -447,7 +473,7 @@
                                 {
                                   "text": {
                                     "value": "Verified",
-                                    "fontSize": 14,
+                                    "fontSize": "14 * windowWidth / 360",
                                     "fontWeight": 600,
                                     "color": "#ffffff"
                                   }
@@ -459,7 +485,7 @@
                             "spacer": {
                               "modifiers": [
                                 {
-                                  "width": 16
+                                  "width": "16 * windowWidth / 360"
                                 }
                               ]
                             }
@@ -471,10 +497,10 @@
                                   "weight": 1
                                 },
                                 {
-                                  "width": 18
+                                  "width": "18 * windowWidth / 360"
                                 },
                                 {
-                                  "height": 18
+                                  "height": "18 * windowWidth / 360"
                                 }
                               ]
                             }
@@ -512,13 +538,16 @@
                         "end": 0,
                         "bottom": 14
                       }
+                    },
+                    {
+                      "fillMaxWidth": 1
                     }
                   ],
                   "children": [
                     {
                       "text": {
                         "value": "Manage UPI ID",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#beb4cc",
                         "overflow": "ellipsis",
@@ -542,7 +571,7 @@
                           {
                             "text": {
                               "value": "9999999999@ybl",
-                              "fontSize": 14,
+                              "fontSize": "14 * windowWidth / 360",
                               "fontWeight": 500,
                               "color": "#ffffff",
                               "overflow": "ellipsis"
@@ -552,10 +581,10 @@
                             "box": {
                               "modifiers": [
                                 {
-                                  "width": 18
+                                  "width": "18 * windowWidth / 360"
                                 },
                                 {
-                                  "height": 18
+                                  "height": "18 * windowWidth / 360"
                                 }
                               ]
                             }
@@ -593,13 +622,16 @@
                         "end": 0,
                         "bottom": 14
                       }
+                    },
+                    {
+                      "fillMaxWidth": 1
                     }
                   ],
                   "children": [
                     {
                       "text": {
                         "value": "Saved Addresses",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#beb4cc",
                         "overflow": "ellipsis",
@@ -623,7 +655,7 @@
                           {
                             "text": {
                               "value": "2",
-                              "fontSize": 14,
+                              "fontSize": "14 * windowWidth / 360",
                               "fontWeight": 500,
                               "color": "#ffffff",
                               "overflow": "ellipsis"
@@ -633,7 +665,7 @@
                             "spacer": {
                               "modifiers": [
                                 {
-                                  "width": 12
+                                  "width": "12 * windowWidth / 360"
                                 }
                               ]
                             }
@@ -642,10 +674,10 @@
                             "box": {
                               "modifiers": [
                                 {
-                                  "width": 18
+                                  "width": "18 * windowWidth / 360"
                                 },
                                 {
-                                  "height": 18
+                                  "height": "18 * windowWidth / 360"
                                 }
                               ]
                             }
@@ -683,13 +715,16 @@
                         "end": 0,
                         "bottom": 14
                       }
+                    },
+                    {
+                      "fillMaxWidth": 1
                     }
                   ],
                   "children": [
                     {
                       "text": {
                         "value": "Nominee Details",
-                        "fontSize": 14,
+                        "fontSize": "14 * windowWidth / 360",
                         "fontWeight": 500,
                         "color": "#beb4cc",
                         "overflow": "ellipsis",
@@ -704,7 +739,7 @@
                       "spacer": {
                         "modifiers": [
                           {
-                            "width": 12
+                            "width": "12 * windowWidth / 360"
                           }
                         ]
                       }
@@ -713,10 +748,10 @@
                       "box": {
                         "modifiers": [
                           {
-                            "width": 18
+                            "width": "18 * windowWidth / 360"
                           },
                           {
-                            "height": 18
+                            "height": "18 * windowWidth / 360"
                           }
                         ]
                       }
