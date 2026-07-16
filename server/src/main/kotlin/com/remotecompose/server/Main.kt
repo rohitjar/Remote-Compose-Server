@@ -3,8 +3,11 @@ package com.remotecompose.server
 import com.remotecompose.rc.core.RenderContext
 import java.io.File
 
-/** Default output directory for `--compose` when no output path is given. */
+/** Default output directory for `--compose` / `--parse` when no output path is given. */
 private const val DEFAULT_OUTPUT_DIR = "/Users/rohitkumar/AndroidStudioProjects/RemoteCompose/app/src/main/assets"
+
+/** Where `--parse <name>` looks for `<name>.json` RemoteCompose JSON documents. */
+private const val DEFAULT_JSON_DIR = "documents"
 
 /**
  * Remote Compose Server — server-driven-UI entry point.
@@ -12,6 +15,8 @@ private const val DEFAULT_OUTPUT_DIR = "/Users/rohitkumar/AndroidStudioProjects/
  * Modes:
  *   HTTP server (default):  ./gradlew :server:run --args="--serve 8080"
  *   Render to file (CLI):   ./gradlew :server:run --args="--compose profile out.rc --density 3.0"
+ *   JSON doc to file (CLI): ./gradlew :server:run --args="--parse home"
+ *                           (reads documents/home.json → assets/home.rc via RemoteComposeJsonParser)
  *   Inspect a .rc file:     ./gradlew :server:run --args="--test-inflate"
  *
  * (The JSON editor / DocumentBuilder path lives in the standalone :dashboard-server.)
@@ -21,6 +26,8 @@ fun main(args: Array<String>) {
         "--test-inflate" -> testInflate()
 
         "--compose" -> compose(args)
+
+        "--parse" -> parseJsonDocument(args)
 
         "--help", "-h" -> printUsage()
 
@@ -63,6 +70,38 @@ private fun compose(args: Array<String>) {
     println("✓ Success! ${binary.size} bytes written to ${outputFile.absolutePath}")
 }
 
+/**
+ * `--parse <name|path.json> [output.rc]`
+ * — parse a RemoteCompose JSON document (official androidx-main format) to a binary .rc
+ * file via [RemoteComposeJsonParser]. A bare name resolves to `documents/<name>.json`;
+ * output defaults to `$DEFAULT_OUTPUT_DIR/<name>.rc`.
+ */
+private fun parseJsonDocument(args: Array<String>) {
+    val name = args.getOrNull(1) ?: run {
+        System.err.println("Usage: --parse <name|path.json> [output.rc]")
+        System.err.println("Available: ${availableJsonDocuments()}")
+        return
+    }
+    val jsonFile = File(name).takeIf { it.isFile } ?: File(DEFAULT_JSON_DIR, "$name.json")
+    if (!jsonFile.isFile) {
+        System.err.println("JSON document not found: ${jsonFile.absolutePath}")
+        System.err.println("Available: ${availableJsonDocuments()}")
+        return
+    }
+    val positional = args.drop(1).filterNot { it.startsWith("--") }
+    val outputFile = File(positional.getOrElse(1) { "$DEFAULT_OUTPUT_DIR/${jsonFile.nameWithoutExtension}.rc" })
+    println("Parsing: ${jsonFile.name} → ${outputFile.name}")
+    val binary = parseRemoteComposeJson(jsonFile.readText())
+    outputFile.writeBytes(binary)
+    println("✓ Success! ${binary.size} bytes written to ${outputFile.absolutePath}")
+}
+
+private fun availableJsonDocuments(): String =
+    File(DEFAULT_JSON_DIR).listFiles { f -> f.extension == "json" }
+        ?.map { it.nameWithoutExtension }?.sorted()?.joinToString()
+        ?.ifEmpty { "(none)" }
+        ?: "(no $DEFAULT_JSON_DIR/ directory)"
+
 /** Parses `--flag value` pairs out of the raw CLI args, e.g. `--density 3.0`. */
 private fun parseFlags(args: Array<String>): Map<String, String> =
     args.withIndex()
@@ -78,6 +117,7 @@ private fun printUsage() {
         Usage:
           HTTP server:      ./gradlew :server:run --args="--serve 8080"
           Render to file:   ./gradlew :server:run --args="--compose <screen> [out.rc] [--density D] [--width W] [--height H]"
+          JSON doc to file: ./gradlew :server:run --args="--parse <name|path.json> [out.rc]"
 
         Screens: ${ScreenRegistry.screens.keys.joinToString()}
         """.trimIndent()

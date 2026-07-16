@@ -26,6 +26,12 @@ import java.net.URLDecoder
  *   GET  /v1/screens/{key}/data                 → per-user ScreenData JSON
  *   POST /v1/analytics                          → host-action analytics events (ingest stub)
  *
+ * Ad-hoc document authoring (no registered Screen involved):
+ *
+ *   POST /v1/parse                              → body is a RemoteCompose JSON document
+ *          (the official androidx-main JSON format) → binary .rc bytes, parsed by
+ *          androidx.compose.remote.creation.json.RemoteComposeJsonParser.
+ *
  * Legacy convenience endpoint (CLI / manual curl, not used by the app):
  *
  *   GET /{key}?density=&width=&height=          → binary .rc
@@ -43,6 +49,8 @@ fun startScreenServer(port: Int) {
     }
 
     server.createContext("/v1/analytics") { exchange -> exchange.serveAnalytics() }
+
+    server.createContext("/v1/parse") { exchange -> exchange.serveParse() }
 
     ScreenRegistry.screens.forEach { (key, screen) ->
         // JDK HttpServer routes by longest prefix; the deeper contexts win over the manifest.
@@ -66,6 +74,7 @@ fun startScreenServer(port: Int) {
         Consumer API (manifest-first):
         $endpoints
             POST http://localhost:$port/v1/analytics
+            POST http://localhost:$port/v1/parse   (RemoteCompose JSON document → .rc binary)
             GET  http://localhost:$port/health
 
         Binary query params (optional): density, width, height
@@ -205,6 +214,38 @@ private fun HttpExchange.serveBinary(key: String, screen: Screen) {
     } catch (e: Exception) {
         respondJson(400, """{"error":"${e.message?.replace("\"", "'")}"}""")
         System.err.println("✗ /v1/screens/$key/binary failed: ${e.message}")
+    }
+}
+
+// ─── v1: RemoteCompose JSON document → binary ─────────────────────────────────
+
+/**
+ * Parses a RemoteCompose JSON document (the official androidx-main JSON format —
+ * `{header, resources, root}`) straight into the binary .rc encoding via
+ * [parseRemoteComposeJson], which also understands URL `bitmap` ids.
+ */
+private fun HttpExchange.serveParse() {
+    cors()
+    if (isPreflight()) return
+    if (requestMethod != "POST") {
+        respondJson(405, """{"error":"Method not allowed. Use POST."}""")
+        return
+    }
+    try {
+        val json = requestBody.readBytes().decodeToString()
+        if (json.isBlank()) {
+            respondJson(400, """{"error":"Empty body; expected a RemoteCompose JSON document"}""")
+            return
+        }
+        val binary = parseRemoteComposeJson(json)
+        responseHeaders.set("Content-Type", "application/octet-stream")
+        responseHeaders.set("Content-Disposition", "attachment; filename=\"document.rc\"")
+        sendResponseHeaders(200, binary.size.toLong())
+        responseBody.use { it.write(binary) }
+        println("✓ POST /v1/parse ← ${json.length} chars JSON → ${binary.size} bytes")
+    } catch (e: Exception) {
+        respondJson(400, """{"error":"${e.message?.replace("\"", "'")}"}""")
+        System.err.println("✗ /v1/parse failed: ${e.message}")
     }
 }
 

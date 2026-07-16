@@ -53,6 +53,8 @@ fun ProfileScreen(
         val kycVerified = remoteNamedInteger("USER:profile.kyc.verified", 0)
         val kycPending  = remoteNamedInteger("USER:profile.kyc.pending", 1)
 
+        val bitmap = remoteNamedBitmapUrl("", "")
+
         // Safe-area strips match the profile card band (purple900); the content
         // column paints its own bgProfile surface so rows keep their color.
         Box(

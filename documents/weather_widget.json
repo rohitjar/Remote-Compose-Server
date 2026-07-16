@@ -1,0 +1,748 @@
+{
+  "header": {
+    "width": 330,
+    "height": 700,
+    "contentDescription": "Aurum Playground document",
+    "apiLevel": 8,
+    "densityBehavior": 2
+  },
+  "root": {
+    "column": {
+      "verticalAlignment": "top",
+      "horizontalAlignment": "start",
+      "modifiers": [
+        "fillMaxSize",
+        {
+          "background": "#201929"
+        }
+      ],
+      "children": [
+        {
+          "row": {
+            "horizontalAlignment": "start",
+            "verticalAlignment": "center",
+            "modifiers": [
+              {
+                "background": "#201929"
+              }
+            ],
+            "children": [
+              {
+                "text": {
+                  "value": "Profile",
+                  "fontSize": 18,
+                  "fontWeight": 600,
+                  "color": "#F6F7FA"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "column": {
+            "verticalAlignment": "top",
+            "horizontalAlignment": "start",
+            "children": [
+              {
+                "box": {
+                  "horizontalAlignment": "start",
+                  "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "padding": {
+                        "start": 16,
+                        "top": 0,
+                        "end": 16,
+                        "bottom": 0
+                      }
+                    },
+                    {
+                      "fillMaxWidth": 1
+                    },
+                    {
+                      "background": "#201929"
+                    },
+                    {
+                      "border": {
+                        "width": 1,
+                        "cornerRadius": 0,
+                        "color": "#201929",
+                        "shape": 0
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "box": {
+                        "horizontalAlignment": "center",
+                        "verticalAlignment": "center",
+                        "modifiers": [
+                          {
+                            "background": "#5A21A3"
+                          },
+                          {
+                            "border": {
+                              "width": 1.5,
+                              "cornerRadius": 16,
+                              "color": "#8D54D6",
+                              "shape": 0
+                            }
+                          },
+                          {
+                            "zIndex": 1
+                          },
+                          {
+                            "offset": [
+                              0,
+                              8
+                            ]
+                          }
+                        ],
+                        "children": [
+                          {
+                            "box": {
+                              "horizontalAlignment": "center",
+                              "verticalAlignment": "center",
+                              "modifiers": [
+                                {
+                                  "width": 60
+                                },
+                                {
+                                  "height": 60
+                                },
+                                {
+                                  "background": "#FFFFFF"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "text": {
+                                    "value": "AS",
+                                    "fontSize": 24,
+                                    "fontWeight": 700,
+                                    "color": "#7029CC",
+                                    "modifiers": [
+                                      {
+                                        "background": "#7029CC"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "column": {
+                              "verticalAlignment": "top",
+                              "horizontalAlignment": "center",
+                              "children": [
+                                {
+                                  "text": {
+                                    "value": "Aurum",
+                                    "fontSize": 16,
+                                    "fontWeight": 700,
+                                    "color": "#ffffff",
+                                    "textAlign": "center"
+                                  }
+                                },
+                                {
+                                  "spacer": {
+                                    "modifiers": [
+                                      {
+                                        "height": 5
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "text": {
+                                    "value": "+91-9869409330",
+                                    "fontSize": 14,
+                                    "fontWeight": 500,
+                                    "color": "#ffffff",
+                                    "textAlign": "center"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "column": {
+            "verticalAlignment": "top",
+            "horizontalAlignment": "start",
+            "modifiers": [
+              {
+                "padding": {
+                  "start": 16,
+                  "top": 0,
+                  "end": 16,
+                  "bottom": 0
+                }
+              },
+              {
+                "background": "#201929"
+              },
+              {
+                "zIndex": 1
+              },
+              {
+                "offset": [
+                  0,
+                  -1
+                ]
+              }
+            ],
+            "children": [
+              {
+                "spacer": {
+                  "modifiers": [
+                    {
+                      "height": 22
+                    }
+                  ]
+                }
+              },
+              {
+                "row": {
+                  "horizontalAlignment": "spaceBetween",
+                  "verticalAlignment": "center",
+                  "children": [
+                    {
+                      "text": {
+                        "value": "Profile Details",
+                        "fontSize": 16,
+                        "fontWeight": 700,
+                        "color": "#ffffff"
+                      }
+                    },
+                    {
+                      "box": {
+                        "horizontalAlignment": "center",
+                        "verticalAlignment": "center",
+                        "modifiers": [
+                          {
+                            "width": 32
+                          },
+                          {
+                            "height": 32
+                          },
+                          {
+                            "background": "#372B47"
+                          },
+                          {
+                            "ripple": {}
+                          }
+                        ],
+                        "children": [
+                          {
+                            "box": {
+                              "modifiers": [
+                                {
+                                  "width": 16
+                                },
+                                {
+                                  "height": 16
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "spacer": {
+                  "modifiers": [
+                    {
+                      "height": 8
+                    }
+                  ]
+                }
+              },
+              {
+                "row": {
+                  "horizontalAlignment": "start",
+                  "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "padding": {
+                        "start": 0,
+                        "top": 14,
+                        "end": 0,
+                        "bottom": 14
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "text": {
+                        "value": "Age",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#beb4cc",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "text": {
+                        "value": "28",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#ffffff",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "box": {
+                  "modifiers": [
+                    {
+                      "fillMaxWidth": 1
+                    },
+                    {
+                      "height": 1
+                    },
+                    {
+                      "background": "#332B40"
+                    }
+                  ]
+                }
+              },
+              {
+                "row": {
+                  "horizontalAlignment": "start",
+                  "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "padding": {
+                        "start": 0,
+                        "top": 14,
+                        "end": 0,
+                        "bottom": 14
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "text": {
+                        "value": "Gender",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#beb4cc",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "text": {
+                        "value": "Male",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#ffffff",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "box": {
+                  "modifiers": [
+                    {
+                      "fillMaxWidth": 1
+                    },
+                    {
+                      "height": 1
+                    },
+                    {
+                      "background": "#332B40"
+                    }
+                  ]
+                }
+              },
+              {
+                "row": {
+                  "horizontalAlignment": "start",
+                  "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "padding": {
+                        "start": 0,
+                        "top": 12,
+                        "end": 0,
+                        "bottom": 12
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "text": {
+                        "value": "KYC Verification",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#beb4cc",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "row": {
+                        "horizontalAlignment": "start",
+                        "verticalAlignment": "center",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ],
+                        "children": [
+                          {
+                            "box": {
+                              "horizontalAlignment": "start",
+                              "verticalAlignment": "center",
+                              "modifiers": [
+                                {
+                                  "height": 30
+                                },
+                                {
+                                  "background": "#14CC52"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "text": {
+                                    "value": "Verified",
+                                    "fontSize": 14,
+                                    "fontWeight": 600,
+                                    "color": "#ffffff"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "spacer": {
+                              "modifiers": [
+                                {
+                                  "width": 16
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "box": {
+                              "modifiers": [
+                                {
+                                  "weight": 1
+                                },
+                                {
+                                  "width": 18
+                                },
+                                {
+                                  "height": 18
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "box": {
+                  "modifiers": [
+                    {
+                      "fillMaxWidth": 1
+                    },
+                    {
+                      "height": 1
+                    },
+                    {
+                      "background": "#332B40"
+                    }
+                  ]
+                }
+              },
+              {
+                "row": {
+                  "horizontalAlignment": "start",
+                  "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "padding": {
+                        "start": 0,
+                        "top": 14,
+                        "end": 0,
+                        "bottom": 14
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "text": {
+                        "value": "Manage UPI ID",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#beb4cc",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "row": {
+                        "horizontalAlignment": "start",
+                        "verticalAlignment": "center",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ],
+                        "children": [
+                          {
+                            "text": {
+                              "value": "9999999999@ybl",
+                              "fontSize": 14,
+                              "fontWeight": 500,
+                              "color": "#ffffff",
+                              "overflow": "ellipsis"
+                            }
+                          },
+                          {
+                            "box": {
+                              "modifiers": [
+                                {
+                                  "width": 18
+                                },
+                                {
+                                  "height": 18
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "box": {
+                  "modifiers": [
+                    {
+                      "fillMaxWidth": 1
+                    },
+                    {
+                      "height": 1
+                    },
+                    {
+                      "background": "#332B40"
+                    }
+                  ]
+                }
+              },
+              {
+                "row": {
+                  "horizontalAlignment": "start",
+                  "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "padding": {
+                        "start": 0,
+                        "top": 14,
+                        "end": 0,
+                        "bottom": 14
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "text": {
+                        "value": "Saved Addresses",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#beb4cc",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "row": {
+                        "horizontalAlignment": "start",
+                        "verticalAlignment": "center",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ],
+                        "children": [
+                          {
+                            "text": {
+                              "value": "2",
+                              "fontSize": 14,
+                              "fontWeight": 500,
+                              "color": "#ffffff",
+                              "overflow": "ellipsis"
+                            }
+                          },
+                          {
+                            "spacer": {
+                              "modifiers": [
+                                {
+                                  "width": 12
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "box": {
+                              "modifiers": [
+                                {
+                                  "width": 18
+                                },
+                                {
+                                  "height": 18
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "box": {
+                  "modifiers": [
+                    {
+                      "fillMaxWidth": 1
+                    },
+                    {
+                      "height": 1
+                    },
+                    {
+                      "background": "#332B40"
+                    }
+                  ]
+                }
+              },
+              {
+                "row": {
+                  "horizontalAlignment": "start",
+                  "verticalAlignment": "center",
+                  "modifiers": [
+                    {
+                      "padding": {
+                        "start": 0,
+                        "top": 14,
+                        "end": 0,
+                        "bottom": 14
+                      }
+                    }
+                  ],
+                  "children": [
+                    {
+                      "text": {
+                        "value": "Nominee Details",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "color": "#beb4cc",
+                        "overflow": "ellipsis",
+                        "modifiers": [
+                          {
+                            "weight": 1
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "spacer": {
+                        "modifiers": [
+                          {
+                            "width": 12
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "box": {
+                        "modifiers": [
+                          {
+                            "width": 18
+                          },
+                          {
+                            "height": 18
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "box": {
+                  "modifiers": [
+                    {
+                      "fillMaxWidth": 1
+                    },
+                    {
+                      "height": 1
+                    },
+                    {
+                      "background": "#332B40"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
