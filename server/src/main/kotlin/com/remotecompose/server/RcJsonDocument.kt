@@ -6,7 +6,6 @@ import androidx.compose.remote.creation.JvmRcPlatformServices
 import androidx.compose.remote.creation.RemoteComposeWriter
 import androidx.compose.remote.creation.json.RemoteComposeJsonParser
 import androidx.compose.remote.creation.json.UrlBitmapSupport
-import org.json.JSONObject
 
 /**
  * Parses a RemoteCompose JSON document (the official androidx-main `{header, resources, root}`
@@ -22,12 +21,7 @@ fun parseRemoteComposeJson(json: String): ByteArray {
     val tags = RemoteComposeJsonParser.parseHeaderOnly(json)
     val writer = RemoteComposeWriter(JvmRcPlatformServices(), apiLevel, *tags)
     val parser = RemoteComposeJsonParser(writer)
-    val header = JSONObject(json).optJSONObject("header")
-    UrlBitmapSupport.install(
-        parser,
-        header?.optDouble("width", Double.NaN)?.toFloat() ?: Float.NaN,
-        header?.optDouble("height", Double.NaN)?.toFloat() ?: Float.NaN,
-    )
+    UrlBitmapSupport.install(parser)
     parser.parse(json)
     return writer.encodeToByteArray()
 }
