@@ -1,783 +1,3356 @@
 {
   "header": {
-    "width": 330,
-    "height": 700,
-    "contentDescription": "Aurum Playground document",
-    "apiLevel": 7
+    "apiLevel": 8,
+    "profiles": 512,
+    "width": 360,
+    "height": 640,
+    "densityBehavior": 2,
+    "contentDescription": "Aurum Playground document"
   },
   "root": {
-    "column": {
-      "verticalAlignment": "top",
-      "horizontalAlignment": "start",
-      "modifiers": [
-        {
-          "fillMaxSize": 1
-        },
-        {
-          "background": "#201929"
+    "type": "column",
+    "verticalAlignment": "top",
+    "horizontalAlignment": "start",
+    "modifiers": [
+      {
+        "verticalScroll": {
+          "position": 0,
+          "notches": 0
         }
-      ],
-      "children": [
-        {
-          "row": {
+      },
+      {
+        "fillMaxSize": 1
+      },
+      {
+        "background": "#1d1829"
+      },
+      {
+        "padding": {
+          "start": 16,
+          "top": 0,
+          "end": 16,
+          "bottom": 0
+        }
+      }
+    ],
+    "children": [
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "44 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": "44 * max(windowWidth, 360) / 360"
+          }
+        ],
+        "children": [
+          {
+            "type": "box",
             "horizontalAlignment": "start",
-            "verticalAlignment": "center",
+            "verticalAlignment": "top",
             "modifiers": [
               {
-                "background": "#201929"
+                "fillMaxSize": 1
               }
             ],
             "children": [
               {
-                "text": {
-                  "value": "Profile",
-                  "fontSize": "18 * windowWidth / 360",
-                  "fontWeight": 600,
-                  "color": "#F6F7FA"
-                }
+                "type": "box",
+                "modifiers": [
+                  {
+                    "width": "380 * max(windowWidth, 360) / 360"
+                  },
+                  {
+                    "height": "200 * max(windowWidth, 360) / 360"
+                  },
+                  {
+                    "clip": 100
+                  },
+                  {
+                    "graphicsLayer": {
+                      "alpha": 0.6
+                    }
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "canvas",
+                    "modifiers": [
+                      {
+                        "fillMaxSize": 1
+                      }
+                    ],
+                    "commands": [
+                      {
+                        "paint": {
+                          "ops": [
+                            {
+                              "style": "fill"
+                            },
+                            {
+                              "radialGradient": {
+                                "centerX": "width / 2",
+                                "centerY": "height / 2",
+                                "radius": "max(width, height) / 2",
+                                "colors": [
+                                  "#7029cc",
+                                  "#007029cc"
+                                ],
+                                "stops": [
+                                  0,
+                                  0.7
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "drawRoundRect": {
+                          "left": 0,
+                          "top": 0,
+                          "right": "width",
+                          "bottom": "height",
+                          "rx": "min(width, height) / 2",
+                          "ry": "min(width, height) / 2"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "horizontalAlignment": "start",
+            "verticalAlignment": "top",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "children": [
+              {
+                "type": "row",
+                "horizontalAlignment": "start",
+                "verticalAlignment": "center",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  },
+                  {
+                    "padding": {
+                      "start": 0,
+                      "top": 6,
+                      "end": 0,
+                      "bottom": 6
+                    }
+                  },
+                  {
+                    "height": "36 * max(windowWidth, 360) / 360"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "bitmap",
+                    "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Farrow-left.svg&w=96&output=png&filt=negate",
+                    "scale": "fit",
+                    "modifiers": [
+                      {
+                        "width": 24
+                      },
+                      {
+                        "height": 24
+                      },
+                      {
+                        "weight": 1
+                      }
+                    ]
+                  },
+                  {
+                    "type": "spacer",
+                    "modifiers": [
+                      {
+                        "weight": 100
+                      }
+                    ]
+                  },
+                  {
+                    "type": "bitmap",
+                    "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fdots-three-vertical.svg&w=96&output=png&filt=negate",
+                    "scale": "fit",
+                    "modifiers": [
+                      {
+                        "width": 24
+                      },
+                      {
+                        "height": 24
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
-        },
-        {
-          "column": {
-            "verticalAlignment": "top",
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ],
+        "children": [
+          {
+            "type": "box",
             "horizontalAlignment": "start",
+            "verticalAlignment": "top",
             "modifiers": [
               {
-                "fillMaxWidth": 1
+                "width": "40 * max(windowWidth, 360) / 360"
+              },
+              {
+                "height": "40 * max(windowWidth, 360) / 360"
+              },
+              {
+                "clip": 20
               }
             ],
             "children": [
               {
-                "box": {
-                  "horizontalAlignment": "start",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "padding": {
-                        "start": 16,
-                        "top": 0,
-                        "end": 16,
-                        "bottom": 0
-                      }
-                    },
-                    {
-                      "fillMaxWidth": 1
-                    },
-                    {
-                      "background": "#201929"
-                    },
-                    {
-                      "border": {
-                        "width": 1,
-                        "cornerRadius": 0,
-                        "color": "#201929",
-                        "shape": 0
-                      }
-                    }
-                  ],
-                  "children": [
-                    {
-                      "box": {
-                        "horizontalAlignment": "center",
-                        "verticalAlignment": "center",
-                        "modifiers": [
-                          {
-                            "fillMaxWidth": 1
-                          },
-                          {
-                            "background": "#5A21A3"
-                          },
-                          {
-                            "border": {
-                              "width": 1.5,
-                              "cornerRadius": 16,
-                              "color": "#8D54D6",
-                              "shape": 0
-                            }
-                          },
-                          {
-                            "zIndex": 1
-                          },
-                          {
-                            "offset": [
-                              0,
-                              "8 * windowWidth / 360"
+                "type": "canvas",
+                "modifiers": [
+                  {
+                    "fillMaxSize": 1
+                  }
+                ],
+                "commands": [
+                  {
+                    "paint": {
+                      "ops": [
+                        {
+                          "style": "fill"
+                        },
+                        {
+                          "linearGradient": {
+                            "x1": 0,
+                            "y1": 0,
+                            "x2": 0,
+                            "y2": "height",
+                            "colors": [
+                              "#7029cc",
+                              "#7029cc"
                             ]
                           }
-                        ],
-                        "children": [
-                          {
-                            "box": {
-                              "horizontalAlignment": "center",
-                              "verticalAlignment": "center",
-                              "modifiers": [
-                                {
-                                  "width": "60 * windowWidth / 360"
-                                },
-                                {
-                                  "height": "60 * windowWidth / 360"
-                                },
-                                {
-                                  "background": "#FFFFFF"
-                                }
-                              ],
-                              "children": [
-                                {
-                                  "text": {
-                                    "value": "AS",
-                                    "fontSize": "24 * windowWidth / 360",
-                                    "fontWeight": 700,
-                                    "color": "#7029CC",
-                                    "modifiers": [
-                                      {
-                                        "background": "#7029CC"
-                                      }
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            "column": {
-                              "verticalAlignment": "top",
-                              "horizontalAlignment": "center",
-                              "children": [
-                                {
-                                  "text": {
-                                    "value": "Aurum",
-                                    "fontSize": "16 * windowWidth / 360",
-                                    "fontWeight": 700,
-                                    "color": "#ffffff",
-                                    "textAlign": "center"
-                                  }
-                                },
-                                {
-                                  "spacer": {
-                                    "modifiers": [
-                                      {
-                                        "height": "5 * windowWidth / 360"
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "text": {
-                                    "value": "+91-9869409330",
-                                    "fontSize": "14 * windowWidth / 360",
-                                    "fontWeight": 500,
-                                    "color": "#ffffff",
-                                    "textAlign": "center"
-                                  }
-                                }
-                              ]
-                            }
-                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "drawRoundRect": {
+                      "left": 0,
+                      "top": 0,
+                      "right": "width",
+                      "bottom": "height",
+                      "rx": "min(width, height) / 2",
+                      "ry": "min(width, height) / 2"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "column",
+                "verticalAlignment": "center",
+                "horizontalAlignment": "center",
+                "modifiers": [
+                  {
+                    "fillMaxSize": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "bitmap",
+                    "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fuser.svg&w=96&output=png&filt=negate",
+                    "scale": "fit",
+                    "modifiers": [
+                      {
+                        "width": 22
+                      },
+                      {
+                        "height": 22
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "verticalAlignment": "top",
+            "horizontalAlignment": "start",
+            "children": [
+              {
+                "type": "text",
+                "value": "Hubert Blaine",
+                "fontSize": "16 * max(windowWidth, 360) / 360",
+                "fontWeight": 700,
+                "color": "#ffffff",
+                "fontFamily": "Inter",
+                "lineHeightMultiplier": 1.38,
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ]
+              },
+              {
+                "type": "spacer",
+                "modifiers": [
+                  {
+                    "height": "2 * max(windowWidth, 360) / 360"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "value": "+91 8861256789",
+                "fontSize": "12 * max(windowWidth, 360) / 360",
+                "fontWeight": 500,
+                "color": "#bab4cc",
+                "fontFamily": "Inter",
+                "lineHeightMultiplier": 1.5,
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fqr-code.svg&w=144&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 48
+              },
+              {
+                "height": 48
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "16 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": "60 * max(windowWidth, 360) / 360"
+          }
+        ],
+        "children": [
+          {
+            "type": "canvas",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "commands": [
+              {
+                "paint": {
+                  "ops": [
+                    {
+                      "style": "fill"
+                    },
+                    {
+                      "linearGradient": {
+                        "x1": 0,
+                        "y1": 0,
+                        "x2": 0,
+                        "y2": "height",
+                        "colors": [
+                          "#12B84A",
+                          "#0C7A31"
                         ]
                       }
                     }
                   ]
                 }
+              },
+              {
+                "drawRoundRect": {
+                  "left": 0,
+                  "top": 0,
+                  "right": "width",
+                  "bottom": "height",
+                  "rx": "min(min(14 * height / 60, width / 2), height / 2)",
+                  "ry": "min(min(14 * height / 60, width / 2), height / 2)"
+                }
+              }
+            ]
+          },
+          {
+            "type": "row",
+            "verticalAlignment": "center",
+            "horizontalAlignment": "start",
+            "modifiers": [
+              {
+                "padding": {
+                  "start": 8,
+                  "top": 10,
+                  "end": 8,
+                  "bottom": 10
+                }
+              },
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "children": [
+              {
+                "type": "column",
+                "verticalAlignment": "top",
+                "horizontalAlignment": "start",
+                "modifiers": [
+                  {
+                    "weight": 1
+                  },
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "row",
+                    "horizontalAlignment": "start",
+                    "verticalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "fillMaxWidth": 1
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "GET VERIFIED",
+                        "fontSize": "14 * max(windowWidth, 360) / 360",
+                        "fontWeight": 700,
+                        "color": "#ffffff",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.43
+                      },
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcaret-right.svg&w=96&output=png&filt=negate",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 18
+                          },
+                          {
+                            "height": 18
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "spacer",
+                    "modifiers": [
+                      {
+                        "height": "3 * max(windowWidth, 360) / 360"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": "Complete your profile and get yourself verified",
+                    "fontSize": "12 * max(windowWidth, 360) / 360",
+                    "fontWeight": 400,
+                    "color": "#eafaf0",
+                    "fontFamily": "Inter",
+                    "lineHeightMultiplier": 1.67,
+                    "modifiers": [
+                      {
+                        "fillMaxWidth": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "bitmap",
+                "id": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=240&q=80",
+                "scale": "crop",
+                "modifiers": [
+                  {
+                    "width": 36
+                  },
+                  {
+                    "height": 36
+                  },
+                  {
+                    "offset": [
+                      "-6 * max(windowWidth, 360) / 360",
+                      0
+                    ]
+                  },
+                  {
+                    "clip": 12
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "canvas",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "commands": [
+              {
+                "paint": {
+                  "ops": [
+                    {
+                      "style": "stroke"
+                    },
+                    {
+                      "strokeWidth": 1
+                    },
+                    {
+                      "linearGradient": {
+                        "x1": 0,
+                        "y1": 0,
+                        "x2": 0,
+                        "y2": "height",
+                        "colors": [
+                          "#36FFFFFF",
+                          "transparent",
+                          "#33FFFFFF"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "drawRoundRect": {
+                  "left": 0.5,
+                  "top": 0.5,
+                  "right": "width - 0.5",
+                  "bottom": "height - 0.5",
+                  "rx": "min(min(14 * height / 60, width / 2), height / 2)",
+                  "ry": "min(min(14 * height / 60, width / 2), height / 2)"
+                }
               }
             ]
           }
-        },
-        {
-          "column": {
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "22 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "For You",
+        "fontSize": "16 * max(windowWidth, 360) / 360",
+        "fontWeight": 700,
+        "color": "#ffffff",
+        "fontFamily": "Inter",
+        "lineHeightMultiplier": 1.5,
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "12 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "clip": 16
+          },
+          {
+            "height": "81 * max(windowWidth, 360) / 360"
+          }
+        ],
+        "children": [
+          {
+            "type": "canvas",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "commands": [
+              {
+                "paint": {
+                  "ops": [
+                    {
+                      "style": "fill"
+                    },
+                    {
+                      "linearGradient": {
+                        "x1": 0,
+                        "y1": 0,
+                        "x2": 0,
+                        "y2": "height",
+                        "colors": [
+                          "#330080FF",
+                          "#330080FF"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "drawRoundRect": {
+                  "left": 0,
+                  "top": 0,
+                  "right": "width",
+                  "bottom": "height",
+                  "rx": "min(min(16 * height / 81, width / 2), height / 2)",
+                  "ry": "min(min(16 * height / 81, width / 2), height / 2)"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
             "verticalAlignment": "top",
             "horizontalAlignment": "start",
             "modifiers": [
               {
                 "padding": {
                   "start": 16,
-                  "top": 0,
+                  "top": 16,
                   "end": 16,
-                  "bottom": 0
+                  "bottom": 16
                 }
               },
               {
-                "fillMaxWidth": 1
-              },
-              {
-                "background": "#201929"
-              },
-              {
-                "zIndex": 1
-              },
-              {
-                "offset": [
-                  0,
-                  "-1 * windowWidth / 360"
-                ]
+                "fillMaxSize": 1
               }
             ],
             "children": [
               {
-                "spacer": {
-                  "modifiers": [
+                "type": "row",
+                "horizontalAlignment": "spaceBetween",
+                "verticalAlignment": "top",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fpiggy-bank.svg&w=96&output=png&filt=negate",
+                        "scale": "fill_bounds",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Daily Savings",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fpaper-plane-tilt.svg&w=96&output=png&filt=negate",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Send Money",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fdiamond.svg&w=96&output=png&filt=negate",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Featured Jewellery",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fgauge.svg&w=96&output=png&filt=negate",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Credit Score",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              },
+              {
+                "border": {
+                  "width": 1,
+                  "cornerRadius": 16,
+                  "color": "#0080FF",
+                  "shape": 2
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "22 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ],
+        "children": [
+          {
+            "type": "text",
+            "value": "Jar",
+            "fontSize": "16 * max(windowWidth, 360) / 360",
+            "fontWeight": 700,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.5
+          },
+          {
+            "type": "text",
+            "value": " GOLD",
+            "fontSize": "16 * max(windowWidth, 360) / 360",
+            "fontWeight": 700,
+            "color": "#F9D33B"
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "12 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "clip": 16
+          },
+          {
+            "height": "178 * max(windowWidth, 360) / 360"
+          }
+        ],
+        "children": [
+          {
+            "type": "canvas",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "commands": [
+              {
+                "paint": {
+                  "ops": [
                     {
-                      "height": "22 * windowWidth / 360"
+                      "style": "fill"
+                    },
+                    {
+                      "linearGradient": {
+                        "x1": 0,
+                        "y1": 0,
+                        "x2": 0,
+                        "y2": "height",
+                        "colors": [
+                          "#322b47",
+                          "#322b47"
+                        ]
+                      }
                     }
                   ]
                 }
               },
               {
-                "row": {
-                  "horizontalAlignment": "spaceBetween",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "fillMaxWidth": 1
-                    }
-                  ],
-                  "children": [
-                    {
-                      "text": {
-                        "value": "Profile Details",
-                        "fontSize": "16 * windowWidth / 360",
-                        "fontWeight": 700,
-                        "color": "#ffffff"
+                "drawRoundRect": {
+                  "left": 0,
+                  "top": 0,
+                  "right": "width",
+                  "bottom": "height",
+                  "rx": "min(min(16 * height / 178, width / 2), height / 2)",
+                  "ry": "min(min(16 * height / 178, width / 2), height / 2)"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "verticalAlignment": "top",
+            "horizontalAlignment": "start",
+            "modifiers": [
+              {
+                "padding": {
+                  "start": 16,
+                  "top": 16,
+                  "end": 16,
+                  "bottom": 16
+                }
+              },
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "children": [
+              {
+                "type": "row",
+                "horizontalAlignment": "spaceBetween",
+                "verticalAlignment": "top",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
                       }
-                    },
-                    {
-                      "box": {
-                        "horizontalAlignment": "center",
-                        "verticalAlignment": "center",
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/ApPB-nBNxQ7pxPGxg_B1YB0rEv_PlUoWBbN4uxsPZSI/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/logos/hamburger/instant_hamburger_v2.webp",
+                        "scale": "fill_bounds",
                         "modifiers": [
                           {
-                            "width": "32 * windowWidth / 360"
+                            "width": 40
                           },
                           {
-                            "height": "32 * windowWidth / 360"
-                          },
-                          {
-                            "background": "#372B47"
-                          },
-                          {
-                            "ripple": {}
+                            "height": 40
                           }
-                        ],
-                        "children": [
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
                           {
-                            "box": {
-                              "modifiers": [
-                                {
-                                  "width": "16 * windowWidth / 360"
-                                },
-                                {
-                                  "height": "16 * windowWidth / 360"
-                                }
-                              ]
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Instant Saving",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/ymDVsPS6HyO35SgYcFcAETHuIuiVxHDsWRpgdXRYFTw/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/logos/hamburger/wsHamburger.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Weekly Saving",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/X4LlWhXFQzBeaLz0R8Z82KHXg-6gtQUp_XBKK8XFTO8/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/logos/hamburger/msHamburger.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Monthly Saving",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://cdn.myjar.app/ReferAndEarn/whatsAppReferAndEarnIconSizeUpdated.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Refer Jar app",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "spacer",
+                "modifiers": [
+                  {
+                    "height": "20 * max(windowWidth, 360) / 360"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "horizontalAlignment": "spaceBetween",
+                "verticalAlignment": "top",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/gyJ0GLNuyqKACu5LJSSYP__yqz76TrVJLQ7mNRLmqMQ/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/logos/hamburger/withdrawHamburger.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Withdraw Savings",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/yupSG1Ys1UxN3sUpK42EkYBAMQQAtO_Qf5fjHGtnzTA/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/logos/hamburger/spinsHamburger.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Spins",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/BDQhbAwhMeBhgx4GlduzEGT1KN3ZerivFTu66O3GsXc/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/userProfile/settings-card-icon2.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "App Settings",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/D141lzR0BZcrZ8HmESw3rT186WKrcs83t_dDa4IhPtU/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/userProfile/modify-ds-card-icon.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Modify DS",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "22 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Jar Pay",
+        "fontSize": "16 * max(windowWidth, 360) / 360",
+        "fontWeight": 700,
+        "color": "#ffffff",
+        "fontFamily": "Inter",
+        "lineHeightMultiplier": 1.5,
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "12 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "clip": 16
+          },
+          {
+            "height": "139 * max(windowWidth, 360) / 360"
+          }
+        ],
+        "children": [
+          {
+            "type": "canvas",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "commands": [
+              {
+                "paint": {
+                  "ops": [
+                    {
+                      "style": "fill"
+                    },
+                    {
+                      "linearGradient": {
+                        "x1": 0,
+                        "y1": 0,
+                        "x2": 0,
+                        "y2": "height",
+                        "colors": [
+                          "#322b47",
+                          "#322b47"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "drawRoundRect": {
+                  "left": 0,
+                  "top": 0,
+                  "right": "width",
+                  "bottom": "height",
+                  "rx": "min(min(16 * height / 139, width / 2), height / 2)",
+                  "ry": "min(min(16 * height / 139, width / 2), height / 2)"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "verticalAlignment": "top",
+            "horizontalAlignment": "start",
+            "modifiers": [
+              {
+                "padding": {
+                  "start": 16,
+                  "top": 16,
+                  "end": 16,
+                  "bottom": 16
+                }
+              },
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "children": [
+              {
+                "type": "row",
+                "horizontalAlignment": "spaceBetween",
+                "verticalAlignment": "top",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/0K7mLMxMnKUuo6w2md_U2xG0yRj_RvMl4KlagZVWhbU/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/userProfile/sendMoney.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Send Money",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/BOk5U8cckw1wYLdOwHDHit7IqMBd3EHltf5R2lNr-ZQ/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/userProfile/bankTransferCardUrl.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Bank Transfer",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/BVoFtw8PuD1CtwnFUtH5kZElM647IO3SJmgXHe0LL0I/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/userProfile/checkBalance.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Check Balance",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/Q-GOkGTzXTuZtAx68PkXRlLzi4SBC59sFZmKvd2UfBo/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/userProfile/jarPayHome.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Setup JarPay",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "spacer",
+                "modifiers": [
+                  {
+                    "height": "16 * max(windowWidth, 360) / 360"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  },
+                  {
+                    "height": 1
+                  },
+                  {
+                    "background": "#322b47"
+                  }
+                ]
+              },
+              {
+                "type": "spacer",
+                "modifiers": [
+                  {
+                    "height": "10 * max(windowWidth, 360) / 360"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "horizontalAlignment": "start",
+                "verticalAlignment": "center",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "UPI ID: 1234567890@jarunity",
+                    "fontSize": "12 * max(windowWidth, 360) / 360",
+                    "fontWeight": 500,
+                    "color": "#bab4cc",
+                    "fontFamily": "Inter",
+                    "lineHeightMultiplier": 1.5
+                  },
+                  {
+                    "type": "spacer",
+                    "modifiers": [
+                      {
+                        "weight": 1
+                      }
+                    ]
+                  },
+                  {
+                    "type": "bitmap",
+                    "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcopy.svg&w=96&output=png&filt=negate",
+                    "scale": "fit",
+                    "modifiers": [
+                      {
+                        "width": 16
+                      },
+                      {
+                        "height": 16
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "22 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Rewards",
+        "fontSize": "16 * max(windowWidth, 360) / 360",
+        "fontWeight": 700,
+        "color": "#ffffff",
+        "fontFamily": "Inter",
+        "lineHeightMultiplier": 1.5,
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "12 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "clip": 16
+          },
+          {
+            "height": "95 * max(windowWidth, 360) / 360"
+          }
+        ],
+        "children": [
+          {
+            "type": "canvas",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "commands": [
+              {
+                "paint": {
+                  "ops": [
+                    {
+                      "style": "fill"
+                    },
+                    {
+                      "linearGradient": {
+                        "x1": 0,
+                        "y1": 0,
+                        "x2": 0,
+                        "y2": "height",
+                        "colors": [
+                          "#322b47",
+                          "#322b47"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "drawRoundRect": {
+                  "left": 0,
+                  "top": 0,
+                  "right": "width",
+                  "bottom": "height",
+                  "rx": "min(min(16 * height / 95, width / 2), height / 2)",
+                  "ry": "min(min(16 * height / 95, width / 2), height / 2)"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "verticalAlignment": "top",
+            "horizontalAlignment": "start",
+            "modifiers": [
+              {
+                "padding": {
+                  "start": 16,
+                  "top": 16,
+                  "end": 16,
+                  "bottom": 16
+                }
+              },
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "children": [
+              {
+                "type": "row",
+                "horizontalAlignment": "spaceBetween",
+                "verticalAlignment": "top",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/yupSG1Ys1UxN3sUpK42EkYBAMQQAtO_Qf5fjHGtnzTA/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/logos/hamburger/spinsHamburger.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Spins",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/fFERm7lYI1Lm1p4pHUsizQxKiXwGj30wFBQ8AixHS_U/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/logos/hamburger/offersHamburger.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Offers",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/US7wmYZSe8yeWvFI814qWMYsxMiK20d5KlRwVc-rqII/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/userProfile/weeklyMagic.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Weekly Magic",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://img.myjar.app/y78TWR3iUxHruymXu2qmwQ_g6TWja_EfqPmwmba7PQU/rs:fit:0:0/q:60/format:webp/plain/https://cdn.myjar.app/JarCoins/profile_section_coins_icon.webp",
+                        "scale": "crop",
+                        "modifiers": [
+                          {
+                            "width": 40
+                          },
+                          {
+                            "height": 40
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Points",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "22 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Loan",
+        "fontSize": "16 * max(windowWidth, 360) / 360",
+        "fontWeight": 700,
+        "color": "#ffffff",
+        "fontFamily": "Inter",
+        "lineHeightMultiplier": 1.5,
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "12 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "clip": 16
+          },
+          {
+            "height": "81 * max(windowWidth, 360) / 360"
+          }
+        ],
+        "children": [
+          {
+            "type": "canvas",
+            "modifiers": [
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "commands": [
+              {
+                "paint": {
+                  "ops": [
+                    {
+                      "style": "fill"
+                    },
+                    {
+                      "linearGradient": {
+                        "x1": 0,
+                        "y1": 0,
+                        "x2": 0,
+                        "y2": "height",
+                        "colors": [
+                          "#322b47",
+                          "#322b47"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "drawRoundRect": {
+                  "left": 0,
+                  "top": 0,
+                  "right": "width",
+                  "bottom": "height",
+                  "rx": "min(min(16 * height / 81, width / 2), height / 2)",
+                  "ry": "min(min(16 * height / 81, width / 2), height / 2)"
+                }
+              }
+            ]
+          },
+          {
+            "type": "column",
+            "verticalAlignment": "top",
+            "horizontalAlignment": "start",
+            "modifiers": [
+              {
+                "padding": {
+                  "start": 16,
+                  "top": 16,
+                  "end": 16,
+                  "bottom": 16
+                }
+              },
+              {
+                "fillMaxSize": 1
+              }
+            ],
+            "children": [
+              {
+                "type": "row",
+                "horizontalAlignment": "spaceBetween",
+                "verticalAlignment": "top",
+                "modifiers": [
+                  {
+                    "fillMaxWidth": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcurrency-inr.svg&w=96&output=png",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Instant Loan",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fgauge.svg&w=96&output=png",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Credit Score",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcalculator.svg&w=96&output=png",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "EMI Calculator",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "center",
+                    "modifiers": [
+                      {
+                        "width": "74 * max(windowWidth, 360) / 360"
+                      }
+                    ],
+                    "children": [
+                      {
+                        "type": "bitmap",
+                        "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcredit-card.svg&w=96&output=png",
+                        "scale": "fit",
+                        "modifiers": [
+                          {
+                            "width": 26
+                          },
+                          {
+                            "height": 26
+                          }
+                        ]
+                      },
+                      {
+                        "type": "spacer",
+                        "modifiers": [
+                          {
+                            "height": "6 * max(windowWidth, 360) / 360"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "value": "Credit Card",
+                        "fontSize": "12 * max(windowWidth, 360) / 360",
+                        "fontWeight": 500,
+                        "color": "#bab4cc",
+                        "textAlign": "center",
+                        "fontFamily": "Inter",
+                        "lineHeightMultiplier": 1.5,
+                        "modifiers": [
+                          {
+                            "fillMaxWidth": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "22 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Get Help",
+        "fontSize": "16 * max(windowWidth, 360) / 360",
+        "fontWeight": 700,
+        "color": "#ffffff",
+        "fontFamily": "Inter",
+        "lineHeightMultiplier": 1.5,
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "12 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "padding": {
+              "start": 0,
+              "top": 14,
+              "end": 0,
+              "bottom": 14
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fchat-circle-text.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 20
+              },
+              {
+                "height": 20
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Help & Support",
+            "fontSize": "14 * max(windowWidth, 360) / 360",
+            "fontWeight": 500,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.43
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcaret-right.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 16
+              },
+              {
+                "height": 16
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": 1
+          },
+          {
+            "background": "#322b47"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "padding": {
+              "start": 0,
+              "top": 14,
+              "end": 0,
+              "bottom": 14
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fshield-check.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 20
+              },
+              {
+                "height": 20
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Privacy Policy",
+            "fontSize": "14 * max(windowWidth, 360) / 360",
+            "fontWeight": 500,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.43
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcaret-right.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 16
+              },
+              {
+                "height": 16
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": 1
+          },
+          {
+            "background": "#322b47"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "padding": {
+              "start": 0,
+              "top": 14,
+              "end": 0,
+              "bottom": 14
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Ffile-text.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 20
+              },
+              {
+                "height": 20
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Terms & Conditions",
+            "fontSize": "14 * max(windowWidth, 360) / 360",
+            "fontWeight": 500,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.43
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcaret-right.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 16
+              },
+              {
+                "height": 16
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": 1
+          },
+          {
+            "background": "#322b47"
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "22 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "Settings",
+        "fontSize": "16 * max(windowWidth, 360) / 360",
+        "fontWeight": 700,
+        "color": "#ffffff",
+        "fontFamily": "Inter",
+        "lineHeightMultiplier": 1.5,
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "12 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "padding": {
+              "start": 0,
+              "top": 14,
+              "end": 0,
+              "bottom": 14
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fshield-check.svg&w=96&output=png&filt=negate",
+            "scale": "fill_bounds",
+            "modifiers": [
+              {
+                "width": 20
+              },
+              {
+                "height": 20
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Jar Security Shield",
+            "fontSize": "14 * max(windowWidth, 360) / 360",
+            "fontWeight": 500,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.43
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "horizontalAlignment": "start",
+            "verticalAlignment": "top",
+            "modifiers": [
+              {
+                "width": "40 * max(windowWidth, 360) / 360"
+              },
+              {
+                "height": "22 * max(windowWidth, 360) / 360"
+              }
+            ],
+            "children": [
+              {
+                "type": "box",
+                "horizontalAlignment": "start",
+                "verticalAlignment": "top",
+                "modifiers": [
+                  {
+                    "width": "40 * max(windowWidth, 360) / 360"
+                  },
+                  {
+                    "height": "22 * max(windowWidth, 360) / 360"
+                  },
+                  {
+                    "clip": 11
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "canvas",
+                    "modifiers": [
+                      {
+                        "fillMaxSize": 1
+                      }
+                    ],
+                    "commands": [
+                      {
+                        "paint": {
+                          "ops": [
+                            {
+                              "style": "fill"
+                            },
+                            {
+                              "linearGradient": {
+                                "x1": 0,
+                                "y1": 0,
+                                "x2": 0,
+                                "y2": "height",
+                                "colors": [
+                                  "#7029cc",
+                                  "#7029cc"
+                                ]
+                              }
                             }
-                          }
-                        ]
+                          ]
+                        }
+                      },
+                      {
+                        "drawRoundRect": {
+                          "left": 0,
+                          "top": 0,
+                          "right": "width",
+                          "bottom": "height",
+                          "rx": "min(width, height) / 2",
+                          "ry": "min(width, height) / 2"
+                        }
                       }
-                    }
-                  ]
-                }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "verticalAlignment": "top",
+                    "horizontalAlignment": "start",
+                    "modifiers": [
+                      {
+                        "fillMaxSize": 1
+                      }
+                    ]
+                  }
+                ]
               },
               {
-                "spacer": {
-                  "modifiers": [
-                    {
-                      "height": "8 * windowWidth / 360"
-                    }
-                  ]
-                }
-              },
-              {
-                "row": {
-                  "horizontalAlignment": "start",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "padding": {
-                        "start": 0,
-                        "top": 14,
-                        "end": 0,
-                        "bottom": 14
-                      }
-                    },
-                    {
-                      "fillMaxWidth": 1
-                    }
-                  ],
-                  "children": [
-                    {
-                      "text": {
-                        "value": "Age",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#beb4cc",
-                        "overflow": "ellipsis",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
+                "type": "box",
+                "horizontalAlignment": "end",
+                "verticalAlignment": "center",
+                "modifiers": [
+                  {
+                    "fillMaxSize": 1
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "box",
+                    "horizontalAlignment": "start",
+                    "verticalAlignment": "top",
+                    "modifiers": [
+                      {
+                        "width": "16 * max(windowWidth, 360) / 360"
+                      },
+                      {
+                        "height": "16 * max(windowWidth, 360) / 360"
+                      },
+                      {
+                        "offset": [
+                          0,
+                          0
                         ]
+                      },
+                      {
+                        "clip": 8
                       }
-                    },
-                    {
-                      "text": {
-                        "value": "28",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#ffffff",
-                        "overflow": "ellipsis",
+                    ],
+                    "children": [
+                      {
+                        "type": "canvas",
                         "modifiers": [
                           {
-                            "weight": 1
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "box": {
-                  "modifiers": [
-                    {
-                      "fillMaxWidth": 1
-                    },
-                    {
-                      "height": 1
-                    },
-                    {
-                      "background": "#332B40"
-                    }
-                  ]
-                }
-              },
-              {
-                "row": {
-                  "horizontalAlignment": "start",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "padding": {
-                        "start": 0,
-                        "top": 14,
-                        "end": 0,
-                        "bottom": 14
-                      }
-                    },
-                    {
-                      "fillMaxWidth": 1
-                    }
-                  ],
-                  "children": [
-                    {
-                      "text": {
-                        "value": "Gender",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#beb4cc",
-                        "overflow": "ellipsis",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "text": {
-                        "value": "Male",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#ffffff",
-                        "overflow": "ellipsis",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "box": {
-                  "modifiers": [
-                    {
-                      "fillMaxWidth": 1
-                    },
-                    {
-                      "height": 1
-                    },
-                    {
-                      "background": "#332B40"
-                    }
-                  ]
-                }
-              },
-              {
-                "row": {
-                  "horizontalAlignment": "start",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "padding": {
-                        "start": 0,
-                        "top": 12,
-                        "end": 0,
-                        "bottom": 12
-                      }
-                    },
-                    {
-                      "fillMaxWidth": 1
-                    }
-                  ],
-                  "children": [
-                    {
-                      "text": {
-                        "value": "KYC Verification",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#beb4cc",
-                        "overflow": "ellipsis",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "row": {
-                        "horizontalAlignment": "start",
-                        "verticalAlignment": "center",
-                        "modifiers": [
-                          {
-                            "weight": 1
+                            "fillMaxSize": 1
                           }
                         ],
-                        "children": [
+                        "commands": [
                           {
-                            "box": {
-                              "horizontalAlignment": "start",
-                              "verticalAlignment": "center",
-                              "modifiers": [
+                            "paint": {
+                              "ops": [
                                 {
-                                  "height": "30 * windowWidth / 360"
+                                  "style": "fill"
                                 },
                                 {
-                                  "background": "#14CC52"
-                                }
-                              ],
-                              "children": [
-                                {
-                                  "text": {
-                                    "value": "Verified",
-                                    "fontSize": "14 * windowWidth / 360",
-                                    "fontWeight": 600,
-                                    "color": "#ffffff"
+                                  "linearGradient": {
+                                    "x1": 0,
+                                    "y1": 0,
+                                    "x2": 0,
+                                    "y2": "height",
+                                    "colors": [
+                                      "#ffffff",
+                                      "#ffffff"
+                                    ]
                                   }
                                 }
                               ]
                             }
                           },
                           {
-                            "spacer": {
-                              "modifiers": [
-                                {
-                                  "width": "16 * windowWidth / 360"
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            "box": {
-                              "modifiers": [
-                                {
-                                  "weight": 1
-                                },
-                                {
-                                  "width": "18 * windowWidth / 360"
-                                },
-                                {
-                                  "height": "18 * windowWidth / 360"
-                                }
-                              ]
+                            "drawRoundRect": {
+                              "left": 0,
+                              "top": 0,
+                              "right": "width",
+                              "bottom": "height",
+                              "rx": "min(width, height) / 2",
+                              "ry": "min(width, height) / 2"
                             }
                           }
                         ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "box": {
-                  "modifiers": [
-                    {
-                      "fillMaxWidth": 1
-                    },
-                    {
-                      "height": 1
-                    },
-                    {
-                      "background": "#332B40"
-                    }
-                  ]
-                }
-              },
-              {
-                "row": {
-                  "horizontalAlignment": "start",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "padding": {
-                        "start": 0,
-                        "top": 14,
-                        "end": 0,
-                        "bottom": 14
-                      }
-                    },
-                    {
-                      "fillMaxWidth": 1
-                    }
-                  ],
-                  "children": [
-                    {
-                      "text": {
-                        "value": "Manage UPI ID",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#beb4cc",
-                        "overflow": "ellipsis",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "row": {
+                      },
+                      {
+                        "type": "column",
+                        "verticalAlignment": "top",
                         "horizontalAlignment": "start",
-                        "verticalAlignment": "center",
                         "modifiers": [
                           {
-                            "weight": 1
-                          }
-                        ],
-                        "children": [
-                          {
-                            "text": {
-                              "value": "9999999999@ybl",
-                              "fontSize": "14 * windowWidth / 360",
-                              "fontWeight": 500,
-                              "color": "#ffffff",
-                              "overflow": "ellipsis"
-                            }
-                          },
-                          {
-                            "box": {
-                              "modifiers": [
-                                {
-                                  "width": "18 * windowWidth / 360"
-                                },
-                                {
-                                  "height": "18 * windowWidth / 360"
-                                }
-                              ]
-                            }
+                            "fillMaxSize": 1
                           }
                         ]
                       }
-                    }
-                  ]
-                }
-              },
-              {
-                "box": {
-                  "modifiers": [
-                    {
-                      "fillMaxWidth": 1
-                    },
-                    {
-                      "height": 1
-                    },
-                    {
-                      "background": "#332B40"
-                    }
-                  ]
-                }
-              },
-              {
-                "row": {
-                  "horizontalAlignment": "start",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "padding": {
-                        "start": 0,
-                        "top": 14,
-                        "end": 0,
-                        "bottom": 14
-                      }
-                    },
-                    {
-                      "fillMaxWidth": 1
-                    }
-                  ],
-                  "children": [
-                    {
-                      "text": {
-                        "value": "Saved Addresses",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#beb4cc",
-                        "overflow": "ellipsis",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "row": {
-                        "horizontalAlignment": "start",
-                        "verticalAlignment": "center",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
-                        ],
-                        "children": [
-                          {
-                            "text": {
-                              "value": "2",
-                              "fontSize": "14 * windowWidth / 360",
-                              "fontWeight": 500,
-                              "color": "#ffffff",
-                              "overflow": "ellipsis"
-                            }
-                          },
-                          {
-                            "spacer": {
-                              "modifiers": [
-                                {
-                                  "width": "12 * windowWidth / 360"
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            "box": {
-                              "modifiers": [
-                                {
-                                  "width": "18 * windowWidth / 360"
-                                },
-                                {
-                                  "height": "18 * windowWidth / 360"
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "box": {
-                  "modifiers": [
-                    {
-                      "fillMaxWidth": 1
-                    },
-                    {
-                      "height": 1
-                    },
-                    {
-                      "background": "#332B40"
-                    }
-                  ]
-                }
-              },
-              {
-                "row": {
-                  "horizontalAlignment": "start",
-                  "verticalAlignment": "center",
-                  "modifiers": [
-                    {
-                      "padding": {
-                        "start": 0,
-                        "top": 14,
-                        "end": 0,
-                        "bottom": 14
-                      }
-                    },
-                    {
-                      "fillMaxWidth": 1
-                    }
-                  ],
-                  "children": [
-                    {
-                      "text": {
-                        "value": "Nominee Details",
-                        "fontSize": "14 * windowWidth / 360",
-                        "fontWeight": 500,
-                        "color": "#beb4cc",
-                        "overflow": "ellipsis",
-                        "modifiers": [
-                          {
-                            "weight": 1
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "spacer": {
-                        "modifiers": [
-                          {
-                            "width": "12 * windowWidth / 360"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "box": {
-                        "modifiers": [
-                          {
-                            "width": "18 * windowWidth / 360"
-                          },
-                          {
-                            "height": "18 * windowWidth / 360"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "box": {
-                  "modifiers": [
-                    {
-                      "fillMaxWidth": 1
-                    },
-                    {
-                      "height": 1
-                    },
-                    {
-                      "background": "#332B40"
-                    }
-                  ]
-                }
+                    ]
+                  }
+                ]
               }
             ]
           }
-        }
-      ]
-    }
+        ]
+      },
+      {
+        "type": "box",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": 1
+          },
+          {
+            "background": "#322b47"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "padding": {
+              "start": 0,
+              "top": 14,
+              "end": 0,
+              "bottom": 14
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fbell.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 20
+              },
+              {
+                "height": 20
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Notification Settings",
+            "fontSize": "14 * max(windowWidth, 360) / 360",
+            "fontWeight": 500,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.43
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcaret-right.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 16
+              },
+              {
+                "height": 16
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": 1
+          },
+          {
+            "background": "#322b47"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "padding": {
+              "start": 0,
+              "top": 14,
+              "end": 0,
+              "bottom": 14
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Ftranslate.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 20
+              },
+              {
+                "height": 20
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Change app Language",
+            "fontSize": "14 * max(windowWidth, 360) / 360",
+            "fontWeight": 500,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.43
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcaret-right.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 16
+              },
+              {
+                "height": 16
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": 1
+          },
+          {
+            "background": "#322b47"
+          }
+        ]
+      },
+      {
+        "type": "row",
+        "horizontalAlignment": "start",
+        "verticalAlignment": "center",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "padding": {
+              "start": 0,
+              "top": 14,
+              "end": 0,
+              "bottom": 14
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fsign-out.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 20
+              },
+              {
+                "height": 20
+              }
+            ]
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "width": "12 * max(windowWidth, 360) / 360"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "value": "Logout",
+            "fontSize": "14 * max(windowWidth, 360) / 360",
+            "fontWeight": 500,
+            "color": "#ffffff",
+            "fontFamily": "Inter",
+            "lineHeightMultiplier": 1.43
+          },
+          {
+            "type": "spacer",
+            "modifiers": [
+              {
+                "weight": 1
+              }
+            ]
+          },
+          {
+            "type": "bitmap",
+            "id": "https://images.weserv.nl/?url=unpkg.com%2F%40phosphor-icons%2Fcore%402%2Fassets%2Fregular%2Fcaret-right.svg&w=96&output=png&filt=negate",
+            "scale": "fit",
+            "modifiers": [
+              {
+                "width": 16
+              },
+              {
+                "height": 16
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          },
+          {
+            "height": 1
+          },
+          {
+            "background": "#322b47"
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "24 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "value": "VERSION 7.3.3 (532)",
+        "fontSize": "10 * max(windowWidth, 360) / 360",
+        "fontWeight": 700,
+        "color": "#bab4cc",
+        "textAlign": "center",
+        "fontFamily": "Inter",
+        "lineHeightMultiplier": 1.4,
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "24 * max(windowWidth, 360) / 360"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "horizontalAlignment": "center",
+        "verticalAlignment": "top",
+        "modifiers": [
+          {
+            "fillMaxWidth": 1
+          }
+        ],
+        "children": [
+          {
+            "type": "text",
+            "value": "Savings\nSimplified!",
+            "fontSize": "26 * max(windowWidth, 360) / 360",
+            "fontWeight": 700,
+            "color": "#3a3350",
+            "modifiers": [
+              {
+                "fillMaxWidth": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "spacer",
+        "modifiers": [
+          {
+            "height": "20 * max(windowWidth, 360) / 360"
+          }
+        ]
+      }
+    ]
   }
 }
