@@ -20,7 +20,7 @@ data class ScreenManifest(
     val screen: String,
     val layoutVersion: Int,
     val binary: EndpointRef,
-    val data: EndpointRef,
+    val data: List<EndpointRef>,
     val analytics: EndpointRef,
 ) {
     fun toJson(): String = Json.encodeToString(serializer(), this)

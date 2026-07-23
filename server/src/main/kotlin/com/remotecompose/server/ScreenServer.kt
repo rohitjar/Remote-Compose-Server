@@ -113,7 +113,7 @@ private fun HttpExchange.serveManifest(key: String, screen: Screen) {
             screen = key,
             layoutVersion = screen.layoutVersion,
             binary = EndpointRef("$base/v1/screens/$key/binary/${screen.layoutVersion}"),
-            data = EndpointRef("$base/v1/screens/$key/data", method = "POST"),
+            data = listOf(EndpointRef("https://prod.myjar.app/v1/api/user/details", method = "GET"), EndpointRef("https://prod.myjar.app/v1/api/kyc/status?kycContext=PROFILE", method = "GET")),
             analytics = EndpointRef("$base/v1/analytics", method = "POST"),
         ).toJson()
     }
