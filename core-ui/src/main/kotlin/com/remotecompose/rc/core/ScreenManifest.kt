@@ -14,6 +14,12 @@ import kotlinx.serialization.json.Json
  * The binary URL is pinned to [layoutVersion] (`…/binary/{version}`), so it identifies
  * immutable bytes and can be cached forever at any layer; a redesign changes the URL.
  * Consumers append their render metrics (`density`/`width`/`height`) as query params.
+ *
+ * [data] is a LIST of endpoints: the consumer calls them all in parallel, flattens each JSON
+ * response by path (`data.firstName`, `items.0.title`, …) and binds the document's `USER:`
+ * slots by those flat keys. That lets one screen aggregate several existing backend services
+ * (profile, KYC, savings…) with no server-side fan-out and no SDUI-specific backend code —
+ * see [Screen.dataEndpoints].
  */
 @Serializable
 data class ScreenManifest(

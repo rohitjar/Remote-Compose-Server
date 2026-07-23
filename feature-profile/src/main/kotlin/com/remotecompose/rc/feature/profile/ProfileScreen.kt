@@ -41,16 +41,29 @@ fun ProfileScreen(
         // user-agnostic (one cached skeleton for all users; the consumer fills these via
         // StateUpdater.setUserLocal*). MUST stay at document root: nested declarations
         // never register in the player's variable table and overrides silently no-op.
-        val name        = remoteNamedText("USER:profile.name", "")
+        //
+        // Slot names are the FLATTENED paths of the real API responses this screen's manifest
+        // links (ProfileScreenProvider.dataEndpoints) — the consumer flattens each response and
+        // binds slots by flat key. Both APIs wrap their payload in the standard
+        // {success, data:{…}} envelope, hence the `data.` prefix:
+        //   GET /v1/api/user/details                 → data.firstName, data.phoneNumber, …
+        //   GET /v1/api/kyc/status?kycContext=PROFILE → data.kycStatus, data.title, …
+        val name        = remoteNamedText("USER:data.firstName", "")
+        val phone       = remoteNamedText("USER:data.phoneNumber", "")
+        val age         = remoteNamedText("USER:data.age", "")
+        val gender      = remoteNamedText("USER:data.gender", "")
+        // No source in either endpoint yet — these keep their baked defaults until an API
+        // carries them (initials could later derive from firstName; UPI/addresses need their
+        // own endpoints in the manifest).
         val initials    = remoteNamedText("USER:profile.initials", "")
-        val phone       = remoteNamedText("USER:profile.phone", "")
-        val age         = remoteNamedText("USER:profile.age", "")
-        val gender      = remoteNamedText("USER:profile.gender", "")
         val upi         = remoteNamedText("USER:profile.upi", "")
         val addresses   = remoteNamedText("USER:profile.addressCount", "")
-        // KYC renders both variants; these toggles show exactly one (1=VISIBLE, 0=GONE).
-        val kycVerified = remoteNamedInteger("USER:profile.kyc.verified", 0)
-        val kycPending  = remoteNamedInteger("USER:profile.kyc.pending", 1)
+        // KYC renders both variants; exactly one shows (1=VISIBLE, 0=GONE). user/details sends
+        // kycVerified as a boolean — the consumer coerces true/false → 1/0 — and the pending
+        // toggle is DERIVED in-document (1 - verified), so one wire value drives both and they
+        // can never disagree.
+        val kycVerified = remoteNamedInteger("USER:data.kycVerified", 0)
+        val kycPending  = -kycVerified + 1
 
         // Safe-area strips match the profile card band (purple900); the content
         // column paints its own bgProfile surface so rows keep their color.

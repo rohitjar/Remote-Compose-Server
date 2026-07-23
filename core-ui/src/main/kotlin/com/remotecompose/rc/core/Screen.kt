@@ -1,5 +1,7 @@
 package com.remotecompose.rc.core
 
+import kotlinx.serialization.json.JsonObject
+
 /**
  * A server-driven screen, discovered at runtime via [java.util.ServiceLoader].
  *
@@ -33,11 +35,24 @@ interface Screen {
     fun render(request: ScreenRequest): ByteArray = render(request.context.toRenderContext())
 
     /**
-     * Per-user values for the named `USER:` slots declared in [render]'s document.
-     * Served from `/v1/screens/<key>/data`; the consumer replays it via
-     * `StateUpdater.setUserLocal*`. [ScreenRequest.args] carries the screen's arguments
+     * External data links to advertise in the manifest INSTEAD of the server's own
+     * `/v1/screens/<key>/data`. The consumer calls every listed endpoint in parallel,
+     * flattens each JSON response by path, and binds the document's `USER:` slots by those
+     * flat keys — so a screen can be fed by existing product APIs (in their natural response
+     * shape, `{success, data:{…}}` envelope and all) with zero SDUI-specific backend code.
+     * Slot names in [render]'s document must be the flattened paths of those responses.
+     * Null (the default) keeps the self-served data endpoint backed by [data].
+     */
+    val dataEndpoints: List<EndpointRef>? get() = null
+
+    /**
+     * Per-user values for the named `USER:` slots declared in [render]'s document — raw JSON
+     * in whatever shape is natural; the consumer flattens it by path and binds slots by flat
+     * key (a slot named `profile.name` reads `{profile:{name:…}}` — no type envelope, types
+     * live in the binary). Served from `/v1/screens/<key>/data`; ignored when [dataEndpoints]
+     * routes the screen to external APIs. [ScreenRequest.args] carries the screen's arguments
      * (e.g. an entity id baked into the host action that navigated here) — treat it as
      * untrusted input. Screens with no dynamic slots keep the empty default.
      */
-    fun data(request: ScreenRequest): ScreenData = ScreenData()
+    fun data(request: ScreenRequest): JsonObject = JsonObject(emptyMap())
 }

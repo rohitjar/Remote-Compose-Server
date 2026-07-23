@@ -1,28 +1,28 @@
 package com.remotecompose.rc.feature.profile
 
+import com.remotecompose.rc.core.EndpointRef
 import com.remotecompose.rc.core.RenderContext
 import com.remotecompose.rc.core.Screen
-import com.remotecompose.rc.core.ScreenData
-import com.remotecompose.rc.core.ScreenRequest
-import kotlinx.serialization.json.jsonPrimitive
 
 /** Registers the Profile screen for ServiceLoader discovery. */
 class ProfileScreenProvider : Screen {
     override val key = "profile"
 
-    // v2: user data moved out of the binary into named USER: slots (served via /profile/data).
-    override val layoutVersion = 2
+    // v3: slots renamed to the flattened paths of the real Jar product APIs (see
+    // dataEndpoints); the demo /profile/data payload is gone.
+    override val layoutVersion = 3
+
+    /**
+     * The real product APIs that feed this screen's `USER:` slots. The consumer calls both in
+     * parallel and flattens each response by path; both wrap their payload in the standard
+     * `{success, data:{…}}` envelope, so every slot binds under the `data.` prefix (the two
+     * field sets are disjoint, so sharing the prefix is collision-free). Slot names in
+     * [ProfileScreen] must stay in sync with these responses' flattened paths.
+     */
+    override val dataEndpoints = listOf(
+        EndpointRef("https://prod.myjar.app/v1/api/user/details"),
+        EndpointRef("https://prod.myjar.app/v1/api/kyc/status?kycContext=PROFILE"),
+    )
 
     override fun render(ctx: RenderContext): ByteArray = ProfileScreen(ctx)
-
-    // In production this would look up the authenticated user; the demo serves the defaults,
-    // letting request args override a couple of fields to exercise the envelope end to end.
-    // Args are untrusted client-relayed input — real screens must authorize them.
-    override fun data(request: ScreenRequest): ScreenData {
-        val defaults = ProfileScreenData()
-        return defaults.copy(
-            userName = request.args["userName"]?.jsonPrimitive?.content ?: defaults.userName,
-            userInitials = request.args["userInitials"]?.jsonPrimitive?.content ?: defaults.userInitials,
-        ).toScreenData()
-    }
 }

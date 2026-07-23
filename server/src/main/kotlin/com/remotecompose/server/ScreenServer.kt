@@ -24,7 +24,9 @@ import java.net.URLDecoder
  *   GET  /v1/screens/{key}/binary/{version}?density=&width=&height=
  *          → binary .rc skeleton. Version-pinned → served with `Cache-Control: immutable`.
  *            A stale {version} answers 409 so the consumer re-fetches the manifest.
- *   GET  /v1/screens/{key}/data                 → per-user ScreenData JSON
+ *   GET  /v1/screens/{key}/data                 → per-user data JSON (raw shape; consumer
+ *          flattens by path and binds USER: slots by flat key). Screens backed by real
+ *          product APIs skip this: their manifest lists external data links instead.
  *   POST /v1/analytics                          → host-action analytics events (ingest stub)
  *
  * Ad-hoc document authoring (no registered Screen involved):
@@ -109,11 +111,14 @@ private fun HttpExchange.serveManifest(key: String, screen: Screen) {
         // {args, context} envelope); the method advertised here is what shipped clients
         // will use — flipping a verb is a server-side change, no app release.
         // Binary stays GET so its version-pinned URL remains cacheable at every layer.
+        // Data is a LIST: screens backed by real product APIs advertise those links
+        // (Screen.dataEndpoints); the rest fall back to the self-served /data endpoint.
         ScreenManifest(
             screen = key,
             layoutVersion = screen.layoutVersion,
             binary = EndpointRef("$base/v1/screens/$key/binary/${screen.layoutVersion}"),
-            data = listOf(EndpointRef("https://prod.myjar.app/v1/api/user/details", method = "GET"), EndpointRef("https://prod.myjar.app/v1/api/kyc/status?kycContext=PROFILE", method = "GET")),
+            data = screen.dataEndpoints
+                ?: listOf(EndpointRef("$base/v1/screens/$key/data", method = "POST")),
             analytics = EndpointRef("$base/v1/analytics", method = "POST"),
         ).toJson()
     }
@@ -156,7 +161,7 @@ private fun HttpExchange.serveData(key: String, screen: Screen) {
     }
     try {
         val request = screenRequest()
-        val json = screen.data(request).toJson()
+        val json = screen.data(request).toString()
         respondJson(200, json)
         println("✓ $requestMethod /v1/screens/$key/data args=${request.args} → ${json.length} bytes")
     } catch (e: Exception) {
