@@ -4,7 +4,9 @@ package com.remotecompose.rc.feature.profile
 
 import androidx.compose.remote.creation.Rc
 import androidx.compose.remote.creation.dsl.Modifier
+import androidx.compose.remote.creation.dsl.RcContentScale
 import androidx.compose.remote.creation.dsl.RcHorizontalPositioning
+import androidx.compose.remote.creation.dsl.RcImage
 import androidx.compose.remote.creation.dsl.RcInteger
 import androidx.compose.remote.creation.dsl.RcPaintStyle
 import androidx.compose.remote.creation.dsl.RcScope
@@ -64,7 +66,7 @@ fun ProfileScreen(
         // can never disagree.
         val kycVerified = remoteNamedInteger("USER:data.kycVerified", 0)
         val kycPending  = -kycVerified + 1
-
+        val profileImageUrl = remoteBitmapUrl("USER:data.profilePicUrl")
         // Safe-area strips match the profile card band (purple900); the content
         // column paints its own bgProfile surface so rows keep their color.
         Box(
@@ -104,9 +106,6 @@ fun ProfileScreen(
                             horizontal = RcHorizontalPositioning.Center,
                             vertical = RcVerticalPositioning.Center,
                         ) {
-                            Image(
-                                image = remoteBitmapUrl("")
-                            )
                             RemoteUrlImage(Icons.back, Modifier.wrapContentSize(), scale = Rc.ImageScale.FILL_BOUNDS, width = 96, height = 96)
                         }
                         Spacer(modifier = Modifier.width(6.rdp))
@@ -124,7 +123,7 @@ fun ProfileScreen(
                 ) {
                     // Profile card (avatar + name + phone) — exact Figma "main details" frame.
                     ProfileCard(
-                        initials = initials,
+                        profileImageUrl = profileImageUrl,
                         name = name,
                         phone = phone,
                     )
@@ -207,7 +206,7 @@ private fun RcScope.RowGap() {
     Box(modifier = Modifier.fillMaxWidth().height(16.rdp)) {}
 }
 
-private fun RcScope.ProfileCard(initials: RcText, name: RcText, phone: RcText) {
+private fun RcScope.ProfileCard(profileImageUrl: RcImage, name: RcText, phone: RcText) {
     val cardShape   = RoundedRectShape(16.rdp.value, 16.rdp.value, 0.rdp.value, 0.rdp.value) // top corners only
     val avatarShape = RoundedRectShape(30.rdp.value, 30.rdp.value, 30.rdp.value, 30.rdp.value) // 60dp circle
     val bandShape   = RoundedRectShape(0.rdp.value, 0.rdp.value, 8.rdp.value, 8.rdp.value)    // bottom corners only (Figma: 8dp)
@@ -338,18 +337,23 @@ private fun RcScope.ProfileCard(initials: RcText, name: RcText, phone: RcText) {
                         vertical = RcVerticalPositioning.Center,
                     ) {
 //                        RemoteUrlImage(
-//                            url = "https://cdn.myjar.app/profilePics/64d211e6c82e5256c8c698276a290c94cd6c6d0339b75c42.jpg",
+//                            url = profileImageUrl,
 //                            width = 230,
 //                            height = 512,
 //                            modifier = Modifier.onClick { hostAction("editImage") },
 //                            scale = RemoteComposeWriter.IMAGE_SCALE_FILL_BOUNDS
 //                        )
-                        Text(
-                            text = initials,
-                            color = Colors.purple500,
-                            fontSize = 24.rsp,
-                            fontWeight = 700f,
+                        Image(
+                            image = profileImageUrl,
+                            modifier = Modifier.onClick { hostAction("editImage") },
+                            contentScale = RcContentScale.FillBounds
                         )
+//                        Text(
+//                            text = initials,
+//                            color = Colors.purple500,
+//                            fontSize = 24.rsp,
+//                            fontWeight = 700f,
+//                        )
                     }
 
                     Spacer(modifier = Modifier.width(12.rdp).wrapContentHeight()) // 12dp gap
